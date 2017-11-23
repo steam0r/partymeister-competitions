@@ -1,0 +1,21 @@
+<?php
+
+namespace Partymeister\Competitions\Grids;
+
+use Motor\Backend\Grid\Grid;
+use Motor\Backend\Grid\Renderers\CollectionRenderer;
+use Motor\Backend\Grid\Renderers\TranslateRenderer;
+
+class OptionGroupGrid extends Grid
+{
+
+    protected function setup()
+    {
+        $this->addColumn('name', trans('motor-backend::backend/global.name'), true);
+        $this->setDefaultSorting('name', 'ASC');
+        $this->addColumn('type', trans('partymeister-competitions::backend/option_groups.type'), true)->renderer(TranslateRenderer::class, ['file' => 'partymeister-competitions::backend/option_groups.types']);
+        $this->addColumn('options', trans('partymeister-competitions::backend/option_groups.options'), true)->renderer(CollectionRenderer::class, ['column' => 'name']);
+        $this->addEditAction(trans('motor-backend::backend/global.edit'), 'backend.option_groups.edit');
+        $this->addDeleteAction(trans('motor-backend::backend/global.delete'), 'backend.option_groups.destroy');
+    }
+}
