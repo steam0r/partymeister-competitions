@@ -34,6 +34,14 @@ return [
                     'roles'       => [ 'SuperAdmin' ],
                     'permissions' => [ 'competition_types.read' ],
                 ],
+                130 => [ // <-- !!! replace 929 with your own sort position !!!
+                    'slug' => 'vote_categories',
+                    'name'  => 'partymeister-competitions::backend/vote_categories.vote_categories',
+                    'icon'  => 'fa fa-plus',
+                    'route' => 'backend.vote_categories.index',
+                    'roles'       => [ 'SuperAdmin' ],
+                    'permissions' => [ 'vote_categories.read' ],
+                ],
             ]
         ],
     ]

@@ -11,7 +11,7 @@ return [
     'deleted'      => 'Competition deleted',
 
     'name'                      => 'Name',
-    'sort_position'             => 'Sort_position',
+    'sort_position'             => 'Sort position',
     'has_prizegiving'           => 'Has prizegiving',
     'prizegiving_sort_position' => 'Prizegiving sort position',
     'upload_enabled'            => 'Upload enabled',

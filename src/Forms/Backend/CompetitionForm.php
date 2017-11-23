@@ -5,6 +5,7 @@ namespace Partymeister\Competitions\Forms\Backend;
 use Kris\LaravelFormBuilder\Form;
 use Partymeister\Competitions\Models\CompetitionType;
 use Partymeister\Competitions\Models\OptionGroup;
+use Partymeister\Competitions\Models\VoteCategory;
 
 class CompetitionForm extends Form
 {
@@ -21,6 +22,11 @@ class CompetitionForm extends Form
             ->add('option_groups', 'select', [
                 'attr' => ['multiple' => true, 'id' => 'option_groups'],
                 'choices' => OptionGroup::pluck('name', 'id')->toArray(),
+            ])
+            ->add('vote_categories', 'select', [
+                'attr' => ['multiple' => true, 'id' => 'vote_categories'],
+                'choices' => VoteCategory::pluck('name', 'id')->toArray(),
+                'default_value' => 1
             ])
             ->add('submit', 'submit', ['attr' => ['class' => 'btn btn-primary'], 'label' => trans('partymeister-competitions::backend/competitions.save')]);
     }

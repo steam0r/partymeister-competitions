@@ -7,6 +7,7 @@
         {!! form_row($form->name) !!}
         {!! form_row($form->competition_type_id) !!}
         {!! form_row($form->option_groups) !!}
+        {!! form_row($form->vote_categories) !!}
         {!! form_row($form->sort_position) !!}
         {!! form_row($form->has_prizegiving) !!}
         <div class="has-prizegiving">

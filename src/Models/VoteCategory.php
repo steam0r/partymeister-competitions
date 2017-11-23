@@ -10,11 +10,10 @@ use Culpa\Traits\CreatedBy;
 use Culpa\Traits\DeletedBy;
 use Culpa\Traits\UpdatedBy;
 
-class Competition extends Model
+class VoteCategory extends Model
 {
-
     use Searchable;
-    use Filterable;
+	use Filterable;
     use Blameable, CreatedBy, UpdatedBy, DeletedBy;
 
     /**
@@ -22,7 +21,7 @@ class Competition extends Model
      *
      * @var array
      */
-    protected $blameable = [ 'created', 'updated', 'deleted' ];
+    protected $blameable = array('created', 'updated', 'deleted');
 
     /**
      * Searchable columns for the searchable trait
@@ -30,7 +29,7 @@ class Competition extends Model
      * @var array
      */
     protected $searchableColumns = [
-        'name',
+        'name'
     ];
 
     /**
@@ -40,27 +39,14 @@ class Competition extends Model
      */
     protected $fillable = [
         'name',
-        'competition_type_id',
-        'has_prizegiving',
-        'sort_position',
-        'prizegiving_sort_position',
-        'upload_enabled',
-        'voting_enabled'
+        'points',
+        'has_negative',
+        'has_comment',
+        'has_special_vote',
     ];
 
-
-    public function competition_type()
+    public function competitions()
     {
-        return $this->belongsTo(CompetitionType::class);
-    }
-
-    public function option_groups()
-    {
-        return $this->belongsToMany(OptionGroup::class);
-    }
-
-    public function vote_categories()
-    {
-        return $this->belongsToMany(VoteCategory::class);
+        return $this->belongsToMany(Competition::class);
     }
 }

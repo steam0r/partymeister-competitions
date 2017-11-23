@@ -25,4 +25,12 @@ return [
             'delete'
         ]
     ],
+    'vote_categories'   => [
+        'name'   => 'partymeister-competitions::backend/vote_categories.vote_categories',
+        'values' => [
+            'read',
+            'write',
+            'delete'
+        ]
+    ],
 ];

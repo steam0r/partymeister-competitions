@@ -12,14 +12,18 @@ class CompetitionService extends BaseService
 
     public function afterCreate()
     {
-        foreach ($this->request->get('option_groups', []) as $group) {
-            $this->record->option_groups()->attach($group);
+        foreach ($this->request->get('option_groups', []) as $id) {
+            $this->record->option_groups()->attach($id);
+        }
+        foreach ($this->request->get('vote_categories', []) as $id) {
+            $this->record->vote_categories()->attach($id);
         }
     }
 
     public function afterUpdate()
     {
         $this->record->option_groups()->detach();
+        $this->record->vote_categories()->detach();
         $this->afterCreate();
     }
 }
