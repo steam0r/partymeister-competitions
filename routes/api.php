@@ -6,4 +6,6 @@ Route::group([
     'as'         => 'api.',
 ], function () {
     Route::resource('option_groups', 'OptionGroupsController');
+    Route::resource('competition_types', 'CompetitionTypesController');
+    Route::resource('competitions', 'CompetitionsController');
 });

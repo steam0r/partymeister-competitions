@@ -41,7 +41,7 @@ class OptionGroupTransformer extends Fractal\TransformerAbstract
 
 
     /**
-     * Include Options
+     * Include options
      *
      * @return \League\Fractal\Resource\Collection
      */

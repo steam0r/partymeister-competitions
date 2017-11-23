@@ -89,6 +89,14 @@ class PartymeisterServiceProvider extends ServiceProvider
         Route::bind('option_group', function($id){
             return \Partymeister\Competitions\Models\OptionGroup::findOrFail($id);
         });
+
+        Route::bind('competition_type', function($id){
+            return \Partymeister\Competitions\Models\CompetitionType::findOrFail($id);
+        });
+
+        Route::bind('competition', function($id){
+            return \Partymeister\Competitions\Models\Competition::findOrFail($id);
+        });
     }
 
 

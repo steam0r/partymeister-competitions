@@ -13,5 +13,7 @@ Route::group([
 
     Route::group([ 'middleware' => [ 'permission' ] ], function () {
         Route::resource('option_groups', 'OptionGroupsController');
+        Route::resource('competition_types', 'CompetitionTypesController');
+        Route::resource('competitions', 'CompetitionsController');
     });
 });
