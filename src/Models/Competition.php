@@ -53,4 +53,9 @@ class Competition extends Model
     {
         return $this->belongsTo(CompetitionType::class);
     }
+
+    public function option_groups()
+    {
+        return $this->belongsToMany(OptionGroup::class);
+    }
 }

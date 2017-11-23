@@ -47,4 +47,9 @@ class OptionGroup extends Model
         return $this->hasMany(Option::class);
     }
 
+    public function competitions()
+    {
+        return $this->belongsToMany(Competition::class);
+    }
+
 }

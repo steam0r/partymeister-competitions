@@ -4,6 +4,7 @@ namespace Partymeister\Competitions\Forms\Backend;
 
 use Kris\LaravelFormBuilder\Form;
 use Partymeister\Competitions\Models\CompetitionType;
+use Partymeister\Competitions\Models\OptionGroup;
 
 class CompetitionForm extends Form
 {
@@ -17,7 +18,10 @@ class CompetitionForm extends Form
             ->add('prizegiving_sort_position', 'text', ['label' => trans('partymeister-competitions::backend/competitions.prizegiving_sort_position')])
             ->add('upload_enabled', 'checkbox', ['label' => trans('partymeister-competitions::backend/competitions.upload_enabled')])
             ->add('voting_enabled', 'checkbox', ['label' => trans('partymeister-competitions::backend/competitions.voting_enabled')])
-
+            ->add('option_groups', 'select', [
+                'attr' => ['multiple' => true, 'id' => 'option_groups'],
+                'choices' => OptionGroup::pluck('name', 'id')->toArray(),
+            ])
             ->add('submit', 'submit', ['attr' => ['class' => 'btn btn-primary'], 'label' => trans('partymeister-competitions::backend/competitions.save')]);
     }
 }
