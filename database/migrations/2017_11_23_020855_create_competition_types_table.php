@@ -23,6 +23,7 @@ class CreateCompetitionTypesTable extends Migration
             $table->boolean('has_video')->default(false);
             $table->boolean('has_recordings')->default(false);
             $table->boolean('has_composer')->default(false);
+            $table->boolean('has_running_time')->default(false);
             $table->boolean('is_anonymous')->default(false);
             $table->boolean('has_remote_entries')->default(false);
             $table->boolean('file_is_optional')->default(false);

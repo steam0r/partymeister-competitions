@@ -30,10 +30,13 @@
                 {!! form_row($form->has_composer) !!}
             </div>
             <div class="col-md-3">
-                {!! form_row($form->is_anonymous) !!}
+                {!! form_row($form->has_running_time) !!}
             </div>
         </div>
         <div class="row">
+            <div class="col-md-3">
+                {!! form_row($form->is_anonymous) !!}
+            </div>
             <div class="col-md-3">
                 {!! form_row($form->has_remote_entries) !!}
             </div>

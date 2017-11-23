@@ -33,4 +33,12 @@ return [
             'delete'
         ]
     ],
+    'entries'           => [
+        'name'   => 'partymeister-competitions::backend/entries.entries',
+        'values' => [
+            'read',
+            'write',
+            'delete'
+        ]
+    ],
 ];

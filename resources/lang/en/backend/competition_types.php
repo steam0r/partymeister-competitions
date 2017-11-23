@@ -20,6 +20,7 @@ return [
     'has_video'          => 'Has video file',
     'has_recordings'     => 'Will be recorded',
     'has_composer'       => 'Composer required',
+    'has_running_time'   => 'Has running time',
     'is_anonymous'       => 'Is anonymous (author omitted)',
     'file_is_optional'   => 'File upload optional',
     'has_remote_entries' => 'Remote entries allowed',

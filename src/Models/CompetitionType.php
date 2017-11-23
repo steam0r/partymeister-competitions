@@ -47,6 +47,7 @@ class CompetitionType extends Model
         'has_audio',
         'has_recordings',
         'has_composer',
+        'has_running_time',
         'is_anonymous',
         'has_remote_entries',
         'file_is_optional'
@@ -78,6 +79,9 @@ class CompetitionType extends Model
         }
         if ($this->has_recordings) {
             $properties[] = 'has_recordings';
+        }
+        if ($this->has_running_time) {
+            $properties[] = 'has_running_time';
         }
         if ($this->has_composer) {
             $properties[] = 'has_composer';

@@ -13,7 +13,7 @@ class CompetitionTypeTransformer extends Fractal\TransformerAbstract
      *
      * @var array
      */
-    protected $availableIncludes = ['competitions'];
+    protected $availableIncludes = [ 'competitions' ];
 
 
     /**
@@ -35,11 +35,13 @@ class CompetitionTypeTransformer extends Fractal\TransformerAbstract
             'has_audio'          => (bool) $record->has_audio,
             'has_recordings'     => (bool) $record->has_recordings,
             'has_composer'       => (bool) $record->has_composer,
+            'has_running_time'   => (bool) $record->has_running_time,
             'is_anonymous'       => (bool) $record->is_anonymous,
             'has_remote_entries' => (bool) $record->has_remote_entries,
             'file_is_optional'   => (bool) $record->file_is_optional
         ];
     }
+
 
     /**
      * Include competitions

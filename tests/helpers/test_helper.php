@@ -19,3 +19,8 @@ function create_test_vote_category($count = 1)
 {
     return factory(Partymeister\Competitions\Models\VoteCategory::class, $count)->create();
 }
+
+function create_test_entry($count = 1)
+{
+    return factory(Partymeister\Competitions\Models\Entry::class, $count)->create();
+}

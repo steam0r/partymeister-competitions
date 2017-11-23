@@ -4,6 +4,7 @@ namespace Partymeister\Competitions\Transformers;
 
 use League\Fractal;
 use Partymeister\Competitions\Models\Competition;
+use Partymeister\Competitions\Models\OptionGroup;
 
 class CompetitionTransformer extends Fractal\TransformerAbstract
 {
@@ -13,14 +14,14 @@ class CompetitionTransformer extends Fractal\TransformerAbstract
      *
      * @var array
      */
-    protected $availableIncludes = ['competition_type'];
+    protected $availableIncludes = ['competition_type', 'vote_categories', 'option_groups'];
 
     /**
      * List of resources to automatically include
      *
      * @var array
      */
-    protected $defaultIncludes = [ 'competition_type' ];
+    protected $defaultIncludes = ['competition_type', 'vote_categories', 'option_groups'];
 
 
     /**
@@ -53,4 +54,31 @@ class CompetitionTransformer extends Fractal\TransformerAbstract
     {
         return $this->item($record->competition_type(), new CompetitionTypeTransformer());
     }
+
+    /**
+     * Include vote categories
+     *
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeVoteCategories(Competition $record)
+    {
+        $collection = $record->vote_categories;
+        if (!is_null($collection)) {
+            return $this->collection($collection, new VoteCategoryTransformer());
+        }
+    }
+
+    /**
+     * Include option groups
+     *
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeOptionGroups(Competition $record)
+    {
+        $collection = $record->option_groups;
+        if (!is_null($collection)) {
+            return $this->collection($collection, new OptionGroupTransformer());
+        }
+    }
+
 }

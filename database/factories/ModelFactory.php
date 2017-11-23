@@ -23,3 +23,9 @@ $factory->define(Partymeister\Competitions\Models\VoteCategory::class, function 
         'name' => $faker->word
     ];
 });
+
+$factory->define(Partymeister\Competitions\Models\Entry::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word
+    ];
+});
