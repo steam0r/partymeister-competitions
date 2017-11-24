@@ -25,6 +25,8 @@ return [
     'is_prepared'                                 => 'Is prepared',
     'upload_enabled'                              => 'Upload enabled',
     'composer_not_member_of_copyright_collective' => 'Composer is not a member of a copyright collective',
+    'ip_address'                                  => 'IP address',
+    'last_file_uploaded_at'                       => 'Last file upload',
 
     'name'            => 'Name',
     'email'           => 'Email',
@@ -37,9 +39,9 @@ return [
     'stati'           => [
         0 => 'Unchecked',
         1 => 'Checked',
-        2 => 'Qualified',
-        3 => 'Preselected',
-        4 => 'Disqualified'
+        2 => 'Needs feedback',
+        3 => 'Disqualified',
+        4 => 'Not preselected',
     ],
     'entry_info'      => 'Entry information',
     'file_info'       => 'Files',

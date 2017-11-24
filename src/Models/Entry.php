@@ -24,7 +24,7 @@ class Entry extends Model
      *
      * @var array
      */
-    protected $blameable = array('created', 'updated', 'deleted');
+    protected $blameable = [ 'created', 'updated', 'deleted' ];
 
     /**
      * Searchable columns for the searchable trait
@@ -76,4 +76,16 @@ class Entry extends Model
         'composer_city',
         'composer_country_iso_3166_1',
     ];
+
+
+    public function competition()
+    {
+        return $this->belongsTo(Competition::class);
+    }
+
+
+    public function getNameAttribute()
+    {
+        return $this->title . ' by ' . $this->author;
+    }
 }

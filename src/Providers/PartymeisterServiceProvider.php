@@ -24,6 +24,16 @@ class PartymeisterServiceProvider extends ServiceProvider
         $this->permissions();
         $this->registerCommands();
         $this->migrations();
+        $this->publishResourceAssets();
+    }
+
+    public function publishResourceAssets()
+    {
+        $assets = [
+            __DIR__ . '/../../resources/assets/css'       => resource_path('assets/css'),
+        ];
+
+        $this->publishes($assets, 'partymeister-competitions-install');
     }
 
     public function config()
