@@ -3,8 +3,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">
-                    <span class="badge badge-danger" v-if="is_remote">REMOTE</span>
-                    @{{title}} by @{{author}}
+                    <span class="badge badge-danger" v-if="entry.is_remote">REMOTE</span>
+                    @{{entry.title}} by @{{entry.author}}
                 </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -16,64 +16,70 @@
                         ID
                     </dt>
                     <dd class="col-sm-10">
-                        @{{ id }}
+                        @{{ entry.id }}
                     </dd>
 
                     <dt class="col-sm-2">
                         {{trans('partymeister-competitions::backend/competitions.competition')}}
                     </dt>
                     <dd class="col-sm-10">
-                        @{{ competition.data.name }}
+                        @{{ entry.competition.data.name }}
                     </dd>
 
-                    <dt class="col-sm-2">
-                        {{trans('partymeister-competitions::backend/entries.running_time')}}
-                    </dt>
-                    <dd class="col-sm-10">
-                        @{{ running_time }}
-                    </dd>
+                    <template v-if="entry.competition.data.competition_type.data.has_running_time">
+                        <dt class="col-sm-2">
+                            {{trans('partymeister-competitions::backend/entries.running_time')}}
+                        </dt>
+                        <dd class="col-sm-10">
+                            @{{ entry.running_time }}
+                        </dd>
+                    </template>
 
                     <dt class="col-sm-2">
                         {{trans('partymeister-competitions::backend/entries.title')}}
                     </dt>
                     <dd class="col-sm-10">
-                        @{{ title }}
+                        @{{ entry.title }}
                     </dd>
 
                     <dt class="col-sm-2">
                         {{trans('partymeister-competitions::backend/entries.author')}}
                     </dt>
                     <dd class="col-sm-10">
-                        @{{ author }}
+                        @{{ entry.author }}
                     </dd>
 
                     <dt class="col-sm-2">
                         {{trans('partymeister-competitions::backend/entries.description')}}
                     </dt>
                     <dd class="col-sm-10">
-                        <p v-html="nl2br(description)"></p>
+                        <p v-html="nl2br(entry.description)"></p>
                     </dd>
 
                     <dt class="col-sm-2">
                         {{trans('partymeister-competitions::backend/entries.organizer_description')}}
                     </dt>
                     <dd class="col-sm-10">
-                        <p v-html="nl2br(organizer_description)"></p>
+                        <p v-html="nl2br(entry.organizer_description)"></p>
                     </dd>
 
-                    <dt class="col-sm-2">
-                        {{trans('partymeister-competitions::backend/entries.filesize')}}
-                    </dt>
-                    <dd class="col-sm-10">
-                        @{{ filesize_human }} (@{{ filesize_bytes }} bytes)
-                    </dd>
+                    <template v-if="entry.competition.data.competition_type.data.has_filesize">
+                        <dt class="col-sm-2">
+                            {{trans('partymeister-competitions::backend/entries.filesize')}}
+                        </dt>
+                        <dd class="col-sm-10">
+                            @{{ entry.filesize_human }} (@{{ entry.filesize_bytes }} bytes)
+                        </dd>
+                    </template>
 
-                    <dt class="col-sm-2">
-                        {{trans('partymeister-competitions::backend/entries.platform')}}
-                    </dt>
-                    <dd class="col-sm-10">
-                        @{{ platform }}
-                    </dd>
+                    <template v-if="entry.competition.data.competition_type.data.has_platform">
+                        <dt class="col-sm-2">
+                            {{trans('partymeister-competitions::backend/entries.platform')}}
+                        </dt>
+                        <dd class="col-sm-10">
+                            @{{ entry.platform }}
+                        </dd>
+                    </template>
                 </dl>
 
                 <div class="row">
@@ -84,31 +90,32 @@
                                 {{trans('partymeister-competitions::backend/entries.name')}}
                             </dt>
                             <dd class="col-sm-8">
-                                @{{ author_name }}
+                                @{{ entry.author_name }}
                             </dd>
 
                             <dt class="col-sm-4">
                                 {{trans('partymeister-competitions::backend/entries.email')}}
                             </dt>
                             <dd class="col-sm-8">
-                                @{{ author_email }}
+                                @{{ entry.author_email }}
                             </dd>
 
                             <dt class="col-sm-4">
                                 {{trans('partymeister-competitions::backend/entries.phone')}}
                             </dt>
                             <dd class="col-sm-8">
-                                @{{ author_phone }}
+                                @{{ entry.author_phone }}
                             </dd>
 
                             <dt class="col-sm-4">
                                 {{trans('partymeister-competitions::backend/entries.address')}}
                             </dt>
                             <dd class="col-sm-8">
-                                @{{ author_address }} @{{ author_zip }} @{{ author_city }} @{{ author_country }}
+                                @{{ entry.author_address }} @{{ entry.author_zip }} @{{ entry.author_city }} @{{ entry.author_country }}
                             </dd>
                         </dl>
                     </div>
+                    <template v-if="entry.competition.data.competition_type.data.has_composer">
                     <div class="col-md-6">
                         <h4>{{trans('partymeister-competitions::backend/entries.composer_info')}}</h4>
                         <dl class="row">
@@ -116,28 +123,28 @@
                                 {{trans('partymeister-competitions::backend/entries.name')}}
                             </dt>
                             <dd class="col-sm-8">
-                                @{{ composer_name }}
+                                @{{ entry.composer_name }}
                             </dd>
 
                             <dt class="col-sm-4">
                                 {{trans('partymeister-competitions::backend/entries.email')}}
                             </dt>
                             <dd class="col-sm-8">
-                                @{{ composer_email }}
+                                @{{ entry.composer_email }}
                             </dd>
 
                             <dt class="col-sm-4">
                                 {{trans('partymeister-competitions::backend/entries.phone')}}
                             </dt>
                             <dd class="col-sm-8">
-                                @{{ composer_phone }}
+                                @{{ entry.composer_phone }}
                             </dd>
 
                             <dt class="col-sm-4">
                                 {{trans('partymeister-competitions::backend/entries.address')}}
                             </dt>
                             <dd class="col-sm-8">
-                                @{{ composer_address }} @{{ composer_zip }} @{{ composer_city }} @{{ composer_country }}
+                                @{{ entry.composer_address }} @{{ entry.composer_zip }} @{{ entry.composer_city }} @{{ entry.composer_country }}
                             </dd>
 
                             <dt class="col-sm-4">
@@ -145,10 +152,11 @@
                             </dt>
 
                             <dd class="col-sm-8">
-                                @{{ bool(composer_not_member_of_copyright_collective) }}
+                                @{{ bool(entry.composer_not_member_of_copyright_collective) }}
                             </dd>
                         </dl>
                     </div>
+                    </template>
                 </div>
             </div>
         </div>

@@ -25,6 +25,7 @@
 @endsection
 @section('view_scripts')
     <script type="text/javascript">
+        var app = false;
         $('.delete-record').click(function (e) {
             if (!confirm('{{ trans('motor-backend::backend/global.delete_question') }}')) {
                 e.preventDefault();
@@ -34,23 +35,30 @@
         $('.show-entry-description').click(function (e) {
             $.ajax('{{action('\Partymeister\Competitions\Http\Controllers\Api\EntriesController@index')}}/' + $(this).data('id') + '?api_token={{Auth::user()->api_token}}')
                 .done(function (results) {
-                    var app = new window.Vue({
-                        el: '#entry-modal',
-                        data: results.data,
-                        methods: {
-                            nl2br: function(string) {
-                                return (string + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
+
+                    if (app === false) {
+                        app = new window.Vue({
+                            el: '#entry-modal',
+                            data: {
+                                entry: results.data
                             },
-                            bool: function(value) {
-                                if (value == 0) {
-                                    return '{{ trans('motor-backend::backend/global.no') }}';
-                                } else {
-                                    return '{{ trans('motor-backend::backend/global.yes') }}';
+                            methods: {
+                                nl2br: function(string) {
+                                    return (string + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
+                                },
+                                bool: function(value) {
+                                    if (value == 0) {
+                                        return '{{ trans('motor-backend::backend/global.no') }}';
+                                    } else {
+                                        return '{{ trans('motor-backend::backend/global.yes') }}';
+                                    }
                                 }
                             }
-                        }
-                    });
-//                    $('#entry-modal .modal-title').html(results.data.title + ' by ' + results.data.author);
+                        });
+                    } else {
+                        app.entry = results.data;
+                        app.$forceUpdate();
+                    }
                     $('#entry-modal').modal('show')
                 });
             e.preventDefault();
