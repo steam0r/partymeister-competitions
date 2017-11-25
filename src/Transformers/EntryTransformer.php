@@ -52,7 +52,7 @@ class EntryTransformer extends Fractal\TransformerAbstract
             'is_recorded'                                 => (bool) $record->is_recorded,
             'upload_enabled'                              => (bool) $record->upload_enabled,
             'is_prepared'                                 => (bool) $record->is_prepared,
-            'status'                                      => trans('partymeister-competitions::backend/entries.stati' . $record->status),
+            'status'                                      => trans('partymeister-competitions::backend/entries.stati.' . $record->status),
             'last_file_uploaded_at'                       => str_replace(' ', 'T', $record->last_file_uploaded_at),
             'author_name'                                 => $record->author_name,
             'author_email'                                => $record->author_email,
