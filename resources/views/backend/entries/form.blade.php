@@ -46,13 +46,42 @@
             <h3 class="box-title">{{ trans('partymeister-competitions::backend/entries.file_info') }}</h3>
         </div>
         <div class="@boxBody">
-            Screenshot
-            <br>
-            File(s)
-            <br>
-            Audio file
-            <br>
-            Video file
+            <div class="row">
+                @if ($form->has('screenshot'))
+                    <div class="col-md-3">
+                        {!! form_row($form->screenshot) !!}
+                    </div>
+                @endif
+                @if ($form->has('audio'))
+                    <div class="col-md-3">
+                        {!! form_row($form->audio) !!}
+                    </div>
+                @endif
+                @if ($form->has('video'))
+                    <div class="col-md-3">
+                        {!! form_row($form->video) !!}
+                    </div>
+                @endif
+            </div>
+
+            @if ($form->has('work_stage_1'))
+                <div class="row">
+
+                @php
+                    $i = 1;
+                @endphp
+                @while ($form->has('work_stage_'.$i))
+                    <div class="col-md-3">
+                        {!! form_row($form->{'work_stage_'.$i}) !!}
+                    </div>
+                    @php
+                        $i++;
+                    @endphp
+                @endwhile
+                </div>
+            @endif
+
+            {!! form_row($form->file) !!}
         </div>
         <!-- /.box-body -->
     </div>
@@ -119,12 +148,14 @@
                 {!! form_row($form->composer_country_iso_3166_1) !!}
             </div>
             <!-- /.box-body -->
-
-            <div class="@boxFooter">
-                {!! form_row($form->submit) !!}
-            </div>
         </div>
     @endif
+    <div class="@boxWrapper">
+        <div class="@boxFooter">
+            {!! form_row($form->submit) !!}
+        </div>
+    </div>
+
 @endif
 {!! form_end($form, false) !!}
 @section('view_scripts')

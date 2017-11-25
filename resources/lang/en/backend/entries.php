@@ -50,4 +50,10 @@ return [
     'composer_info'   => 'Composer data',
     'additional_info' => 'Additional data',
     'option_info'     => 'Options',
+
+    'screenshot' => 'Screenshot',
+    'video'      => 'Video',
+    'audio'      => 'Audio',
+    'work_stage' => 'Work stage',
+    'file'       => 'File',
 ];

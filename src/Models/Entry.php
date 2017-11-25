@@ -10,10 +10,14 @@ use Culpa\Traits\Blameable;
 use Culpa\Traits\CreatedBy;
 use Culpa\Traits\DeletedBy;
 use Culpa\Traits\UpdatedBy;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
+use Spatie\MediaLibrary\Media;
 
-class Entry extends Model
+class Entry extends Model implements HasMediaConversions
 {
 
+    use HasMediaTrait;
     use Searchable;
     use Filterable;
 
@@ -78,6 +82,11 @@ class Entry extends Model
         'status',
     ];
 
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')->setManipulations([ 'w' => 320, 'h' => 240 ]);
+    }
 
     public function competition()
     {

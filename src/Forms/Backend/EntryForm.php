@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Input;
 use Kris\LaravelFormBuilder\Form;
 use Partymeister\Competitions\Models\Competition;
+use Partymeister\Competitions\Models\Entry;
 
 class EntryForm extends Form
 {
@@ -40,9 +41,25 @@ class EntryForm extends Form
             ->add('author_city', 'text', ['label' => trans('partymeister-competitions::backend/entries.city')])
             ->add('author_country_iso_3166_1', 'select2', ['label' => trans('partymeister-competitions::backend/entries.country'), 'choices' => \Symfony\Component\Intl\Intl::getRegionBundle()->getCountryNames()])
             ->add('options', 'form', ['wrapper' => [], 'class' => '\Partymeister\Competitions\Forms\Backend\EntryOptionForm', 'label' => false, 'data' => $data])
-            ->add('submit', 'submit', ['attr' => ['class' => 'btn btn-primary'], 'label' => trans('partymeister-competitions::backend/entries.save')]);
+            ->add('submit', 'submit', ['attr' => ['class' => 'btn btn-primary'], 'label' => trans('partymeister-competitions::backend/entries.save')])
+            ->add('file', 'file_file', ['label' =>  trans('partymeister-competitions::backend/entries.file'), 'model' => Entry::class]);
+
 
         if (isset($data['competition'])) {
+            if ($data['competition']->competition_type->has_screenshot) {
+                for($i=1; $i<=$data['competition']->competition_type->number_of_work_stages; $i++) {
+                    $this->add('work_stage_'.$i, 'file_image', ['label' =>  trans('partymeister-competitions::backend/entries.work_stage').' '.$i, 'model' => Entry::class]);
+                }
+            }
+            if ($data['competition']->competition_type->has_screenshot) {
+                $this->add('screenshot', 'file_image', ['label' =>  trans('partymeister-competitions::backend/entries.screenshot'), 'model' => Entry::class]);
+            }
+            if ($data['competition']->competition_type->has_video) {
+                $this->add('video', 'file_video', ['label' =>  trans('partymeister-competitions::backend/entries.video'), 'model' => Entry::class]);
+            }
+            if ($data['competition']->competition_type->has_audio) {
+                $this->add('audio', 'file_audio', ['label' =>  trans('partymeister-competitions::backend/entries.audio'), 'model' => Entry::class]);
+            }
             if ($data['competition']->competition_type->has_filesize) {
                 $this->add('filesize', 'text', ['label' => trans('partymeister-competitions::backend/entries.filesize')]);
             }
