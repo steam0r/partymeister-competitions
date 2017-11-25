@@ -25,6 +25,7 @@ return [
     'is_prepared'                                 => 'Is prepared',
     'upload_enabled'                              => 'Upload enabled',
     'composer_not_member_of_copyright_collective' => 'Composer is not a member of a copyright collective',
+    'composer_gema_cleared'                       => 'GEMA cleared',
     'ip_address'                                  => 'IP address',
     'last_file_uploaded_at'                       => 'Last file upload',
 
@@ -47,5 +48,6 @@ return [
     'file_info'       => 'Files',
     'author_info'     => 'Author data',
     'composer_info'   => 'Composer data',
-    'additional_info' => 'Additional data'
+    'additional_info' => 'Additional data',
+    'option_info'     => 'Options',
 ];

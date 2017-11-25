@@ -35,7 +35,7 @@ class CompetitionTransformer extends Fractal\TransformerAbstract
     {
         return [
             'id'                        => (int) $record->id,
-            'competition_type'          => $record->competition_type()->name,
+            'competition_type'          => $record->competition_type->name,
             'name'                      => $record->name,
             'sort_position'             => (int) $record->sort_position,
             'prizegiving_sort_position' => (int) $record->prizegiving_sort_position,
@@ -50,9 +50,9 @@ class CompetitionTransformer extends Fractal\TransformerAbstract
      *
      * @return \League\Fractal\Resource\Item
      */
-    public function includeOptions(Competition $record)
+    public function includeCompetitionType(Competition $record)
     {
-        return $this->item($record->competition_type(), new CompetitionTypeTransformer());
+        return $this->item($record->competition_type, new CompetitionTypeTransformer());
     }
 
     /**

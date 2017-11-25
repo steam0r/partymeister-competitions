@@ -14,7 +14,9 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class EntriesController extends Controller
 {
+
     use FormBuilderTrait;
+
 
     /**
      * Display a listing of the resource.
@@ -25,7 +27,7 @@ class EntriesController extends Controller
     {
         $grid = new EntryGrid(Entry::class);
 
-        $service = EntryService::collection($grid);
+        $service      = EntryService::collection($grid);
         $grid->filter = $service->getFilter();
         $paginator    = $service->getPaginator();
 
@@ -38,7 +40,7 @@ class EntriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(EntryRequest $request)
     {
         $form = $this->form(EntryForm::class, [
             'method'  => 'POST',
@@ -62,6 +64,9 @@ class EntriesController extends Controller
         $form = $this->form(EntryForm::class);
 
         // It will automatically use current request, get the rules, and do the validation
+        if ((int) $request->get('reload_on_change') == 1) {
+            return redirect()->back()->withInput();
+        }
         if ( ! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
@@ -118,6 +123,11 @@ class EntriesController extends Controller
     public function update(EntryRequest $request, Entry $record)
     {
         $form = $this->form(EntryForm::class);
+
+        // It will automatically use current request, get the rules, and do the validation
+        if ((int) $request->get('reload_on_change') == 1) {
+            return redirect()->back()->withInput();
+        }
 
         // It will automatically use current request, get the rules, and do the validation
         if ( ! $form->isValid()) {

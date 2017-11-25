@@ -3,7 +3,7 @@
 namespace Partymeister\Competitions\Transformers;
 
 use League\Fractal;
-use Partymeister\Competitions\Models\OptionGroup;
+use Partymeister\Competitions\Models\Option;
 
 class OptionTransformer extends Fractal\TransformerAbstract
 {
@@ -19,11 +19,11 @@ class OptionTransformer extends Fractal\TransformerAbstract
     /**
      * Transform record to array
      *
-     * @param OptionGroup $record
+     * @param Option $record
      *
      * @return array
      */
-    public function transform(OptionGroup $record)
+    public function transform(Option $record)
     {
         return [
             'id'            => (int) $record->id,

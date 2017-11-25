@@ -75,6 +75,7 @@ class Entry extends Model
         'composer_zip',
         'composer_city',
         'composer_country_iso_3166_1',
+        'status',
     ];
 
 
@@ -87,5 +88,10 @@ class Entry extends Model
     public function getNameAttribute()
     {
         return $this->title . ' by ' . $this->author;
+    }
+
+    public function options()
+    {
+        return $this->belongsToMany(Option::class);
     }
 }
