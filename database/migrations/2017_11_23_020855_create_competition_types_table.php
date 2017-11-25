@@ -25,6 +25,7 @@ class CreateCompetitionTypesTable extends Migration
             $table->boolean('has_composer')->default(false);
             $table->boolean('has_running_time')->default(false);
             $table->boolean('is_anonymous')->default(false);
+            $table->integer('number_of_work_stages')->unsigned()->default(false);
             $table->boolean('has_remote_entries')->default(false);
             $table->boolean('file_is_optional')->default(false);
 

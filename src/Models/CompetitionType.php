@@ -49,6 +49,7 @@ class CompetitionType extends Model
         'has_composer',
         'has_running_time',
         'is_anonymous',
+        'number_of_work_stages',
         'has_remote_entries',
         'file_is_optional'
     ];
@@ -83,6 +84,9 @@ class CompetitionType extends Model
         if ($this->has_running_time) {
             $properties[] = 'has_running_time';
         }
+        if ($this->number_of_work_stages > 0) {
+            $properties[] = 'number_of_work_stages';
+        }
         if ($this->has_composer) {
             $properties[] = 'has_composer';
         }
@@ -94,6 +98,19 @@ class CompetitionType extends Model
         }
         if ($this->file_is_optional) {
             $properties[] = 'file_is_optional';
+        }
+        return $properties;
+    }
+
+    public function getTranslatedPropertiesAttribute()
+    {
+        $properties = $this->getPropertiesAttribute();
+        foreach ($properties as $index => $property) {
+            if ($property == 'number_of_work_stages') {
+                $properties[$index] = trans('partymeister-competitions::backend/competition_types.n_number_of_work_stages', ['number' => $this->number_of_work_stages]);
+            } else {
+                $properties[$index] = trans('partymeister-competitions::backend/competition_types.'.$property);
+            }
         }
         return $properties;
     }

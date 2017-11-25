@@ -28,7 +28,7 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         });
-        
+
         var apiToken = '{{Auth::user()->api_token}}';
         var app = false;
         $('.delete-record').click(function (e) {

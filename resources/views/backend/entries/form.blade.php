@@ -6,7 +6,7 @@
     <div class="@boxBody">
         {!! form_row($form->reload_on_change) !!}
         {!! form_row($form->competition_id) !!}
-        @if (Illuminate\Support\Facades\Input::old('competition_id') || (!is_null($form->getModel()) && $form->getModel()->competition_id > 0))
+        @if (Illuminate\Support\Facades\Input::old('competition_id') || (is_object($form->getModel()) && $form->getModel()->competition_id > 0))
             {!! form_row($form->author) !!}
             {!! form_row($form->title) !!}
             {!! form_row($form->sort_position) !!}
@@ -16,7 +16,7 @@
     </div>
     <!-- /.box-body -->
 </div>
-@if (Illuminate\Support\Facades\Input::old('competition_id') || (!is_null($form->getModel()) && $form->getModel()->competition_id > 0))
+@if (Illuminate\Support\Facades\Input::old('competition_id') || (is_object($form->getModel()) && $form->getModel()->competition_id > 0))
     <div class="@boxWrapper box-primary">
         <div class="@boxHeader with-border">
             <h3 class="box-title">{{ trans('partymeister-competitions::backend/entries.entry_info') }}</h3>

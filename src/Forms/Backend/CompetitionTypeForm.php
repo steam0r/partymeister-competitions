@@ -21,6 +21,7 @@ class CompetitionTypeForm extends Form
         ->add('is_anonymous', 'checkbox', ['label' => trans('partymeister-competitions::backend/competition_types.is_anonymous')])
         ->add('has_remote_entries', 'checkbox', ['label' => trans('partymeister-competitions::backend/competition_types.has_remote_entries')])
         ->add('file_is_optional', 'checkbox', ['label' => trans('partymeister-competitions::backend/competition_types.file_is_optional')])
+        ->add('number_of_work_stages', 'text', ['label' => trans('partymeister-competitions::backend/competition_types.number_of_work_stages')])
 
 
         ->add('submit', 'submit', ['attr' => ['class' => 'btn btn-primary'], 'label' => trans('partymeister-competitions::backend/competition_types.save')]);
