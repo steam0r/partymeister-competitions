@@ -49,7 +49,6 @@ class Entry extends Model implements HasMediaConversions
     protected $fillable = [
         'competition_id',
         'ip_address',
-        'last_file_uploaded_at',
         'sort_position',
         'title',
         'author',
@@ -85,7 +84,22 @@ class Entry extends Model implements HasMediaConversions
 
     public function registerMediaConversions(Media $media = null)
     {
-        $this->addMediaConversion('thumb')->setManipulations([ 'w' => 320, 'h' => 240 ]);
+        $this->addMediaConversion('thumb')
+            ->width(320)
+            ->height(240);
+
+        $this->addMediaConversion('preview')
+            ->width(1280)
+            ->height(1024);
+    }
+
+    public function getLastFileUploadAttribute()
+    {
+        $media = $this->getMedia('file')->reverse()->first();
+        if (!is_null($media)) {
+            return $media->created_at;
+        }
+        return '';
     }
 
     public function competition()

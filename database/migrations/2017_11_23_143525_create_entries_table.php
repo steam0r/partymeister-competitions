@@ -31,7 +31,6 @@ class CreateEntriesTable extends Migration
             $table->boolean('upload_enabled')->default(false);
             $table->boolean('is_prepared')->default(false);
             $table->integer('status')->default(0);
-            $table->datetime('last_file_uploaded_at')->nullable();
             $table->string('author_name');
             $table->string('author_email');
             $table->string('author_phone');

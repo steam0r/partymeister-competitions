@@ -82,6 +82,30 @@
                     </template>
                 </dl>
 
+                <div class="row clearfix">
+                    <template v-if="entry.screenshot">
+                        <div class="col-md-4">
+                            <h5>{{trans('partymeister-competitions::backend/entries.screenshot')}}</h5>
+                            <a data-caption="{{trans('partymeister-competitions::backend/entries.screenshot')}}" data-fancybox="gallery" :href="entry.screenshot.data.url"><img class="img-thumbnail" :src="entry.screenshot.data.url"/></a>
+                        </div>
+                    </template>
+                    {{--<template v-if="entry.video">--}}
+                        {{--<div class="col-md-6">--}}
+                            {{--<h5>{{trans('partymeister-competitions::backend/entries.video')}}</h5>--}}
+                            {{--<video style="width:100%;height:100%;" controls="controls" width="100%" height="100%" :src="entry.video.data.url"></video>--}}
+                        {{--</div>--}}
+                    {{--</template>--}}
+                    {{--<div class="clearfix"></div>--}}
+                </div>
+                <template v-if="entry.work_stages">
+                    <h5>{{trans('partymeister-competitions::backend/entries.work_stages')}}</h5>
+                    <div class="row">
+                        <div class="col-md-3" v-for="(work_stage, index) in entry.work_stages.data">
+                            <a data-caption="{{trans('partymeister-competitions::backend/entries.work_stage')}}" data-fancybox="gallery" :href="work_stage.url"><img class="img-thumbnail" :src="work_stage.url"/></a>
+                        </div>
+                    </div>
+                </template>
+
                 <div class="row">
                     <div class="col-md-6">
                         <h4>{{trans('partymeister-competitions::backend/entries.author_info')}}</h4>

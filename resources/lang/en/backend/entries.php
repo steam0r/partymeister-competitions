@@ -11,6 +11,7 @@ return [
     'deleted' => 'Entry deleted',
 
     'sort_position'                               => 'Playlist position',
+    'sort_position_short'                         => 'Pos.',
     'title'                                       => 'Title',
     'author'                                      => 'Author',
     'filesize'                                    => 'Filesize',
@@ -51,9 +52,10 @@ return [
     'additional_info' => 'Additional data',
     'option_info'     => 'Options',
 
-    'screenshot' => 'Screenshot',
-    'video'      => 'Video',
-    'audio'      => 'Audio',
-    'work_stage' => 'Work stage',
-    'file'       => 'File',
+    'screenshot'  => 'Screenshot',
+    'video'       => 'Video',
+    'audio'       => 'Audio',
+    'work_stage'  => 'Work stage',
+    'work_stages' => 'Work stages',
+    'file'        => 'File',
 ];

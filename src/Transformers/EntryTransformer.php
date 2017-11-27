@@ -4,6 +4,7 @@ namespace Partymeister\Competitions\Transformers;
 
 use League\Fractal;
 use Motor\Backend\Helpers\Filesize;
+use Motor\Backend\Transformers\MediaTransformer;
 use Partymeister\Competitions\Models\Entry;
 use Symfony\Component\Intl\Intl;
 
@@ -15,14 +16,14 @@ class EntryTransformer extends Fractal\TransformerAbstract
      *
      * @var array
      */
-    protected $availableIncludes = [ 'competition' ];
+    protected $availableIncludes = [ 'competition', 'files', 'screenshot', 'video', 'audio', 'work_stages' ];
 
     /**
      * List of resources to automatically include
      *
      * @var array
      */
-    protected $defaultIncludes = [ 'competition' ];
+    protected $defaultIncludes = [ 'competition', 'files', 'screenshot', 'video', 'audio', 'work_stages' ];
 
 
     /**
@@ -83,5 +84,65 @@ class EntryTransformer extends Fractal\TransformerAbstract
     public function includeCompetition(Entry $record)
     {
         return $this->item($record->competition, new CompetitionTransformer());
+    }
+
+    /**
+     * Include files
+     *
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeFiles(Entry $record)
+    {
+        return $this->collection($record->getMedia('file'), new MediaTransformer());
+    }
+
+    /**
+     * Include work stages
+     *
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeWorkStages(Entry $record)
+    {
+        $workStages = $record->media()->where('collection_name', 'LIKE', 'work_stage%')->orderBy('collection_name')->get();
+        return $this->collection($workStages, new MediaTransformer());
+    }
+
+    /**
+     * Include screenshot
+     *
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includeScreenshot(Entry $record)
+    {
+        $media = $record->getFirstMedia('screenshot');
+        if (!is_null($media)) {
+            return $this->item($media, new MediaTransformer());
+        }
+    }
+
+    /**
+     * Include audio
+     *
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includeAudio(Entry $record)
+    {
+        $media = $record->getFirstMedia('audio');
+        if (!is_null($media)) {
+            return $this->item($media, new MediaTransformer());
+        }
+    }
+
+    /**
+     * Include screenshot
+     *
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includeVideo(Entry $record)
+    {
+        $media = $record->getFirstMedia('video');
+        if (!is_null($media)) {
+            return $this->item($media, new MediaTransformer());
+        }
     }
 }
