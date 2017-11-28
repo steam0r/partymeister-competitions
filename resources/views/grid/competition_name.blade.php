@@ -1,0 +1,1 @@
+<a href="{{route('backend.entries.index')}}?competition_id={{$record->id}}">{{$record->name}}</a>

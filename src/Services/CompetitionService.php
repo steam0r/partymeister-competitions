@@ -2,6 +2,7 @@
 
 namespace Partymeister\Competitions\Services;
 
+use Motor\Core\Filter\Renderers\SelectRenderer;
 use Partymeister\Competitions\Models\Competition;
 use Motor\Backend\Services\BaseService;
 
@@ -9,6 +10,14 @@ class CompetitionService extends BaseService
 {
 
     protected $model = Competition::class;
+
+    public function filters()
+    {
+        //$this->filter->addClientFilter();
+        $this->filter->add(new SelectRenderer('has_prizegiving'))->setOptionPrefix(trans('partymeister-competitions::backend/competitions.has_prizegiving'))->setEmptyOption('-- '.trans('partymeister-competitions::backend/competitions.has_prizegiving').' --')->setOptions([1 => trans('motor-backend::backend/global.yes'), 0 => trans('motor-backend::backend/global.no')]);
+        $this->filter->add(new SelectRenderer('upload_enabled'))->setOptionPrefix(trans('partymeister-competitions::backend/competitions.upload_enabled'))->setEmptyOption('-- '.trans('partymeister-competitions::backend/competitions.upload_enabled').' --')->setOptions([1 => trans('motor-backend::backend/global.yes'), 0 => trans('motor-backend::backend/global.no')]);
+        $this->filter->add(new SelectRenderer('voting_enabled'))->setOptionPrefix(trans('partymeister-competitions::backend/competitions.voting_enabled'))->setEmptyOption('-- '.trans('partymeister-competitions::backend/competitions.voting_enabled').' --')->setOptions([1 => trans('motor-backend::backend/global.yes'), 0 => trans('motor-backend::backend/global.no')]);
+    }
 
     public function afterCreate()
     {

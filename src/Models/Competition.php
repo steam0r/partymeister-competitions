@@ -48,6 +48,11 @@ class Competition extends Model
         'voting_enabled'
     ];
 
+    public function getEntryCountAttribute()
+    {
+        return $this->entries()->count();
+    }
+
 
     public function competition_type()
     {
@@ -62,5 +67,10 @@ class Competition extends Model
     public function vote_categories()
     {
         return $this->belongsToMany(VoteCategory::class);
+    }
+
+    public function entries()
+    {
+        return $this->hasMany(Entry::class);
     }
 }

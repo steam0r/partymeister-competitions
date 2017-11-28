@@ -2,6 +2,8 @@
 
 namespace Partymeister\Competitions\Services;
 
+use Motor\Core\Filter\Renderers\SelectRenderer;
+use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
 use Motor\Backend\Services\BaseService;
 
@@ -9,6 +11,17 @@ class EntryService extends BaseService
 {
 
     protected $model = Entry::class;
+
+
+    public function filters()
+    {
+        //$this->filter->addClientFilter();
+        $this->filter->add(new SelectRenderer('competition_id'))->setOptionPrefix(trans('partymeister-competitions::backend/competitions.competition'))->setEmptyOption('-- ' . trans('partymeister-competitions::backend/competitions.competition') . ' --')->setOptions(Competition::orderBy('sort_position',
+            'ASC')->pluck('name', 'id'));
+
+        $this->filter->add(new SelectRenderer('status'))->setOptionPrefix(trans('partymeister-competitions::backend/entries.status'))->setEmptyOption('-- ' . trans('partymeister-competitions::backend/entries.status') . ' --')->setOptions(trans('partymeister-competitions::backend/entries.stati'));
+    }
+
 
     public function afterCreate()
     {
@@ -24,18 +37,21 @@ class EntryService extends BaseService
         $this->addImages();
     }
 
+
     public function afterUpdate()
     {
         $this->record->options()->detach();
         $this->afterCreate();
     }
 
+
     protected function addImages()
     {
         $numberOfWorkStages = $this->record->competition->competition_type->number_of_work_stages;
         if ($numberOfWorkStages > 0) {
-            for ($i=1; $i<=$numberOfWorkStages; $i++) {
-                $this->uploadFile($this->request->file('work_stage_'.$i), 'work_stage_'.$i, 'work_stage_'.$i, $this->record);
+            for ($i = 1; $i <= $numberOfWorkStages; $i++) {
+                $this->uploadFile($this->request->file('work_stage_' . $i), 'work_stage_' . $i, 'work_stage_' . $i,
+                    $this->record);
             }
         }
 
