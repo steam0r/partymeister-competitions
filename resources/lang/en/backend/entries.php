@@ -20,6 +20,7 @@ return [
     'organizer_description'                       => 'Message to the organizers',
     'running_time'                                => 'Running time',
     'custom_option'                               => 'Custom option',
+    'custom_option_short'                         => 'Custom opt.',
     'allow_release'                               => 'Release allowed',
     'is_remote'                                   => 'Is remote entry',
     'is_recorded'                                 => 'Is recorded',

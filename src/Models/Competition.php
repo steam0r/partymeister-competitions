@@ -48,6 +48,11 @@ class Competition extends Model
         'voting_enabled'
     ];
 
+    public function getSortedEntriesAttribute()
+    {
+        return $this->entries()->where('status', 1)->orderBy('sort_position', 'ASC')->get();
+    }
+
     public function getEntryCountAttribute()
     {
         return $this->entries()->count();

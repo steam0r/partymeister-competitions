@@ -16,14 +16,14 @@ class EntryTransformer extends Fractal\TransformerAbstract
      *
      * @var array
      */
-    protected $availableIncludes = [ 'competition', 'files', 'screenshot', 'video', 'audio', 'work_stages' ];
+    protected $availableIncludes = [ 'competition', 'files', 'screenshot', 'video', 'audio', 'work_stages', 'options' ];
 
     /**
      * List of resources to automatically include
      *
      * @var array
      */
-    protected $defaultIncludes = [ 'competition', 'files', 'screenshot', 'video', 'audio', 'work_stages' ];
+    protected $defaultIncludes = [ 'competition', 'files', 'screenshot', 'video', 'audio', 'work_stages', 'options' ];
 
 
     /**
@@ -93,7 +93,17 @@ class EntryTransformer extends Fractal\TransformerAbstract
      */
     public function includeFiles(Entry $record)
     {
-        return $this->collection($record->getMedia('file'), new MediaTransformer());
+        return $this->collection($record->getMedia('file')->reverse(), new MediaTransformer());
+    }
+
+    /**
+     * Include options
+     *
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeOptions(Entry $record)
+    {
+        return $this->collection($record->options, new OptionTransformer());
     }
 
     /**
@@ -104,7 +114,9 @@ class EntryTransformer extends Fractal\TransformerAbstract
     public function includeWorkStages(Entry $record)
     {
         $workStages = $record->media()->where('collection_name', 'LIKE', 'work_stage%')->orderBy('collection_name')->get();
-        return $this->collection($workStages, new MediaTransformer());
+        if ($workStages->count() > 0) {
+            return $this->collection($workStages, new MediaTransformer());
+        }
     }
 
     /**

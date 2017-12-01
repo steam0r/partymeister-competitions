@@ -20,5 +20,11 @@ return [
     'upload_enabled'                  => 'Upload enabled',
     'voting_enabled'                  => 'Voting enabled',
 
-    'status' => 'Status',
+    'actions'                => 'Actions',
+    'status'                 => 'Status',
+    'generate_playlist'      => 'Generate playlist',
+    'download_json_playlist' => 'Download playlist as JSON',
+    'download_m3u_playlist'  => 'Download playlist as m3u',
+    'show_live_voting'       => 'Show live voting',
+    'anonymized'             => '[anonymized for competition]'
 ];

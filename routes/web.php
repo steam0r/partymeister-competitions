@@ -14,6 +14,7 @@ Route::group([
     Route::group([ 'middleware' => [ 'permission' ] ], function () {
         Route::resource('option_groups', 'OptionGroupsController');
         Route::resource('competition_types', 'CompetitionTypesController');
+        Route::get('competitions/{competition}/playlist', 'Competitions\PlaylistsController@index')->name('competitions.playlist.index');
         Route::resource('competitions', 'CompetitionsController');
         Route::resource('vote_categories', 'VoteCategoriesController');
         Route::resource('entries', 'EntriesController');
