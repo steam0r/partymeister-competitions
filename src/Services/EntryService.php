@@ -40,8 +40,10 @@ class EntryService extends BaseService
 
     public function afterUpdate()
     {
-        $this->record->options()->detach();
-        $this->afterCreate();
+        if (count($this->request->get('options', [])) > 0) {
+            $this->record->options()->detach();
+            $this->afterCreate();
+        }
     }
 
 

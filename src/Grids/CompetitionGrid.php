@@ -12,7 +12,9 @@ class CompetitionGrid extends Grid
     protected function setup()
     {
         $this->addColumn('name', trans('motor-backend::backend/global.name'), true)->renderer(BladeRenderer::class, ['template' => 'partymeister-competitions::grid.competition_name']);
+
         $this->addColumn('entry_count', trans('partymeister-competitions::backend/entries.entries'), true);
+
         $this->addColumn('competition_type.name',
             trans('partymeister-competitions::backend/competition_types.competition_type'), true);
 

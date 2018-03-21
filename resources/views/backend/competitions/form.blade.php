@@ -18,11 +18,35 @@
     </div>
     <!-- /.box-body -->
 
+</div>
+<div class="@boxWrapper box-primary">
+    <div class="@boxHeader with-border">
+        <h3 class="box-title">{{ trans('partymeister-competitions::backend/competitions.videos') }}</h3>
+    </div>
+    <div class="@boxBody">
+        <div class="row">
+            <div class="col-md-4">
+                {!! form_row($form->video_1) !!}
+            </div>
+            <div class="col-md-4">
+                {!! form_row($form->video_2) !!}
+            </div>
+            <div class="col-md-4">
+                {!! form_row($form->video_3) !!}
+            </div>
+        </div>
+    </div>
+    <!-- /.box-body -->
+
     <div class="@boxFooter">
         {!! form_row($form->submit) !!}
     </div>
 </div>
 {!! form_end($form) !!}
+
+@section ('right-sidebar')
+    @include('motor-media::layouts.partials.mediapool')
+@endsection
 @section('view_scripts')
     <script type="text/javascript">
         $(document).ready(function () {

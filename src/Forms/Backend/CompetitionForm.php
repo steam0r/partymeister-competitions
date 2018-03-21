@@ -28,6 +28,9 @@ class CompetitionForm extends Form
                 'choices' => VoteCategory::pluck('name', 'id')->toArray(),
                 'default_value' => 1
             ])
-            ->add('submit', 'submit', ['attr' => ['class' => 'btn btn-primary'], 'label' => trans('partymeister-competitions::backend/competitions.save')]);
+            ->add('video_1', 'file_association', ['label' => trans('partymeister-competitions::backend/competitions.video_1')])
+            ->add('video_2', 'file_association', ['label' => trans('partymeister-competitions::backend/competitions.video_2')])
+            ->add('video_3', 'file_association', ['label' => trans('partymeister-competitions::backend/competitions.video_3')])
+            ->add('submit', 'submit', ['attr' => ['class' => 'btn btn-primary competition-submit'], 'label' => trans('partymeister-competitions::backend/competitions.save')]);
     }
 }

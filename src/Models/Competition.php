@@ -9,10 +9,15 @@ use Culpa\Traits\Blameable;
 use Culpa\Traits\CreatedBy;
 use Culpa\Traits\DeletedBy;
 use Culpa\Traits\UpdatedBy;
+use Motor\Media\Models\FileAssociation;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
+use Spatie\MediaLibrary\Media;
 
-class Competition extends Model
+class Competition extends Model implements HasMediaConversions
 {
 
+    use HasMediaTrait;
     use Searchable;
     use Filterable;
     use Blameable, CreatedBy, UpdatedBy, DeletedBy;
@@ -48,6 +53,17 @@ class Competition extends Model
         'voting_enabled'
     ];
 
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')
+            ->width(320)
+            ->height(240);
+
+        $this->addMediaConversion('preview')
+            ->width(1280)
+            ->height(1024);
+    }
+
     public function getSortedEntriesAttribute()
     {
         return $this->entries()->where('status', 1)->orderBy('sort_position', 'ASC')->get();
@@ -77,5 +93,9 @@ class Competition extends Model
     public function entries()
     {
         return $this->hasMany(Entry::class);
+    }
+
+    function file_associations() {
+        return $this->morphMany(FileAssociation::class, 'model');
     }
 }

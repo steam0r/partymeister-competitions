@@ -3,6 +3,7 @@
 namespace Partymeister\Competitions\Grids;
 
 use Motor\Backend\Grid\Grid;
+use Motor\Backend\Grid\Renderers\TestRenderer;
 use Partymeister\Competitions\Grid\Renderers\CompetitionTypeRenderer;
 
 class CompetitionTypeGrid extends Grid

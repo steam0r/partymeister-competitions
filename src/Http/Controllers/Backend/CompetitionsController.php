@@ -46,7 +46,9 @@ class CompetitionsController extends Controller
             'enctype' => 'multipart/form-data'
         ]);
 
-        return view('partymeister-competitions::backend.competitions.create', compact('form'));
+        $motorShowRightSidebar = true;
+
+        return view('partymeister-competitions::backend.competitions.create', compact('form', 'motorShowRightSidebar'));
     }
 
 
@@ -103,7 +105,9 @@ class CompetitionsController extends Controller
             'model'   => $record
         ]);
 
-        return view('partymeister-competitions::backend.competitions.edit', compact('form'));
+        $motorShowRightSidebar = true;
+
+        return view('partymeister-competitions::backend.competitions.edit', compact('form', 'motorShowRightSidebar'));
     }
 
 

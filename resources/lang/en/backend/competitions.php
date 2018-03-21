@@ -26,5 +26,11 @@ return [
     'download_json_playlist' => 'Download playlist as JSON',
     'download_m3u_playlist'  => 'Download playlist as m3u',
     'show_live_voting'       => 'Show live voting',
-    'anonymized'             => '[anonymized for competition]'
+    'anonymized'             => '[anonymized for competition]',
+    'playlist_preview'       => 'Competition playlist preview',
+    'videos'                 => 'Videos',
+    'video_1'                => 'Video 1 (plays after \'Coming up\')',
+    'video_2'                => 'Video 1 (plays after video 1)',
+    'video_3'                => 'Video 1 (plays after video 2)',
+
 ];

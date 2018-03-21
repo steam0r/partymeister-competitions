@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use League\Fractal\Resource\ResourceAbstract;
+use Motor\Backend\Helpers\MediaHelper;
 use Motor\Backend\Http\Controllers\Controller;
 
 use Partymeister\Competitions\Models\Competition;
 
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Partymeister\Competitions\Transformers\Competition\EntryTransformer;
+use Partymeister\Slides\Models\SlideTemplate;
 
 class PlaylistsController extends Controller
 {
@@ -37,15 +39,16 @@ class PlaylistsController extends Controller
                 $data = [
                     'message' => 'Competition playlist for \'' . $competition->name . '\', generated ' . date('Y-m-d H:i:s'),
                     'data'    => [
-                        'competition' => [ 'name'         => $competition->name,
-                                           'is_anonymous' => (bool) $competition->competition_type->is_anonymous
+                        'competition' => [
+                            'name'         => $competition->name,
+                            'is_anonymous' => (bool) $competition->competition_type->is_anonymous
                         ],
                         'entries'     => [ 'data' => $data ]
                     ]
                 ];
 
                 if ($request->get('download')) {
-                    return response()->attachment(json_encode($data), $filename, 'application/json');
+                    return response()->attachment(json_encode($data), $filename . '.json', 'application/json');
                 }
 
                 return response()->json($data);
@@ -57,6 +60,23 @@ class PlaylistsController extends Controller
                 }
 
                 return $m3u;
+                break;
+            case 'slides':
+                $resource = $this->transformCollection($competition->sorted_entries, \Partymeister\Competitions\Transformers\EntryTransformer::class);
+
+                $data = $this->fractal->createData($resource)->toArray();
+                $entries = Arr::get($data, 'data');
+
+                $entryTemplate = SlideTemplate::where('template_for', 'competition')->first();
+                $comingupTemplate = SlideTemplate::where('template_for', 'coming_up')->first();
+                $endTemplate = SlideTemplate::where('template_for', 'end')->first();
+
+                $videos = [];
+                foreach ($competition->file_associations as $fileAssociation) {
+                    $videos[] = MediaHelper::getFileInformation($fileAssociation->file, 'file', false, ['preview', 'thumb']);
+                }
+
+                return view('partymeister-competitions::backend.competitions.playlists.show', compact('competition', 'entries', 'entryTemplate', 'comingupTemplate', 'endTemplate', 'videos'));
                 break;
         }
     }
