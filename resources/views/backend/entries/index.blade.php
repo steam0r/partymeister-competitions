@@ -158,17 +158,16 @@
 ////                                    $('#audio-player audio').remove();
 //                                    var audioPlayer = new MediaElementPlayer('#audio-player');
 //                                    audioPlayer.setSrc(src);
+                                }
+                            }
+                        });
+                    } else {
+                        app.entry = results.data;
+                        app.$forceUpdate();
                     }
-                }
-        });
-        } else
-        {
-            app.entry = results.data;
-            app.$forceUpdate();
-        }
-        $('#entry-modal').modal('show')
-        })
-        ;
+                    $('#entry-modal').modal('show')
+                })
+            ;
         })
         ;
     </script>

@@ -1,0 +1,46 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddVisitorIdToEntries extends Migration
+{
+
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('entries', function (Blueprint $table) {
+            $table->integer('visitor_id')->after('competition_id')->nullable()->unsigned()->index();
+            $table->foreign('visitor_id')->references('id')->on('visitors')->onDelete('set null');
+
+            $table->dropForeign([ 'created_by' ]);
+            $table->dropForeign([ 'updated_by' ]);
+            $table->dropForeign([ 'deleted_by' ]);
+
+            $table->dropColumn('created_by');
+            $table->dropColumn('updated_by');
+            $table->dropColumn('deleted_by');
+        });
+
+    }
+
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('entries', function (Blueprint $table) {
+            $table->dropForeign([ 'visitor_id' ]);
+            $table->dropColumn('visitor_id');
+
+        });
+    }
+}

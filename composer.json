@@ -1,0 +1,30 @@
+{
+  "name": "partymeister/competitions",
+  "description": "Partymeister competitions package",
+  "license": "MIT",
+  "keywords": [
+    "motor"
+  ],
+  "authors": [
+    {
+      "name": "Reza Esmaili",
+      "email": "me@dfox.info"
+    }
+  ],
+  "require": {
+    "partymeister/core": "0.4.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Partymeister\\Competitions\\": "src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Partymeister\\Competitions\\Providers\\PartymeisterServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev"
+}

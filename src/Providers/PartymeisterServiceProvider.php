@@ -115,6 +115,15 @@ class PartymeisterServiceProvider extends ServiceProvider
         Route::bind('entry', function($id){
             return \Partymeister\Competitions\Models\Entry::findOrFail($id);
         });
+        Route::bind('access_key', function($id){
+            return \Partymeister\Competitions\Models\AccessKey::findOrFail($id);
+        });
+        Route::bind('competition_prize', function($id){
+            return \Partymeister\Competitions\Models\CompetitionPrize::findOrFail($id);
+        });
+        Route::bind('vote', function($id){
+            return \Partymeister\Competitions\Models\Vote::findOrFail($id);
+        });
     }
 
 

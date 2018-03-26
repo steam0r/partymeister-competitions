@@ -29,3 +29,21 @@ $factory->define(Partymeister\Competitions\Models\Entry::class, function (Faker\
         'name' => $faker->word
     ];
 });
+
+$factory->define(Partymeister\Competitions\Models\AccessKey::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word
+    ];
+});
+
+$factory->define(Partymeister\Competitions\Models\CompetitionPrize::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word
+    ];
+});
+
+$factory->define(Partymeister\Competitions\Models\Vote::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word
+    ];
+});

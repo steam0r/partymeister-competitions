@@ -14,11 +14,20 @@ use Partymeister\Competitions\Models\Competition;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Partymeister\Competitions\Transformers\Competition\EntryTransformer;
 use Partymeister\Slides\Models\SlideTemplate;
+use Partymeister\Slides\Services\PlaylistService;
 
 class PlaylistsController extends Controller
 {
 
     use FormBuilderTrait;
+
+
+    public function store(Competition $competition, Request $request)
+    {
+        PlaylistService::generateCompetitionPlaylist($competition, $request->all());
+
+        return redirect(route('backend.playlists.index'));
+    }
 
 
     /**
@@ -62,21 +71,52 @@ class PlaylistsController extends Controller
                 return $m3u;
                 break;
             case 'slides':
-                $resource = $this->transformCollection($competition->sorted_entries, \Partymeister\Competitions\Transformers\EntryTransformer::class);
+                $resource = $this->transformCollection($competition->sorted_entries,
+                    \Partymeister\Competitions\Transformers\EntryTransformer::class);
 
-                $data = $this->fractal->createData($resource)->toArray();
+                $data    = $this->fractal->createData($resource)->toArray();
                 $entries = Arr::get($data, 'data');
 
-                $entryTemplate = SlideTemplate::where('template_for', 'competition')->first();
-                $comingupTemplate = SlideTemplate::where('template_for', 'coming_up')->first();
-                $endTemplate = SlideTemplate::where('template_for', 'end')->first();
+                foreach ($entries as $key => $entry) {
+                    if ($key > 0) {
+                        $entries[$key]['previous_sort_position'] = ( strlen($key) == 1 ? '0' . $key : $key );
+                        $entries[$key]['previous_author']        = $entries[$key - 1]['author'];
+                        $entries[$key]['previous_title']         = $entries[$key - 1]['title'];
+                    } else {
+                        $entries[$key]['previous_sort_position'] = ' ';
+                        $entries[$key]['previous_author']        = ' ';
+                        $entries[$key]['previous_title']         = ' ';
+                    }
+                }
+
+                $participants = [];
+                if ($competition->competition_type->is_anonymous) {
+                    foreach ($entries as $key => $entry) {
+                        $participants[]                   = $entry['author'];
+                        $entries[$key]['author']          = ' '; // yes it has to be a space because slidemeister does not substitute empty placeholders yet
+                        $entries[$key]['previous_author'] = ' '; // yes it has to be a space because slidemeister does not substitute empty placeholders yet
+                    }
+                }
+
+                shuffle($participants);
+
+                $entryTemplate        = SlideTemplate::where('template_for', 'competition')->first();
+                $comingupTemplate     = SlideTemplate::where('template_for', 'coming_up')->first();
+                $endTemplate          = SlideTemplate::where('template_for', 'end')->first();
+                $participantsTemplate = SlideTemplate::where('template_for', 'participants')->first();
 
                 $videos = [];
                 foreach ($competition->file_associations as $fileAssociation) {
-                    $videos[] = MediaHelper::getFileInformation($fileAssociation->file, 'file', false, ['preview', 'thumb']);
+                    $videos[] = [
+                        'file_id' => $fileAssociation->file->id,
+                        'data'    => MediaHelper::getFileInformation($fileAssociation->file, 'file', false,
+                            [ 'preview', 'thumb' ])
+                    ];
                 }
 
-                return view('partymeister-competitions::backend.competitions.playlists.show', compact('competition', 'entries', 'entryTemplate', 'comingupTemplate', 'endTemplate', 'videos'));
+                return view('partymeister-competitions::backend.competitions.playlists.show',
+                    compact('competition', 'entries', 'entryTemplate', 'comingupTemplate', 'endTemplate',
+                        'participantsTemplate', 'videos', 'participants'));
                 break;
         }
     }

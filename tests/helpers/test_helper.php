@@ -24,3 +24,18 @@ function create_test_entry($count = 1)
 {
     return factory(Partymeister\Competitions\Models\Entry::class, $count)->create();
 }
+
+function create_test_access_key($count = 1)
+{
+    return factory(Partymeister\Competitions\Models\AccessKey::class, $count)->create();
+}
+
+function create_test_competition_prize($count = 1)
+{
+    return factory(Partymeister\Competitions\Models\CompetitionPrize::class, $count)->create();
+}
+
+function create_test_vote($count = 1)
+{
+    return factory(Partymeister\Competitions\Models\Vote::class, $count)->create();
+}

@@ -1,0 +1,19 @@
+<?php
+
+return [
+    'access_keys' => 'Access keys',
+    'access_key'  => 'Access key',
+    'new'         => 'Create access key',
+    'edit'        => 'Edit access key',
+    'save'        => 'Save access key',
+    'created'     => 'Access key created',
+    'updated'     => 'Access key updated',
+    'deleted'     => 'Access key deleted',
+
+    'ip_address'                  => 'IP address',
+    'registered_at'               => 'Registered at',
+    'generate'                    => 'Generate access keys',
+    'export_pdf'                  => 'Export access keys (PDF)',
+    'export_csv'                  => 'Export access keys (CSV)',
+    'delete_and_ask_for_quantity' => 'WARNING: All access keys will be deleted and newly generated. How many do you want to generate?',
+];

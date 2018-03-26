@@ -10,6 +10,7 @@ use Culpa\Traits\CreatedBy;
 use Culpa\Traits\DeletedBy;
 use Culpa\Traits\UpdatedBy;
 use Motor\Media\Models\FileAssociation;
+use Partymeister\Competitions\Forms\Backend\CompetitionPrizeForm;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Spatie\MediaLibrary\Media;
@@ -97,5 +98,10 @@ class Competition extends Model implements HasMediaConversions
 
     function file_associations() {
         return $this->morphMany(FileAssociation::class, 'model');
+    }
+
+    function prizes()
+    {
+        return $this->hasMany(CompetitionPrize::class);
     }
 }

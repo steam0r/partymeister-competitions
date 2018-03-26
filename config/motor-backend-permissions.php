@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'option_groups'     => [
+    'option_groups'      => [
         'name'   => 'partymeister-competitions::backend/option_groups.option_groups',
         'values' => [
             'read',
@@ -9,7 +9,7 @@ return [
             'delete'
         ]
     ],
-    'competition_types' => [
+    'competition_types'  => [
         'name'   => 'partymeister-competitions::backend/competition_types.competition_types',
         'values' => [
             'read',
@@ -17,7 +17,7 @@ return [
             'delete'
         ]
     ],
-    'competitions'      => [
+    'competitions'       => [
         'name'   => 'partymeister-competitions::backend/competitions.competitions',
         'values' => [
             'read',
@@ -25,7 +25,7 @@ return [
             'delete'
         ]
     ],
-    'vote_categories'   => [
+    'vote_categories'    => [
         'name'   => 'partymeister-competitions::backend/vote_categories.vote_categories',
         'values' => [
             'read',
@@ -33,8 +33,32 @@ return [
             'delete'
         ]
     ],
-    'entries'           => [
+    'entries'            => [
         'name'   => 'partymeister-competitions::backend/entries.entries',
+        'values' => [
+            'read',
+            'write',
+            'delete'
+        ]
+    ],
+    'access_keys'        => [
+        'name'   => 'partymeister-competitions::backend/access_keys.access_keys',
+        'values' => [
+            'read',
+            'write',
+            'delete'
+        ]
+    ],
+    'competition_prizes' => [
+        'name'   => 'partymeister-competitions::backend/competition_prizes.competition_prizes',
+        'values' => [
+            'read',
+            'write',
+            'delete'
+        ]
+    ],
+    'votes'              => [
+        'name'   => 'partymeister-competitions::backend/votes.votes',
         'values' => [
             'read',
             'write',
