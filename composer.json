@@ -12,7 +12,9 @@
     }
   ],
   "require": {
-    "partymeister/core": "0.1.*"
+    "partymeister/core": "0.1.*",
+    "setasign/fpdi-tcpdf": "^2.0",
+    "tecnickcom/tcpdf": "^6.2"
   },
   "autoload": {
     "psr-4": {
