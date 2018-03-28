@@ -7,10 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Motor\Core\Traits\Searchable;
 use Motor\Core\Traits\Filterable;
 
-use Culpa\Traits\Blameable;
-use Culpa\Traits\CreatedBy;
-use Culpa\Traits\DeletedBy;
-use Culpa\Traits\UpdatedBy;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Spatie\MediaLibrary\Media;
@@ -22,21 +18,13 @@ class Entry extends Model implements HasMediaConversions
     use Searchable;
     use Filterable;
 
-    use Blameable, CreatedBy, UpdatedBy, DeletedBy;
-
-    /**
-     * Columns for the Blameable trait
-     *
-     * @var array
-     */
-    protected $blameable = [ 'created', 'updated', 'deleted' ];
-
     /**
      * Searchable columns for the searchable trait
      *
      * @var array
      */
     protected $searchableColumns = [
+        'id',
         'title',
         'author',
         'platform',

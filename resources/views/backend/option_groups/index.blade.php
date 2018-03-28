@@ -7,7 +7,7 @@
 @section('contentheader_title')
     {{ trans('partymeister-competitions::backend/option_groups.option_groups') }}
     @if (has_permission('option_groups.write'))
-	    {!! link_to_route('backend.option_groups.create', trans('partymeister-competitions::backend/option_groups.new'), [], ['class' => 'pull-right btn btn-sm btn-success']) !!}
+	    {!! link_to_route('backend.option_groups.create', trans('partymeister-competitions::backend/option_groups.new'), [], ['class' => 'pull-right float-right btn btn-sm btn-success']) !!}
     @endif
 @endsection
 

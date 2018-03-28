@@ -7,7 +7,7 @@
 @section('contentheader_title')
     {{ trans('partymeister-competitions::backend/vote_categories.vote_categories') }}
     @if (has_permission('vote_categories.write'))
-	    {!! link_to_route('backend.vote_categories.create', trans('partymeister-competitions::backend/vote_categories.new'), [], ['class' => 'pull-right btn btn-sm btn-success']) !!}
+	    {!! link_to_route('backend.vote_categories.create', trans('partymeister-competitions::backend/vote_categories.new'), [], ['class' => 'pull-right float-right btn btn-sm btn-success']) !!}
     @endif
 @endsection
 

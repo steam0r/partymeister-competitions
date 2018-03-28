@@ -36,7 +36,8 @@ class Competition extends Model implements HasMediaConversions
      * @var array
      */
     protected $searchableColumns = [
-        'name',
+        'competitions.name',
+        'competition_type.name'
     ];
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Partymeister\Competitions\Services;
 
+use Illuminate\Support\Facades\Auth;
 use Motor\Core\Filter\Renderers\SelectRenderer;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
@@ -20,6 +21,13 @@ class EntryService extends BaseService
             'ASC')->pluck('name', 'id'));
 
         $this->filter->add(new SelectRenderer('status'))->setOptionPrefix(trans('partymeister-competitions::backend/entries.status'))->setEmptyOption('-- ' . trans('partymeister-competitions::backend/entries.status') . ' --')->setOptions(trans('partymeister-competitions::backend/entries.stati'));
+    }
+
+    public function beforeCreate()
+    {
+        if (Auth::guard('visitor')->user() != null) {
+            $this->data['visitor_id'] = Auth::guard('visitor')->user()->id;
+        }
     }
 
 
@@ -44,6 +52,7 @@ class EntryService extends BaseService
             $this->record->options()->detach();
             $this->afterCreate();
         }
+        $this->addImages();
     }
 
 

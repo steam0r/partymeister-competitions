@@ -17,7 +17,7 @@ class OptionGroupGrid extends Grid
 
 
 
-        $this->addColumn('options', trans('partymeister-competitions::backend/option_groups.options'), true)->renderer(CollectionRenderer::class, ['column' => 'name']);
+        $this->addColumn('options', trans('partymeister-competitions::backend/option_groups.options'))->renderer(CollectionRenderer::class, ['column' => 'name']);
 
 
 

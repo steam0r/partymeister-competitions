@@ -28,6 +28,9 @@ class Vote extends Model
         'competition_id',
         'entry_id',
         'visitor_id',
+        'vote_category_id',
+        'special_vote',
+        'comment',
         'points',
         'ip_address',
     ];

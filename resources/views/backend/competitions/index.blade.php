@@ -7,7 +7,7 @@
 @section('contentheader_title')
     {{ trans('partymeister-competitions::backend/competitions.competitions') }}
     @if (has_permission('competitions.write'))
-	    {!! link_to_route('backend.competitions.create', trans('partymeister-competitions::backend/competitions.new'), [], ['class' => 'pull-right btn btn-sm btn-success']) !!}
+	    {!! link_to_route('backend.competitions.create', trans('partymeister-competitions::backend/competitions.new'), [], ['class' => 'pull-right float-right btn btn-sm btn-success']) !!}
     @endif
 @endsection
 

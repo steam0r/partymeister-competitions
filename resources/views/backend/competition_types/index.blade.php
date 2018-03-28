@@ -7,7 +7,7 @@
 @section('contentheader_title')
     {{ trans('partymeister-competitions::backend/competition_types.competition_types') }}
     @if (has_permission('competition_types.write'))
-	    {!! link_to_route('backend.competition_types.create', trans('partymeister-competitions::backend/competition_types.new'), [], ['class' => 'pull-right btn btn-sm btn-success']) !!}
+	    {!! link_to_route('backend.competition_types.create', trans('partymeister-competitions::backend/competition_types.new'), [], ['class' => 'pull-right float-right btn btn-sm btn-success']) !!}
     @endif
 @endsection
 
