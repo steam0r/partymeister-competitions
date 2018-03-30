@@ -78,6 +78,13 @@ class PlaylistsController extends Controller
                 $entries = Arr::get($data, 'data');
 
                 foreach ($entries as $key => $entry) {
+                	$entries[$key]['competition_name'] = strtoupper($entries[$key]['competition_name']);
+                	if ($entries[$key]['filesize_bytes'] == 0) {
+						$entries[$key]['filesize_human'] = ' ';
+					}
+					if ($entries[$key]['description'] == '') {
+						$entries[$key]['description'] = ' ';
+					}
                     if ($key > 0) {
                         $entries[$key]['previous_sort_position'] = ( strlen($key) == 1 ? '0' . $key : $key );
                         $entries[$key]['previous_author']        = $entries[$key - 1]['author'];

@@ -33,42 +33,46 @@ class EntryService extends BaseService
 
     public function afterCreate()
     {
-        foreach ($this->request->get('options', []) as $group) {
-            if (is_array($group)) {
-                foreach ($group as $option => $id) {
-                    $this->record->options()->attach($id);
-                }
-            } else {
-                $this->record->options()->attach($group);
-            }
-        }
+    	$this->addOptions();
         $this->addImages();
     }
+
+    protected function addOptions()
+	{
+		foreach ($this->request->get('options', []) as $group) {
+			if (is_array($group)) {
+				foreach ($group as $option => $id) {
+					$this->record->options()->attach($id);
+				}
+			} else {
+				$this->record->options()->attach($group);
+			}
+		}
+	}
 
 
     public function afterUpdate()
     {
         if (count($this->request->get('options', [])) > 0) {
             $this->record->options()->detach();
-            $this->afterCreate();
+            $this->addOptions();
         }
-        $this->addImages();
+		$this->addImages();
     }
 
 
     protected function addImages()
     {
-        $numberOfWorkStages = $this->record->competition->competition_type->number_of_work_stages;
+    	$numberOfWorkStages = $this->record->competition->competition_type->number_of_work_stages;
         if ($numberOfWorkStages > 0) {
             for ($i = 1; $i <= $numberOfWorkStages; $i++) {
-                $this->uploadFile($this->request->file('work_stage_' . $i), 'work_stage_' . $i, 'work_stage_' . $i,
-                    $this->record);
+                $this->uploadFile($this->request->file('work_stage_' . $i), 'work_stage_' . $i, 'work_stage_' . $i);
             }
         }
 
-        $this->uploadFile($this->request->file('screenshot'), 'screenshot', null, $this->record);
-        $this->uploadFile($this->request->file('video'), 'video', null, $this->record);
-        $this->uploadFile($this->request->file('audio'), 'audio', null, $this->record);
-        $this->uploadFile($this->request->file('file'), 'file', 'file', $this->record, true);
+        $this->uploadFile($this->request->file('screenshot'), 'screenshot');
+        $this->uploadFile($this->request->file('video'), 'video');
+        $this->uploadFile($this->request->file('audio'), 'audio');
+        $this->uploadFile($this->request->file('file'), 'file', 'file', null, true);
     }
 }

@@ -34,4 +34,9 @@ class Vote extends Model
         'points',
         'ip_address',
     ];
+
+    public function vote_category()
+	{
+		return $this->belongsTo(VoteCategory::class);
+	}
 }

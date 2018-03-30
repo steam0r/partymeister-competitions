@@ -31,7 +31,7 @@ class EntryOptionForm extends Form
                             'selected'       => $selected,
                             'wrapper'        => [ 'class' => 'row' ],
                             'choice_options' => [
-                                'wrapper'    => [ 'class' => 'col-md-2' ],
+                                'wrapper'    => [ 'class' => 'col-md-3' ],
                                 'label_attr' => [ 'class' => 'form-label' ],
                             ],
                             'expanded'       => true,
@@ -45,7 +45,7 @@ class EntryOptionForm extends Form
                             'selected'       => $selected,
                             'wrapper'        => [ 'class' => 'row' ],
                             'choice_options' => [
-                                'wrapper'    => [ 'class' => 'col-md-2' ],
+                                'wrapper'    => [ 'class' => 'col-md-3' ],
                                 'label_attr' => [ 'class' => 'form-label' ],
                             ],
                             'expanded'       => true,

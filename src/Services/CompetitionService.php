@@ -47,12 +47,19 @@ class CompetitionService extends BaseService
 
     public function afterUpdate()
     {
-        $this->record->option_groups()->detach();
-        $this->record->vote_categories()->detach();
+    	if (count($this->request->get('option_groups', [])) > 0) {
+			$this->record->option_groups()->detach();
+		}
+		if (count($this->request->get('vote_categories', [])) > 0)
+		{
+			$this->record->vote_categories()->detach();
+		}
 
         // Delete all playlist items for this playlist
         foreach ($this->record->file_associations()->get() as $fileAssociation) {
-            $fileAssociation->delete();
+			if ($this->request->get($fileAssociation->identifier) != '' || $this->request->get($fileAssociation->identifier) == 'deleted') {
+				$fileAssociation->delete();
+			}
         }
 
         $this->afterCreate();
@@ -61,7 +68,7 @@ class CompetitionService extends BaseService
 
     protected function addFileAssociation($field)
     {
-        if ($this->request->get($field) == '') {
+        if ($this->request->get($field) == '' || $this->request->get($field) == 'deleted') {
             return;
         }
 
