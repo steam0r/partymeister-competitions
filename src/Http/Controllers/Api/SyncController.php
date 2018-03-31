@@ -62,6 +62,19 @@ class SyncController extends Controller
         $entry->is_remote = array_get($data, 'is_remote');
         $entry->save();
 
+
+        $screenshot = array_get($data, 'screenshot.file_base64', null);
+        if (!is_null($screenshot)) {
+            file_put_contents(storage_path().'/'.array_get($data, 'screenshot.file_name'), base64_decode($screenshot));
+            $entry->addMedia(storage_path().'/'.array_get($data, 'screenshot.file_name'))->toMediaCollection('screenshot', 'media');
+        }
+
+        $audio = array_get($data, 'audio.file_base64', null);
+        if (!is_null($audio)) {
+            file_put_contents(storage_path().'/'.array_get($data, 'audio.file_name'), base64_decode($audio));
+            $entry->addMedia(storage_path().'/'.array_get($data, 'audio.file_name'))->toMediaCollection('audio', 'media');
+        }
+
         if ($entry->id != array_get($data, 'id')) {
             $entry->id = array_get($data, 'id');
             $entry->save();
