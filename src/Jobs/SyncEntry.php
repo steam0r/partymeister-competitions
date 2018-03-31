@@ -49,7 +49,9 @@ class SyncEntry implements ShouldQueue
             ->transformWith(new SyncTransformer())
             ->toJson();
 
-        $client = new Client();
+        $client = new Client([
+            'verify' => false
+        ]);
 
         $request = new Request('POST', config('partymeister-competitions-sync.server').config('partymeister-competitions-sync.api.entry'), [ 'content-type' => 'application/json' ], $data);
 

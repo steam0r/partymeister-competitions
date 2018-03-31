@@ -41,7 +41,9 @@ class SyncCompetition implements ShouldQueue
     {
         $data = fractal($this->competition, new CompetitionTransformer())->toJson();
 
-        $client = new Client();
+        $client = new Client([
+            'verify' => false
+        ]);
 
         $request = new Request('POST', config('partymeister-competitions-sync.server').config('partymeister-competitions-sync.api.competition'), [ 'content-type' => 'application/json' ], $data);
 

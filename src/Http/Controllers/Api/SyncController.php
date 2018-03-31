@@ -8,6 +8,7 @@ use Motor\Backend\Http\Controllers\Controller;
 use Partymeister\Competitions\Models\AccessKey;
 use Partymeister\Competitions\Http\Requests\Backend\AccessKeyRequest;
 use Partymeister\Competitions\Models\Competition;
+use Partymeister\Competitions\Models\Entry;
 use Partymeister\Competitions\Services\AccessKeyService;
 use Partymeister\Competitions\Transformers\AccessKeyTransformer;
 
@@ -42,7 +43,29 @@ class SyncController extends Controller
 
     public function entry(Request $request)
     {
-        var_dump($request->all());
+        $data = $request->get('data');
+
+        if (!array_get($data, 'id')) {
+            return response()->json('Error', 403);
+        }
+
+        $entry = Entry::find(array_get($data, 'id'));
+        if (is_null($entry)) {
+            $entry = new Entry();
+        }
+        $entry->competition_id = array_get($data, 'competition_id');
+        $entry->title = array_get($data, 'title');
+        $entry->description = array_get($data, 'description');
+        $entry->author = array_get($data, 'author');
+        $entry->sort_position = array_get($data, 'sort_position');
+        $entry->status = array_get($data, 'status');
+        $entry->is_remote = array_get($data, 'is_remote');
+        $entry->save();
+
+        if ($entry->id != array_get($data, 'id')) {
+            $entry->id = array_get($data, 'id');
+            $entry->save();
+        }
     }
 
 }
