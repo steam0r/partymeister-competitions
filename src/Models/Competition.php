@@ -59,11 +59,11 @@ class Competition extends Model implements HasMediaConversions
     {
         $this->addMediaConversion('thumb')
             ->width(320)
-            ->height(240);
+            ->height(240)->nonQueued();
 
         $this->addMediaConversion('preview')
             ->width(1280)
-            ->height(1024);
+            ->height(1024)->nonQueued();
     }
 
     public function getSortedEntriesAttribute()

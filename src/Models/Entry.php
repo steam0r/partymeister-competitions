@@ -74,9 +74,9 @@ class Entry extends Model implements HasMediaConversions
 
     public function registerMediaConversions(Media $media = null)
     {
-        $this->addMediaConversion('thumb')->width(320)->height(240);
+        $this->addMediaConversion('thumb')->width(320)->height(240)->nonQueued();
 
-        $this->addMediaConversion('preview')->width(1280)->height(1024);
+        $this->addMediaConversion('preview')->width(1280)->height(1024)->nonQueued();
     }
 
 
@@ -121,5 +121,18 @@ class Entry extends Model implements HasMediaConversions
         $manualPoints = DB::table('manual_votes')->select(DB::raw('SUM(points) as points'))->where('entry_id', $this->id)->pluck('points')->first();
 
         return (is_null($points) ? 0 : $points) + (is_null($manualPoints) ? 0 : $manualPoints);
+    }
+
+    public function getNewCommentsAttribute()
+    {
+        return $this->comments()->where('read_by_visitor', false)->count();
+    }
+
+    /**
+     * Get all of the post's comments.
+     */
+    public function comments()
+    {
+        return $this->morphMany('Partymeister\Competitions\Models\Comment', 'model');
     }
 }

@@ -4,6 +4,7 @@ namespace Partymeister\Competitions\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Partymeister\Competitions\Console\Commands\PartymeisterCompetitionsLinkEntryFilesCommand;
 
 class PartymeisterServiceProvider extends ServiceProvider
 {
@@ -45,7 +46,7 @@ class PartymeisterServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                // add commands here
+                PartymeisterCompetitionsLinkEntryFilesCommand::class,
             ]);
         }
     }

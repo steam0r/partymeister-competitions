@@ -24,3 +24,7 @@ Route::group([
     Route::post('access_keys/generate', 'AccessKeys\GenerateController@index')->name('access_keys.generate');
 });
 
+Route::post('api/sync/competition', 'Partymeister\Competitions\Http\Controllers\Api\SyncController@competition');
+Route::post('api/sync/entry', 'Partymeister\Competitions\Http\Controllers\Api\SyncController@entry');
+
+

@@ -26,6 +26,7 @@
 @endsection
 
 @section('main-content')
+    <h1>YES, I'M SORRY THAT IT LOOKS THAT WAY - IT'S FINE! ALSO, WAIT FOR THE PAGE TO RELOAD AFTER YOU CLICK SAVE, IT TAKES A WHILE AND THERE IS NO PROGRESS INDICATOR <i>-- D.Fox</i></h1>
     <form id="competition-playlist-save"
           action="{{route('backend.competitions.playlist.store', ['competition' => $competition->id])}}" method="POST">
         @csrf

@@ -19,6 +19,8 @@ Route::group([
         Route::resource('competitions', 'CompetitionsController');
         Route::resource('vote_categories', 'VoteCategoriesController');
         Route::resource('entries', 'EntriesController');
+        Route::get('entries/comments/{entry}', 'Entries\CommentsController@index')->name('entries.comments.index');
+        Route::post('entries/comments/{entry}', 'Entries\CommentsController@store')->name('entries.comments.store');
         Route::get('access_keys/export_csv', 'AccessKeys\ExportController@csv')->name('access_keys.export.csv');
         Route::get('access_keys/export_pdf', 'AccessKeys\ExportController@pdf')->name('access_keys.export.pdf');
         Route::resource('access_keys', 'AccessKeysController');

@@ -34,14 +34,15 @@ class CompetitionTransformer extends Fractal\TransformerAbstract
     public function transform(Competition $record)
     {
         return [
-            'id'                        => (int) $record->id,
-            'competition_type'          => $record->competition_type->name,
-            'name'                      => $record->name,
-            'sort_position'             => (int) $record->sort_position,
-            'prizegiving_sort_position' => (int) $record->prizegiving_sort_position,
-            'has_prizegiving'           => (bool) $record->has_prizegiving,
-            'upload_enabled'            => (bool) $record->upload_enabled,
-            'voting_enabled'            => (bool) $record->voting_enabled,
+            'id' => (int)$record->id,
+            'competition_type_id' => (int)$record->competition_type_id,
+            'competition_type' => $record->competition_type->name,
+            'name' => $record->name,
+            'sort_position' => (int)$record->sort_position,
+            'prizegiving_sort_position' => (int)$record->prizegiving_sort_position,
+            'has_prizegiving' => (bool)$record->has_prizegiving,
+            'upload_enabled' => (bool)$record->upload_enabled,
+            'voting_enabled' => (bool)$record->voting_enabled,
         ];
     }
 

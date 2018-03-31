@@ -4,6 +4,7 @@ namespace Partymeister\Competitions\Services;
 
 use Motor\Core\Filter\Renderers\SelectRenderer;
 use Motor\Media\Models\FileAssociation;
+use Partymeister\Competitions\Events\CompetitionSaved;
 use Partymeister\Competitions\Models\Competition;
 use Motor\Backend\Services\BaseService;
 
@@ -42,6 +43,8 @@ class CompetitionService extends BaseService
         $this->addFileAssociation('video_1');
         $this->addFileAssociation('video_2');
         $this->addFileAssociation('video_3');
+
+        event(new CompetitionSaved($this->record));
     }
 
 

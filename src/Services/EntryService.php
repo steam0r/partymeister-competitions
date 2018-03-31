@@ -4,6 +4,7 @@ namespace Partymeister\Competitions\Services;
 
 use Illuminate\Support\Facades\Auth;
 use Motor\Core\Filter\Renderers\SelectRenderer;
+use Partymeister\Competitions\Events\EntrySaved;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
 use Motor\Backend\Services\BaseService;
@@ -35,6 +36,7 @@ class EntryService extends BaseService
     {
     	$this->addOptions();
         $this->addImages();
+        event(new EntrySaved($this->record));
     }
 
     protected function addOptions()
@@ -58,6 +60,7 @@ class EntryService extends BaseService
             $this->addOptions();
         }
 		$this->addImages();
+        event(new EntrySaved($this->record));
     }
 
 

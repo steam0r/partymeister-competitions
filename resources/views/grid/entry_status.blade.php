@@ -13,3 +13,7 @@
 @if ($record->competition->competition_type->has_composer)
     <button type="button" data-toggle="tooltip" data-placement="top" data-entry="{{$record->id}}" data-class="btn-success" data-class-alternate="btn-danger" data-composer-gema="{{(int)!$record->composer_not_member_of_copyright_collective}}" class="change-entry-gema btn @defaultButtonSize @if ($record->composer_not_member_of_copyright_collective == 1)btn-success @else btn-danger @endif" title="{{trans('partymeister-competitions::backend/entries.composer_not_member_of_copyright_collective')}}">GEMA</button>
 @endif
+
+<a href="{{route('backend.entries.comments.index', [$record->id])}}" class="ml-4 btn btn-sm @if ($record->comments()->where('read_by_organizer', false)->count() > 0) btn-danger @else btn-outline-secondary @endif">
+    {{$record->comments()->count()}} Messages
+</a>

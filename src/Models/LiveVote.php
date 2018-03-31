@@ -31,4 +31,10 @@ class LiveVote extends Model {
 	{
 		return $this->belongsTo(Competition::class);
 	}
+
+    public function entry()
+    {
+        return $this->belongsTo(Entry::class);
+    }
+
 }

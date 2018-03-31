@@ -24,7 +24,8 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Partymeister\\Competitions\\Providers\\PartymeisterServiceProvider"
+        "Partymeister\\Competitions\\Providers\\PartymeisterServiceProvider",
+        "Partymeister\\Competitions\\Providers\\EventServiceProvider"
       ]
     }
   },
