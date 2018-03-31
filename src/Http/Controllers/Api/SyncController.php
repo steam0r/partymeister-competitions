@@ -9,6 +9,7 @@ use Partymeister\Competitions\Models\AccessKey;
 use Partymeister\Competitions\Http\Requests\Backend\AccessKeyRequest;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
+use Partymeister\Competitions\Models\LiveVote;
 use Partymeister\Competitions\Services\AccessKeyService;
 use Partymeister\Competitions\Transformers\AccessKeyTransformer;
 
@@ -39,6 +40,25 @@ class SyncController extends Controller
             $competition->id = array_get($data, 'id');
             $competition->save();
         }
+    }
+
+    public function livevote(Request $request)
+    {
+        $data = $request->get('data');
+
+        if (!array_get($data, 'entry_id')) {
+            return response()->json('Error', 403);
+        }
+
+        $liveVote = LiveVote::first();
+
+        if (is_null($liveVote)) {
+            $liveVote = new LiveVote();
+        }
+        $liveVote->competition_id = array_get($data, 'competition_id');
+        $liveVote->entry_id = array_get($data, 'entry_id =');
+        $liveVote->sort_position = array_get($data, 'sort_position');
+        $liveVote->save();
     }
 
     public function entry(Request $request)
