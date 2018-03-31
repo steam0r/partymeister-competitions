@@ -78,13 +78,13 @@ class PlaylistsController extends Controller
                 $entries = Arr::get($data, 'data');
 
                 foreach ($entries as $key => $entry) {
-                	$entries[$key]['competition_name'] = strtoupper($entries[$key]['competition_name']);
-                	if ($entries[$key]['filesize_bytes'] == 0) {
-						$entries[$key]['filesize_human'] = ' ';
-					}
-					if ($entries[$key]['description'] == '') {
-						$entries[$key]['description'] = ' ';
-					}
+                    $entries[$key]['competition_name'] = strtoupper($entries[$key]['competition_name']);
+                    if ($entries[$key]['filesize_bytes'] == 0) {
+                        $entries[$key]['filesize_human'] = ' ';
+                    }
+                    if ($entries[$key]['description'] == '') {
+                        $entries[$key]['description'] = ' ';
+                    }
                     if ($key > 0) {
                         $entries[$key]['previous_sort_position'] = ( strlen($key) == 1 ? '0' . $key : $key );
                         $entries[$key]['previous_author']        = $entries[$key - 1]['author'];
@@ -121,9 +121,23 @@ class PlaylistsController extends Controller
                     ];
                 }
 
-                return view('partymeister-competitions::backend.competitions.playlists.show',
-                    compact('competition', 'entries', 'entryTemplate', 'comingupTemplate', 'endTemplate',
-                        'participantsTemplate', 'videos', 'participants'));
+                $response = $this->checkIfCompetitionIsValid($competition);
+
+                foreach ($competition->sorted_entries as $entry) {
+                    if ($entry->getMedia('file')->count() == 1) {
+                        $entry->final_file_media_id = $entry->getFirstMedia('file')->id;
+                        $entry->save();
+                    }
+                }
+
+                if ($response === true) {
+                    return view('partymeister-competitions::backend.competitions.playlists.show',
+                        compact('competition', 'entries', 'entryTemplate', 'comingupTemplate', 'endTemplate',
+                            'participantsTemplate', 'videos', 'participants'));
+                } else {
+                    return $response;
+                }
+
                 break;
         }
     }
@@ -144,4 +158,40 @@ class PlaylistsController extends Controller
 
         return $output;
     }
+
+
+    protected function checkIfCompetitionIsValid($competition)
+    {
+        // Check for entries with status 0 or 2 (unchecked and needs feedback)
+        if ($competition->entries()->whereIn('status', [ 0, 2 ])->count() > 0) {
+            return view('partymeister-competitions::backend.competitions.playlists.show', [
+                'competition' => $competition,
+                'message'     => 'Not all entries are checked and/or disqualified!'
+            ]);
+        }
+
+        $sort_position = 1;
+        foreach ($competition->entries()->where('status', 1)->orderBy('sort_position', 'ASC')->get() as $entry) {
+            if ($entry->sort_position != $sort_position) {
+                return view('partymeister-competitions::backend.competitions.playlists.show', [
+                    'competition' => $competition,
+                    'message'     => 'Not all entries are correctly numbered! Check the sort positions!'
+                ]);
+            }
+            $sort_position++;
+        }
+
+        if ($competition->competition_type->has_composer && $competition->entries()->where('status', 1)
+                                                                         ->where('composer_not_member_of_copyright_collective', false)->count() > 0) {
+            if ($entry->sort_position != $sort_position) {
+                return view('partymeister-competitions::backend.competitions.playlists.show', [
+                    'competition' => $competition,
+                    'message'     => 'Some entries have composers registered with a copyright collective!'
+                ]);
+            }
+        }
+
+        return true;
+    }
+
 }

@@ -1,4 +1,5 @@
 @extends('motor-backend::layouts.backend')
+<div class="loading-overlay"></div>
 
 @section('view_styles')
     @include('partymeister-slides::layouts.partials.slide_fonts')
@@ -8,10 +9,6 @@
             float: left;
             margin-right: 15px;
             margin-bottom: 15px;
-        }
-
-        .weg {
-            display: none !important;
         }
     </style>
 @append
@@ -26,17 +23,23 @@
 @endsection
 
 @section('main-content')
-    <h1>YES, I'M SORRY THAT IT LOOKS THAT WAY - IT'S FINE! ALSO, WAIT FOR THE PAGE TO RELOAD AFTER YOU CLICK SAVE, IT TAKES A WHILE AND THERE IS NO PROGRESS INDICATOR <i>-- D.Fox</i></h1>
+    @if (isset($message))
+    <div class="alert alert-warning">
+        {{$message}}
+    </div>
+    @else
+    <h1>YES, I'M SORRY THAT IT LOOKS THAT WAY - IT'S FINE! ALSO, WAIT FOR THE PAGE TO RELOAD AFTER YOU CLICK SAVE, IT
+        TAKES A WHILE AND THERE IS NO PROGRESS INDICATOR <i>-- D.Fox</i></h1>
     <form id="competition-playlist-save"
           action="{{route('backend.competitions.playlist.store', ['competition' => $competition->id])}}" method="POST">
         @csrf
         <div class="@boxWrapper box-primary" style="margin-bottom: 0;">
             <div class="@boxBody">
                 <div id="slidemeister-competition-comingup" class="slidemeister-instance"></div>
-                {{--<div style="display: none">--}}
-                <div id="slidemeister-competition-comingup-preview" class="slidemeister-instance"></div>
-                <div id="slidemeister-competition-comingup-final" class="slidemeister-instance"></div>
-                {{--</div>--}}
+                <div class="render d-none">
+                    <div id="slidemeister-competition-comingup-preview" class="slidemeister-instance"></div>
+                    <div id="slidemeister-competition-comingup-final" class="slidemeister-instance"></div>
+                </div>
                 <input type="hidden" name="slide[comingup]">
                 <input type="hidden" name="preview[comingup]">
                 <input type="hidden" name="final[comingup]">
@@ -52,8 +55,10 @@
                     </div>
                 @endforeach
                 <div id="slidemeister-competition-now" class="slidemeister-instance"></div>
-                <div id="slidemeister-competition-now-preview" class="slidemeister-instance"></div>
-                <div id="slidemeister-competition-now-final" class="slidemeister-instance"></div>
+                <div class="render d-none">
+                    <div id="slidemeister-competition-now-preview" class="slidemeister-instance"></div>
+                    <div id="slidemeister-competition-now-final" class="slidemeister-instance"></div>
+                </div>
 
                 <input type="hidden" name="slide[now]">
                 <input type="hidden" name="preview[now]">
@@ -62,8 +67,10 @@
                 <input type="hidden" name="name[now]" value="Now">
                 @foreach($entries as $index => $entry)
                     <div id="slidemeister-entry-{{$entry['id']}}" class="slidemeister-instance"></div>
-                    <div id="slidemeister-entry-{{$entry['id']}}-preview" class="slidemeister-instance"></div>
-                    <div id="slidemeister-entry-{{$entry['id']}}-final" class="slidemeister-instance"></div>
+                    <div class="render d-none">
+                        <div id="slidemeister-entry-{{$entry['id']}}-preview" class="slidemeister-instance"></div>
+                        <div id="slidemeister-entry-{{$entry['id']}}-final" class="slidemeister-instance"></div>
+                    </div>
                     <input type="hidden" name="slide[entry_{{$entry['id']}}]">
                     <input type="hidden" name="preview[entry_{{$entry['id']}}]">
                     <input type="hidden" name="final[entry_{{$entry['id']}}]">
@@ -73,8 +80,10 @@
                 @endforeach
                 @if (count($participants) > 0)
                     <div id="slidemeister-competition-participants" class="slidemeister-instance"></div>
-                    <div id="slidemeister-competition-participants-preview" class="slidemeister-instance"></div>
-                    <div id="slidemeister-competition-participants-final" class="slidemeister-instance"></div>
+                    <div class="render d-none">
+                        <div id="slidemeister-competition-participants-preview" class="slidemeister-instance"></div>
+                        <div id="slidemeister-competition-participants-final" class="slidemeister-instance"></div>
+                    </div>
                     <input type="hidden" name="slide[participants]">
                     <input type="hidden" name="preview[participants]">
                     <input type="hidden" name="final[participants]">
@@ -82,8 +91,10 @@
                     <input type="hidden" name="name[participants]" value="Participants">
                 @endif
                 <div id="slidemeister-competition-end" class="slidemeister-instance"></div>
-                <div id="slidemeister-competition-end-preview" class="slidemeister-instance"></div>
-                <div id="slidemeister-competition-end-final" class="slidemeister-instance"></div>
+                <div class="render d-none">
+                    <div id="slidemeister-competition-end-preview" class="slidemeister-instance"></div>
+                    <div id="slidemeister-competition-end-final" class="slidemeister-instance"></div>
+                </div>
                 <input type="hidden" name="slide[end]">
                 <input type="hidden" name="preview[end]">
                 <input type="hidden" name="final[end]">
@@ -92,8 +103,10 @@
             </div>
         </div>
     </form>
+    @endif
 @endsection
 
+@if (!isset($message))
 @section('view_scripts')
     @include('partymeister-slides::layouts.partials.slide_scripts')
     <script>
@@ -189,6 +202,9 @@
             }, false, true);
             $('.competition-playlist-save').on('click', function (e) {
 
+                $('.loading-overlay').addClass('loading');
+                $('.render').removeClass('d-none');
+
                 var tasks = [];
                 Object.keys(sm).forEach(function (key) {
                     $('input[name="slide[' + key + ']"]').val(JSON.stringify(sm[key].data.save(true)));
@@ -212,15 +228,17 @@
 
                 });
 
-                workMyCollection(tasks)
-                    .then(() => {
-                        for (let r of final) {
-                            $('input[name="' + r[0] + '[' + r[1] + ']"]').val(r[2]);
-                        }
-                        $('form#competition-playlist-save').submit();
-                    });
-                return;
+                window.setTimeout(function() {
+                    workMyCollection(tasks)
+                        .then(() => {
+                            for (let r of final) {
+                                $('input[name="' + r[0] + '[' + r[1] + ']"]').val(r[2]);
+                            }
+                            $('form#competition-playlist-save').submit();
+                        });
+                }, 1000);
 
+                return;
             });
 
             function asyncFunc(e) {
@@ -246,3 +264,4 @@
         });
     </script>
 @append
+@endif

@@ -82,6 +82,7 @@
             @endif
 
             {!! form_row($form->file) !!}
+            {!! form_row($form->final_file_media_id) !!}
         </div>
         <!-- /.box-body -->
     </div>

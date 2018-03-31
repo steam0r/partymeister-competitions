@@ -47,6 +47,7 @@ class SyncLiveVote implements ShouldQueue
                 'sort_position' => $this->liveVote->sort_position
             ]
         ];
+        Log::channel('debug')->info(serialize($data));
 
         $client = new Client([
             'verify' => false

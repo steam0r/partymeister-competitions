@@ -3,6 +3,7 @@
 namespace Partymeister\Competitions\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Motor\Core\Traits\Searchable;
 use Motor\Core\Traits\Filterable;
@@ -68,6 +69,7 @@ class Entry extends Model implements HasMediaConversions
         'composer_zip',
         'composer_city',
         'composer_country_iso_3166_1',
+        'final_file_media_id',
         'status',
     ];
 
@@ -108,25 +110,60 @@ class Entry extends Model implements HasMediaConversions
         return $this->belongsToMany(Option::class);
     }
 
+
     public function getVotesAttribute()
     {
         // Get visitor votes
-        $sub = DB::table('votes')->select(DB::raw('SUM(points)/count(id) as points_per_visitor'))->where('entry_id', '=', $this->id)->groupBy('visitor_id');
+        $sub = DB::table('votes')
+                 ->select(DB::raw('SUM(points)/count(id) as points_per_visitor'))
+                 ->where('entry_id', '=', $this->id)
+                 ->groupBy('visitor_id');
 
-        $points = DB::table( DB::raw("({$sub->toSql()}) as sub") )
-                   ->mergeBindings($sub) // you need to get underlying Query Builder
-                   ->select(DB::raw('SUM(points_per_visitor) as points'))->pluck('points')->first();
+        $points = DB::table(DB::raw("({$sub->toSql()}) as sub"))
+                    ->mergeBindings($sub)// you need to get underlying Query Builder
+                    ->select(DB::raw('SUM(points_per_visitor) as points'))
+                    ->pluck('points')
+                    ->first();
 
         // Get manual votes
-        $manualPoints = DB::table('manual_votes')->select(DB::raw('SUM(points) as points'))->where('entry_id', $this->id)->pluck('points')->first();
+        $manualPoints = DB::table('manual_votes')
+                          ->select(DB::raw('SUM(points) as points'))
+                          ->where('entry_id', $this->id)
+                          ->pluck('points')
+                          ->first();
 
-        return (is_null($points) ? 0 : $points) + (is_null($manualPoints) ? 0 : $manualPoints);
+        return ( is_null($points) ? 0 : $points ) + ( is_null($manualPoints) ? 0 : $manualPoints );
     }
+
 
     public function getNewCommentsAttribute()
     {
         return $this->comments()->where('read_by_visitor', false)->count();
     }
+
+
+    public function getOrderedFilesAttribute()
+    {
+        $media = $this->getMedia('file');
+
+        $mediaArray = [];
+        foreach ($media as $m) {
+            $mediaArray[] = $m;
+        }
+
+        usort($mediaArray, function ($item1, $item2) {
+            return strtotime($item2['created_at']) <=> strtotime($item1['created_at']);
+        });
+
+        return collect($mediaArray);
+    }
+
+
+    public function final_file()
+    {
+        return $this->hasOne(Media::class, 'model_id');
+    }
+
 
     /**
      * Get all of the post's comments.

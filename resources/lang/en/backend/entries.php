@@ -30,6 +30,8 @@ return [
     'composer_gema_cleared'                       => 'GEMA cleared',
     'ip_address'                                  => 'IP address',
     'last_file_uploaded_at'                       => 'Last file upload',
+    'final_file_media_id'                         => 'Final file',
+    'choose'                                      => '=== Select final file for release ===',
 
     'name'            => 'Name',
     'email'           => 'Email',

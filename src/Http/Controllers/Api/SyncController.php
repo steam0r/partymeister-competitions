@@ -56,7 +56,7 @@ class SyncController extends Controller
             $liveVote = new LiveVote();
         }
         $liveVote->competition_id = array_get($data, 'competition_id');
-        $liveVote->entry_id = array_get($data, 'entry_id =');
+        $liveVote->entry_id = array_get($data, 'entry_id');
         $liveVote->sort_position = array_get($data, 'sort_position');
         $liveVote->save();
     }

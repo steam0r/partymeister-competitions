@@ -19,6 +19,13 @@ class EntryForm extends Form
             $data['competition'] = Competition::find($this->getModel()->competition_id);
         }
 
+        $files = [];
+        if ($this->getModel() instanceof Entry) {
+            foreach ($this->getModel()->ordered_files as $file) {
+                $files[$file->id] = $file->created_at.' - '.$file->file_name;
+            }
+        }
+
         $this
             ->add('competition_id', 'select2', ['attr' => ['class' => 'form-control reload-on-change'], 'label' => trans('partymeister-competitions::backend/competitions.competition'), 'empty_value' => trans('motor-backend::backend/global.please_choose'), 'choices' => Competition::orderBy('sort_position')->pluck('name', 'id')->toArray()])
             ->add('reload_on_change', 'hidden', ['attr' => ['id' => 'reload_on_change']])
@@ -33,6 +40,7 @@ class EntryForm extends Form
             ->add('status', 'select', ['label' => trans('partymeister-competitions::backend/entries.status'), 'choices' => trans('partymeister-competitions::backend/entries.stati')])
             ->add('upload_enabled', 'checkbox', ['label' => trans('partymeister-competitions::backend/entries.upload_enabled')])
 
+            ->add('final_file_media_id', 'select', ['label' => trans('partymeister-competitions::backend/entries.final_file_media_id'), 'empty_value' => trans('partymeister-competitions::backend/entries.choose'), 'choices' => $files])
             ->add('author_name', 'text', ['label' => trans('partymeister-competitions::backend/entries.name')])
             ->add('author_email', 'text', ['label' => trans('partymeister-competitions::backend/entries.email')])
             ->add('author_phone', 'text', ['label' => trans('partymeister-competitions::backend/entries.phone')])

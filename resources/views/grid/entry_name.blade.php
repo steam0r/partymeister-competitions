@@ -3,7 +3,11 @@
 by {{$record->author}}
 
 <ul class="list-unstyled">
-    @foreach ($record->getMedia('file') as $file)
-    <li><a title="Uploaded at {{$file->created_at}}" href="{{$file->getUrl()}}">Direct download: {{$file->file_name}}</a></li>
+    @foreach ($record->ordered_files as $file)
+        @if ($loop->first)
+            <li><a style="color: green;" title="Uploaded at {{$file->created_at}}" href="{{$file->getUrl()}}">Direct download: {{$file->file_name}} (newest)</a></li>
+        @else
+            <li><a title="Uploaded at {{$file->created_at}}" href="{{$file->getUrl()}}">Direct download: {{$file->file_name}}</a></li>
+        @endif
     @endforeach
 </ul>
