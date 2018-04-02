@@ -26,8 +26,9 @@ class VotesController extends Controller
     public function index()
     {
         $results = VoteService::getAllVotesByRank();
+        $special = VoteService::getAllSpecialVotesByRank();
 
-        return view('partymeister-competitions::backend.votes.index', compact('results'));
+        return view('partymeister-competitions::backend.votes.index', compact('results', 'special'));
     }
 
 

@@ -10,7 +10,8 @@
         {!! link_to_route('backend.competition_prizes.create', trans('partymeister-competitions::backend/competition_prizes.edit'), [], ['class' => 'float-right btn btn-sm btn-success']) !!}
         {!! link_to_route('backend.votes.create', trans('partymeister-competitions::backend/votes.edit'), [], ['class' => 'float-right btn btn-sm btn-success']) !!}
         <div class="dropdown float-right">
-            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{trans('partymeister-competitions::backend/competition_prizes.downloads')}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -25,6 +26,29 @@
 
 @section('main-content')
     <div class="@boxWrapper">
+        @if (isset($special))
+        <div class="@boxHeader">
+            <h3 class="box-title">Crowd favourite</h3>
+        </div>
+        <div class="@boxBody">
+            @foreach ($special as $entry)
+                <div class="row">
+                    <div class="col-md-1">
+                        {{number_format($entry['special_votes'], 0,',','')}}
+                    </div>
+                    <div class="col-md-3">
+                        {{$entry['competition']}}
+                    </div>
+                    <div class="col-md-4">
+                        {{$entry['title']}}
+                    </div>
+                    <div class="col-md-4">
+                        {{$entry['author']}}
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        @endif
         @foreach ($results as $competition)
             <div class="@boxHeader">
                 <h3 class="box-title">{{$competition['name']}}</h3>

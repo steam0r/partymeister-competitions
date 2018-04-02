@@ -30,6 +30,49 @@ class CallbackHelper
         return $callback;
     }
 
+    public static function prizegivingStarts()
+    {
+        $hash = hash_hmac('sha256', 'Prizegiving starts', 20);
+
+        $callback = Callback::where('hash', '=', $hash)->first();
+
+        if (is_null($callback)) {
+            $callback = new Callback();
+        }
+
+        $callback->name        = 'Prizegiving starts';
+        $callback->action      = 'notification';
+        $callback->title       = 'Prizegiving';
+        $callback->body        = 'Prizegiving is starting';
+        $callback->hash        = $hash;
+        $callback->destination = 'events';
+        $callback->save();
+
+        return $callback;
+    }
+
+    public static function competitionEnds(Competition $competition)
+    {
+        $hash = hash_hmac('sha256', $competition->id . 'competition_ends', 20);
+
+        $callback = Callback::where('hash', '=', $hash)->first();
+
+        if (is_null($callback)) {
+            $callback = new Callback();
+        }
+
+        $callback->name        = 'Competition: ' . $competition->name . ' ends';
+        $callback->action      = 'competition_ends';
+        $callback->title       = 'Competition';
+        $callback->body        = $competition->name . ' competition is over';
+        $callback->hash        = $hash;
+        $callback->payload     = json_encode([ 'competition_id' => $competition->id ]);
+        $callback->destination = 'competitions';
+        $callback->save();
+
+        return $callback;
+    }
+
 
     public static function livevoting(Entry $entry)
     {

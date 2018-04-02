@@ -75,15 +75,15 @@ class CompetitionService extends BaseService
             }
         }
 
-        $this->hardLinkReleases();
+        self::hardLinkReleases($this->record);
 
         $this->afterCreate();
     }
 
 
-    protected function hardLinkReleases()
+    public static function hardLinkReleases($competition)
     {
-        if (!$this->record->voting_enabled) {
+        if (!$competition->voting_enabled) {
             return;
         }
 
@@ -91,7 +91,7 @@ class CompetitionService extends BaseService
             mkdir(base_path('releases'));
         }
 
-        $directory = base_path('releases/' . str_slug($this->record->name));
+        $directory = base_path('releases/' . str_slug($competition->name));
 
         if ( ! is_dir($directory)) {
             mkdir($directory);
@@ -109,7 +109,7 @@ class CompetitionService extends BaseService
         }
 
         // Hardlink the files in the correct order, clear directory beforehand
-        foreach ($this->record->sorted_entries as $entry) {
+        foreach ($competition->sorted_entries as $entry) {
             if ($entry->final_file_media_id > 0) {
                 Log::channel('debug')->info($entry->final_file_media_id);
                 $media = Media::find($entry->final_file_media_id);

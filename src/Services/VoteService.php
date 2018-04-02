@@ -30,23 +30,27 @@ class VoteService extends BaseService
     }
 
 
-    public static function getAllVotesByRank()
+    public static function getAllVotesByRank($direction = 'DESC')
     {
         $results = [];
+        $maxPoints = [];
         foreach (Competition::where('has_prizegiving', true)
-                            ->orderBy('prizegiving_sort_position', 'DESC')
+                            ->orderBy('prizegiving_sort_position', $direction)
                             ->get() as $competition) {
             $results[$competition->id] = [
                 'id'      => $competition->id,
                 'name'    => $competition->name,
                 'entries' => []
             ];
+            $maxPoints[$competition->id] = 0;
             foreach ($competition->entries()->where('status', 1)->get() as $entry) {
+                $maxPoints[$competition->id] = max($entry->votes, $maxPoints[$competition->id]);
                 $results[$competition->id]['entries'][$entry->id] = [
-                    'id'     => $entry->id,
-                    'title'  => $entry->title,
-                    'author' => $entry->author,
-                    'points' => $entry->votes
+                    'id'       => $entry->id,
+                    'title'    => $entry->title,
+                    'author'   => $entry->author,
+                    'points'   => $entry->votes,
+                    'comments' => $entry->vote_comments
                 ];
             }
 
@@ -54,6 +58,46 @@ class VoteService extends BaseService
             usort($results[$competition->id]['entries'], function ($item1, $item2) {
                 return $item2['points'] <=> $item1['points'];
             });
+            foreach ($results[$competition->id]['entries'] as $key => $entry) {
+                $results[$competition->id]['entries'][$key]['max_points'] = $maxPoints[$competition->id];
+                $results[$competition->id]['entries'][$key]['rank'] = ($key+1);
+            }
+        }
+
+        return $results;
+    }
+
+
+    public static function getAllSpecialVotesByRank()
+    {
+        $results = [];
+        foreach (Competition::where('has_prizegiving', true)
+                            ->orderBy('prizegiving_sort_position', 'DESC')
+                            ->get() as $competition) {
+            $maxPoints = 0;
+            foreach ($competition->entries()->where('status', 1)->get() as $entry) {
+                $specialVotes = $entry->special_votes;
+                $maxPoints = max($entry->special_votes, $maxPoints);
+                if ($specialVotes > 0) {
+                    $results[$entry->id] = [
+                        'id'            => $entry->id,
+                        'title'         => $entry->title,
+                        'author'        => $entry->author,
+                        'competition'   => $competition->name,
+                        'special_votes' => $specialVotes
+                    ];
+                }
+            }
+
+            // Sort by points
+            usort($results, function ($item1, $item2) {
+                return $item2['special_votes'] <=> $item1['special_votes'];
+            });
+
+            foreach ($results as $key => $entry) {
+                $results[$key]['max_points'] = $maxPoints;
+                $results[$key]['rank'] = ($key+1);
+            }
         }
 
         return $results;

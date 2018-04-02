@@ -6,7 +6,9 @@ use Motor\Backend\Http\Controllers\Controller;
 
 use Partymeister\Competitions\Http\Requests\Backend\CompetitionPrizeRequest;
 use Partymeister\Competitions\Models\Competition;
+use Partymeister\Competitions\Models\Entry;
 use Partymeister\Competitions\PDF\Prize;
+use Partymeister\Competitions\Services\VoteService;
 
 class ExportController extends Controller
 {
@@ -45,27 +47,32 @@ class ExportController extends Controller
         $pdf->SetMargins(20, 20, 20);
         $pdf->SetTemplate('receipt', __DIR__ . '/../../../../../resources/assets/pdf/receipt');
 
-        $competitions = Competition::where('has_prizegiving', true)->orderBy('prizegiving_sort_position', 'DESC')->get();
+        $competitions = Competition::where('has_prizegiving', true)
+                                   ->orderBy('prizegiving_sort_position', 'DESC')
+                                   ->get();
 
         if ($competitions->count() == 0) {
             // FIXME
             die("no competitions");
         }
 
-        foreach ($competitions as $competition) {
+        $results = VoteService::getAllVotesByRank('DESC');
+        foreach ($results as $competition) {
+            $c = Competition::find($competition['id']);
 
             if ($request->get('prizesheet') !== null) {
                 $pdf->AddPage();
-                $pdf->renderCompetitionName($competition->name);
+                $pdf->renderCompetitionName($competition['name']);
 
                 // Prizes
                 $num = 1;
-                foreach ($competition->entries()->get() as $entry) {
-                //foreach ($competition->entries->find_all_by_rank() as $entry) {
+                foreach ($competition['entries'] as $entry) {
+                    $e = Entry::find($entry['id']);
+                    //foreach ($competition->entries->find_all_by_rank() as $entry) {
                     if ($num >= 4) {
                         continue;
                     }
-                    $pdf->renderCompetitionRankings($entry, $competition->prizes()->where('rank', $num)->first());
+                    $pdf->renderCompetitionRankings($e, $c->prizes()->where('rank', $num)->first());
                     $num++;
                 }
             }
@@ -73,17 +80,18 @@ class ExportController extends Controller
             // Receipts
             if ($request->get('receipt') !== null) {
                 $num = 1;
-                foreach ($competition->entries()->get() as $entry) {
-                //foreach ($competition->entries->find_all_by_rank() as $entry) {
+                //foreach ($competition->entries()->get() as $entry) {
+                foreach ($competition['entries'] as $entry) {
+                    $e = Entry::find($entry['id']);
                     if ($num >= 4) {
                         continue;
                     }
 
-                    $prize = $competition->prizes()->where('rank', $num)->first();
+                    $prize = $c->prizes()->where('rank', $num)->first();
                     if ((int) $prize->amount > 0) {
                         $pdf->addPage();
                         $pdf->UseTemplate('receipt');
-                        $pdf->renderReceipt($entry, $prize);
+                        $pdf->renderReceipt($e, $prize);
                     }
                     $num++;
                 }

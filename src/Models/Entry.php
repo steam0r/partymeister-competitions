@@ -111,6 +111,28 @@ class Entry extends Model implements HasMediaConversions
     }
 
 
+    public function getSpecialVotesAttribute()
+    {
+        // Get visitor votes
+        $query = DB::table('votes')
+                   ->select(DB::raw('SUM(special_vote) as special_votes'))
+                   ->where('entry_id', '=', $this->id)
+                   ->first();
+
+        if (is_null($query)) {
+            return 0;
+        }
+
+        return $query->special_votes;
+    }
+
+
+    public function getVoteCommentsAttribute()
+    {
+        return DB::table('votes')->select('comment')->where('entry_id', $this->id)->where('comment', '!=', '')->get()->pluck('comment')->toArray();
+    }
+
+
     public function getVotesAttribute()
     {
         // Get visitor votes
@@ -156,6 +178,17 @@ class Entry extends Model implements HasMediaConversions
         });
 
         return collect($mediaArray);
+    }
+
+
+    public function getDownloadAttribute()
+    {
+        $media = null;
+        if ($this->final_file_media_id > 0) {
+            $media = Media::find($this->final_file_media_id);
+        }
+
+        return $media;
     }
 
 
