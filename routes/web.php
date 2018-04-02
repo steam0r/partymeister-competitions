@@ -44,3 +44,11 @@ Route::get('results', function(){
         echo "\r\n";
     }
 });
+
+Route::get('results-special', function(){
+    $results = \Partymeister\Competitions\Services\VoteService::getAllSpecialVotesByRank();
+
+    foreach ($results as $entry) {
+        echo $entry['special_votes']."\t".$entry['title']."\t".$entry['author']."\r\n";
+    }
+});
