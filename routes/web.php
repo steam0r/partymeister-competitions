@@ -32,3 +32,15 @@ Route::group([
         Route::resource('votes', 'VotesController');
     });
 });
+
+Route::get('results', function(){
+    $results = \Partymeister\Competitions\Services\VoteService::getAllVotesByRank();
+
+    foreach ($results as $competition) {
+        echo $competition['name']."\r\n";
+        foreach ($competition['entries'] as $entry) {
+            echo $entry['points']."\t".$entry['title']."\t".$entry['author']."\r\n";
+        }
+        echo "\r\n";
+    }
+});
