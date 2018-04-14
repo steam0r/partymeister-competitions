@@ -32,19 +32,19 @@ class VoteService extends BaseService
 
     public static function getAllVotesByRank($direction = 'DESC')
     {
-        $results = [];
+        $results   = [];
         $maxPoints = [];
         foreach (Competition::where('has_prizegiving', true)
                             ->orderBy('prizegiving_sort_position', $direction)
                             ->get() as $competition) {
-            $results[$competition->id] = [
+            $results[$competition->id]   = [
                 'id'      => $competition->id,
                 'name'    => $competition->name,
                 'entries' => []
             ];
             $maxPoints[$competition->id] = 0;
             foreach ($competition->entries()->where('status', 1)->get() as $entry) {
-                $maxPoints[$competition->id] = max($entry->votes, $maxPoints[$competition->id]);
+                $maxPoints[$competition->id]                      = max($entry->votes, $maxPoints[$competition->id]);
                 $results[$competition->id]['entries'][$entry->id] = [
                     'id'       => $entry->id,
                     'title'    => $entry->title,
@@ -60,7 +60,7 @@ class VoteService extends BaseService
             });
             foreach ($results[$competition->id]['entries'] as $key => $entry) {
                 $results[$competition->id]['entries'][$key]['max_points'] = $maxPoints[$competition->id];
-                $results[$competition->id]['entries'][$key]['rank'] = ($key+1);
+                $results[$competition->id]['entries'][$key]['rank']       = ( $key + 1 );
             }
         }
 
@@ -70,21 +70,22 @@ class VoteService extends BaseService
 
     public static function getAllSpecialVotesByRank()
     {
-        $results = [];
+        $results   = [];
+        $maxPoints = 0;
         foreach (Competition::where('has_prizegiving', true)
                             ->orderBy('prizegiving_sort_position', 'DESC')
                             ->get() as $competition) {
-            $maxPoints = 0;
             foreach ($competition->entries()->where('status', 1)->get() as $entry) {
-                $specialVotes = $entry->special_votes;
-                $maxPoints = max($entry->special_votes, $maxPoints);
+                $specialVotes = (int) $entry->special_votes;
+                $maxPoints    = max($specialVotes, $maxPoints);
                 if ($specialVotes > 0) {
                     $results[$entry->id] = [
                         'id'            => $entry->id,
                         'title'         => $entry->title,
                         'author'        => $entry->author,
                         'competition'   => $competition->name,
-                        'special_votes' => $specialVotes
+                        'special_votes' => (int) $specialVotes,
+                        'points'        => (int) $specialVotes,
                     ];
                 }
             }
@@ -96,7 +97,7 @@ class VoteService extends BaseService
 
             foreach ($results as $key => $entry) {
                 $results[$key]['max_points'] = $maxPoints;
-                $results[$key]['rank'] = ($key+1);
+                $results[$key]['rank']       = ( $key + 1 );
             }
         }
 
