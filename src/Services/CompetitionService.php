@@ -48,9 +48,7 @@ class CompetitionService extends BaseService
         foreach ($this->request->get('option_groups', []) as $id) {
             $this->record->option_groups()->attach($id);
         }
-        foreach ($this->request->get('vote_categories', []) as $id) {
-            $this->record->vote_categories()->attach($id);
-        }
+        $this->record->vote_categories()->attach($this->request->get('vote_categories'));
         $this->addFileAssociation('video_1');
         $this->addFileAssociation('video_2');
         $this->addFileAssociation('video_3');
@@ -64,9 +62,7 @@ class CompetitionService extends BaseService
         if (count($this->request->get('option_groups', [])) > 0) {
             $this->record->option_groups()->detach();
         }
-        if (count($this->request->get('vote_categories', [])) > 0) {
-            $this->record->vote_categories()->detach();
-        }
+        $this->record->vote_categories()->detach();
 
         // Delete all playlist items for this playlist
         foreach ($this->record->file_associations()->get() as $fileAssociation) {

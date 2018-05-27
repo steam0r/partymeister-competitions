@@ -13,7 +13,7 @@ class SimpleTransformer extends Fractal\TransformerAbstract {
 			'comment'          => $vote->comment,
 			'special_vote'     => $vote->special_vote,
 			'vote_category_id' => (int)$vote->vote_category_id,
-			'vote_category'    => $vote->vote_category->name
+			'vote_category'    => $vote->vote_category->name,
 		];
 	}
 }

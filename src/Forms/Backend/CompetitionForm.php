@@ -24,7 +24,8 @@ class CompetitionForm extends Form
                 'choices' => OptionGroup::pluck('name', 'id')->toArray(),
             ])
             ->add('vote_categories', 'select', [
-                'attr' => ['multiple' => true, 'id' => 'vote_categories'],
+                'label' => trans('partymeister-competitions::backend/vote_categories.vote_category'),
+                'attr' => ['id' => 'vote_categories'],
                 'choices' => VoteCategory::pluck('name', 'id')->toArray(),
                 'default_value' => 1
             ])
