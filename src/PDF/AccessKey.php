@@ -11,7 +11,7 @@ class AccessKey extends PDF {
 		$this->setMargins(5, 5, 5);
 		$this->AddStyle('Accesskey', 'Courier', 'B', 14);
 		$this->setAutoPageBreak(FALSE);
-		$this->setTemplate('logo', __DIR__ . '/../../resources/assets/pdf/accesskey');
+		$this->setTemplate('logo', resource_path('assets/pdf/partymeister-competitions-accesskey'));
 	}
 
 	function generate()

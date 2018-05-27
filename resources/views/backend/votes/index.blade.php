@@ -82,4 +82,4 @@
             }
         });
     </script>
-@endsection
+@append

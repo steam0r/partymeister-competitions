@@ -26,7 +26,7 @@ class ExportController extends Controller
         $pdf->SetMargins(20, 20, 20);
 
         $pdf->addPage();
-        $pdf->SetTemplate('receipt', __DIR__ . '/../../../../../resources/assets/pdf/receipt');
+        $pdf->setTemplate('receipt', resource_path('assets/pdf/partymeister-competitions-receipt'));
         $pdf->UseTemplate('receipt');
 
         $pdf->renderReceipt();
@@ -45,7 +45,7 @@ class ExportController extends Controller
         $pdf->SetCompression(true);
         $pdf->SetDisplayMode('fullpage');
         $pdf->SetMargins(20, 20, 20);
-        $pdf->SetTemplate('receipt', __DIR__ . '/../../../../../resources/assets/pdf/receipt');
+        $pdf->setTemplate('receipt', resource_path('assets/pdf/partymeister-competitions-receipt'));
 
         $competitions = Competition::where('has_prizegiving', true)
                                    ->orderBy('prizegiving_sort_position', 'DESC')

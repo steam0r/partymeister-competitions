@@ -171,4 +171,4 @@
         })
         ;
     </script>
-@endsection
+@append

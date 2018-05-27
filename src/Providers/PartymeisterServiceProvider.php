@@ -31,19 +31,23 @@ class PartymeisterServiceProvider extends ServiceProvider
         $this->publishResourceAssets();
     }
 
+
     public function publishResourceAssets()
     {
         $assets = [
-            __DIR__ . '/../../resources/assets/css'       => resource_path('assets/css'),
+            __DIR__ . '/../../resources/assets/sass' => resource_path('assets/sass'),
+            __DIR__ . '/../../resources/assets/pdf'  => resource_path('assets/pdf'),
         ];
 
-        $this->publishes($assets, 'partymeister-competitions-install');
+        $this->publishes($assets, 'partymeister-competitions-install-resources');
     }
+
 
     public function config()
     {
 
     }
+
 
     public function registerCommands()
     {
@@ -68,9 +72,9 @@ class PartymeisterServiceProvider extends ServiceProvider
     {
         $config = $this->app['config']->get('motor-backend-permissions', []);
         $this->app['config']->set('motor-backend-permissions',
-            array_replace_recursive(require __DIR__ . '/../../config/motor-backend-permissions.php',
-                $config));
+            array_replace_recursive(require __DIR__ . '/../../config/motor-backend-permissions.php', $config));
     }
+
 
     public function routes()
     {
@@ -103,32 +107,32 @@ class PartymeisterServiceProvider extends ServiceProvider
 
     public function routeModelBindings()
     {
-        Route::bind('option_group', function($id){
+        Route::bind('option_group', function ($id) {
             return \Partymeister\Competitions\Models\OptionGroup::findOrFail($id);
         });
 
-        Route::bind('competition_type', function($id){
+        Route::bind('competition_type', function ($id) {
             return \Partymeister\Competitions\Models\CompetitionType::findOrFail($id);
         });
 
-        Route::bind('competition', function($id){
+        Route::bind('competition', function ($id) {
             return \Partymeister\Competitions\Models\Competition::findOrFail($id);
         });
 
-        Route::bind('vote_category', function($id){
+        Route::bind('vote_category', function ($id) {
             return \Partymeister\Competitions\Models\VoteCategory::findOrFail($id);
         });
 
-        Route::bind('entry', function($id){
+        Route::bind('entry', function ($id) {
             return \Partymeister\Competitions\Models\Entry::findOrFail($id);
         });
-        Route::bind('access_key', function($id){
+        Route::bind('access_key', function ($id) {
             return \Partymeister\Competitions\Models\AccessKey::findOrFail($id);
         });
-        Route::bind('competition_prize', function($id){
+        Route::bind('competition_prize', function ($id) {
             return \Partymeister\Competitions\Models\CompetitionPrize::findOrFail($id);
         });
-        Route::bind('vote', function($id){
+        Route::bind('vote', function ($id) {
             return \Partymeister\Competitions\Models\Vote::findOrFail($id);
         });
     }
