@@ -54,6 +54,55 @@
                     <input type="hidden" name="type[now]" value="now">
                     <input type="hidden" name="name[now]" value="Prizegiving: Now">
 
+                    @foreach ($results as $key => $competition)
+                        <div id="slidemeister-prizegiving-{{$key}}-now" class="slidemeister-instance"></div>
+
+                        <input type="hidden" name="slide[{{$key}}_now]">
+                        <input type="hidden" name="preview[{{$key}}_now]">
+                        <input type="hidden" name="final[{{$key}}_now]">
+                        <input type="hidden" name="cached_html_preview[{{$key}}_now]">
+                        <input type="hidden" name="cached_html_final[{{$key}}_now]">
+                        <input type="hidden" name="type[{{$key}}_now]" value="now">
+                        <input type="hidden" name="name[{{$key}}_now]" value="Competition: {{$key}} Now">
+
+                        @if ($competition['has_comment'])
+                        <div id="slidemeister-prizegiving-{{$key}}-comments"
+                             class="slidemeister-instance"></div>
+
+                        <input type="hidden" name="slide[{{$key}}_comments]">
+                        <input type="hidden" name="preview[{{$key}}_comments]">
+                        <input type="hidden" name="final[{{$key}}_comments]">
+                        <input type="hidden" name="cached_html_preview[{{$key}}_comments]">
+                        <input type="hidden" name="cached_html_final[{{$key}}_comments]">
+                        <input type="hidden" name="type[{{$key}}_comments]" value="comments">
+                        <input type="hidden" name="name[{{$key}}_comments]"
+                               value="Competition: {{$key}} Comments">
+                        @endif
+
+                        <div id="slidemeister-prizegiving-{{$key}}-slide" class="slidemeister-instance"></div>
+
+                        <input type="hidden" name="slide[{{$key}}_slide]">
+                        <input type="hidden" name="preview[{{$key}}_slide]">
+                        <input type="hidden" name="final[{{$key}}_slide]">
+                        <input type="hidden" name="cached_html_preview[{{$key}}_slide]">
+                        <input type="hidden" name="cached_html_final[{{$key}}_slide]">
+                        <input type="hidden" name="type[{{$key}}_slide]" value="siegmeister_bars">
+                        <input type="hidden" name="name[{{$key}}_slide]" value="Competition: {{$key}} Bars">
+                        <input type="hidden" name="meta[{{$key}}_slide]" value="Competition: {{$key}} Meta">
+
+                        <div id="slidemeister-prizegiving-{{$key}}-winners" class="slidemeister-instance"></div>
+
+                        <input type="hidden" name="slide[{{$key}}_winners]">
+                        <input type="hidden" name="preview[{{$key}}_winners]">
+                        <input type="hidden" name="final[{{$key}}_winners]">
+                        <input type="hidden" name="cached_html_preview[{{$key}}_winners]">
+                        <input type="hidden" name="cached_html_final[{{$key}}_winners]">
+                        <input type="hidden" name="type[{{$key}}_winners]" value="siegmeister_winners">
+                        <input type="hidden" name="name[{{$key}}_winners]"
+                               value="Competition: {{$key}} Winners">
+                    @endforeach
+
+                    @if (count($specialVotes) > 0)
 
                     <div id="slidemeister-prizegiving-special-now" class="slidemeister-instance"></div>
 
@@ -85,56 +134,7 @@
                     <input type="hidden" name="cached_html_final[special_winners]">
                     <input type="hidden" name="type[special_winners]" value="siegmeister_winners">
                     <input type="hidden" name="name[special_winners]" value="Special: Winners">
-
-
-                    @foreach ($results as $key => $competition)
-                        <div id="slidemeister-prizegiving-{{$key}}-now" class="slidemeister-instance"></div>
-
-                        <input type="hidden" name="slide[{{$key}}_now]">
-                        <input type="hidden" name="preview[{{$key}}_now]">
-                        <input type="hidden" name="final[{{$key}}_now]">
-                        <input type="hidden" name="cached_html_preview[{{$key}}_now]">
-                        <input type="hidden" name="cached_html_final[{{$key}}_now]">
-                        <input type="hidden" name="type[{{$key}}_now]" value="now">
-                        <input type="hidden" name="name[{{$key}}_now]" value="Competition: {{$key}} Now">
-
-                        <div id="slidemeister-prizegiving-{{$key}}-comments"
-                             class="slidemeister-instance"></div>
-
-                        <input type="hidden" name="slide[{{$key}}_comments]">
-                        <input type="hidden" name="preview[{{$key}}_comments]">
-                        <input type="hidden" name="final[{{$key}}_comments]">
-                        <input type="hidden" name="cached_html_preview[{{$key}}_comments]">
-                        <input type="hidden" name="cached_html_final[{{$key}}_comments]">
-                        <input type="hidden" name="type[{{$key}}_comments]" value="comments">
-                        <input type="hidden" name="name[{{$key}}_comments]"
-                               value="Competition: {{$key}} Comments">
-
-                        <div id="slidemeister-prizegiving-{{$key}}-slide" class="slidemeister-instance"></div>
-
-                        <input type="hidden" name="slide[{{$key}}_slide]">
-                        <input type="hidden" name="preview[{{$key}}_slide]">
-                        <input type="hidden" name="final[{{$key}}_slide]">
-                        <input type="hidden" name="cached_html_preview[{{$key}}_slide]">
-                        <input type="hidden" name="cached_html_final[{{$key}}_slide]">
-                        <input type="hidden" name="type[{{$key}}_slide]" value="siegmeister_bars">
-                        <input type="hidden" name="name[{{$key}}_slide]" value="Competition: {{$key}} Bars">
-                        <input type="hidden" name="meta[{{$key}}_slide]" value="Competition: {{$key}} Meta">
-
-
-
-
-                        <div id="slidemeister-prizegiving-{{$key}}-winners" class="slidemeister-instance"></div>
-
-                        <input type="hidden" name="slide[{{$key}}_winners]">
-                        <input type="hidden" name="preview[{{$key}}_winners]">
-                        <input type="hidden" name="final[{{$key}}_winners]">
-                        <input type="hidden" name="cached_html_preview[{{$key}}_winners]">
-                        <input type="hidden" name="cached_html_final[{{$key}}_winners]">
-                        <input type="hidden" name="type[{{$key}}_winners]" value="siegmeister_winners">
-                        <input type="hidden" name="name[{{$key}}_winners]"
-                               value="Competition: {{$key}} Winners">
-                    @endforeach
+                    @endif
 
                     <div id="slidemeister-prizegiving-end" class="slidemeister-instance"></div>
 
@@ -171,24 +171,6 @@
                 'headline': 'NOW'
             }, false, true);
 
-            sm['special_now'] = $('#slidemeister-prizegiving-special-now').slidemeister('#slidemeister-properties', slidemeisterProperties);
-            sm['special_now'].data.load({!! $comingupTemplate->definitions !!}, {
-                'competition': 'CROWD FAVOURITE',
-                'headline': 'NOW'
-            }, false, true);
-
-            sm['special_slide'] = $('#slidemeister-prizegiving-special-slide').slidemeister('#slidemeister-properties', slidemeisterProperties);
-            sm['special_slide'].data.load({!! $prizegivingTemplate->definitions !!}, {
-                'competition': 'CROWD FAVOURITE'
-            }, false, true);
-            sm['special_slide'].data.populatePrizegiving({!! json_encode($specialVotes) !!}, 'meta[special_slide]');
-
-            sm['special_winners'] = $('#slidemeister-prizegiving-special-winners').slidemeister('#slidemeister-properties', slidemeisterProperties);
-            sm['special_winners'].data.load({!! $prizegivingTemplate->definitions !!}, {
-                'competition': 'CROWD FAVOURITE'
-            }, false, true);
-            sm['special_winners'].data.populatePrizegiving({!! json_encode($specialVotes) !!}, '', true);
-
             @foreach ($results as $key => $competition)
                 sm['{{$key}}_now'] = $('#slidemeister-prizegiving-{{$key}}-now').slidemeister('#slidemeister-properties', slidemeisterProperties);
             sm['{{$key}}_now'].data.load({!! $comingupTemplate->definitions !!}, {
@@ -208,12 +190,34 @@
             }, false, true);
             sm['{{$key}}_winners'].data.populatePrizegiving({!! json_encode($competition['entries']) !!}, '', true);
 
-            sm['{{$key}}_comments'] = $('#slidemeister-prizegiving-{{$key}}-comments').slidemeister('#slidemeister-properties', slidemeisterProperties);
+            @if ($competition['has_comment'])
+                sm['{{$key}}_comments'] = $('#slidemeister-prizegiving-{{$key}}-comments').slidemeister('#slidemeister-properties', slidemeisterProperties);
             sm['{{$key}}_comments'].data.load({!! $commentsTemplate->definitions !!}, {
                 'body': '{!! addslashes($comments[$key]) !!}'
             }, false, true);
+            @endif
 
             @endforeach
+
+            @if (count($specialVotes) > 0)
+            sm['special_now'] = $('#slidemeister-prizegiving-special-now').slidemeister('#slidemeister-properties', slidemeisterProperties);
+            sm['special_now'].data.load({!! $comingupTemplate->definitions !!}, {
+                'competition': 'CROWD FAVOURITE',
+                'headline': 'NOW'
+            }, false, true);
+
+            sm['special_slide'] = $('#slidemeister-prizegiving-special-slide').slidemeister('#slidemeister-properties', slidemeisterProperties);
+            sm['special_slide'].data.load({!! $prizegivingTemplate->definitions !!}, {
+                'competition': 'CROWD FAVOURITE'
+            }, false, true);
+            sm['special_slide'].data.populatePrizegiving({!! json_encode($specialVotes) !!}, 'meta[special_slide]');
+
+            sm['special_winners'] = $('#slidemeister-prizegiving-special-winners').slidemeister('#slidemeister-properties', slidemeisterProperties);
+            sm['special_winners'].data.load({!! $prizegivingTemplate->definitions !!}, {
+                'competition': 'CROWD FAVOURITE'
+            }, false, true);
+            sm['special_winners'].data.populatePrizegiving({!! json_encode($specialVotes) !!}, '', true);
+            @endif
 
                 sm['end'] = $('#slidemeister-prizegiving-end').slidemeister('#slidemeister-properties', slidemeisterProperties);
             sm['end'].data.load({!! $endTemplate->definitions !!}, {
