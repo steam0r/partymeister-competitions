@@ -63,7 +63,7 @@
 
             $(document).on('click', 'button.remove-options', function (e) {
                 e.preventDefault();
-                $(this).parent().parent().parent().remove();
+                $(this).parent().parent().remove();
             });
         });
     </script>
