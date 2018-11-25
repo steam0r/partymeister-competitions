@@ -45,7 +45,7 @@
 {!! form_end($form) !!}
 
 @section ('right-sidebar')
-    @include('motor-media::layouts.partials.mediapool')
+    <motor-cms-mediapool></motor-cms-mediapool>
 @endsection
 @section('view_scripts')
     <script type="text/javascript">

@@ -21,7 +21,8 @@
             @include('motor-backend::grid.table')
         @endif
     </div>
-    @include('partymeister-competitions::layouts.partials.entry_modal', ['id' => 'entry-modal', 'label' => 'Entry modal window' ])
+    <partymeister-competitions-entry-modal :id="'entry-modal'"
+                                           :label="'Entry modal window'"></partymeister-competitions-entry-modal>
 @endsection
 @section('view_scripts')
     <script type="text/javascript">
@@ -30,7 +31,6 @@
         });
 
         var apiToken = '{{Auth::user()->api_token}}';
-        var app = false;
 
         var switchCssClass = function (that, value, cssClass1, cssClass2) {
             if (value == true) {
@@ -125,50 +125,9 @@
             e.preventDefault();
             $.ajax('{{action('\Partymeister\Competitions\Http\Controllers\Api\EntriesController@index')}}/' + $(this).data('id') + '?api_token=' + apiToken)
                 .done(function (results) {
-                    console.log(results);
-
-                    if (app === false) {
-                        app = new window.Vue({
-                            el: '#entry-modal',
-                            data: {
-                                entry: results.data
-                            },
-                            methods: {
-                                nl2br: function (string) {
-                                    return (string + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
-                                },
-                                bool: function (value) {
-                                    if (value == 0) {
-                                        return '{{ trans('motor-backend::backend/global.no') }}';
-                                    } else {
-                                        return '{{ trans('motor-backend::backend/global.yes') }}';
-                                    }
-                                },
-                                setAudioSource: function () {
-                                    var that = this;
-                                    var audioPlayer = new MediaElementPlayer('audio-player');
-                                    console.log(audioPlayer);
-                                    audioPlayer.setSrc(that.entry.audio.data.url);
-
-//                                    var audioPlayer = $('#audio-player').mediaelementplayer({success: function(mediaElement, originalNode, instance) {
-//                                        console.log("hier");
-//                                        instance.media.pluginApi.setSrc(that.entry.audio.data.url);
-//                                    }});
-//                                    audioPlayer.setSrc(src);
-////                                    $('#audio-player audio').remove();
-//                                    var audioPlayer = new MediaElementPlayer('#audio-player');
-//                                    audioPlayer.setSrc(src);
-                                }
-                            }
-                        });
-                    } else {
-                        app.entry = results.data;
-                        app.$forceUpdate();
-                    }
+                    Vue.prototype.$eventHub.$emit('partymeister-competitions:show-entry-modal', results.data);
                     $('#entry-modal').modal('show')
-                })
-            ;
-        })
-        ;
+                });
+        });
     </script>
 @append
