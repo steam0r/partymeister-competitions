@@ -15,7 +15,7 @@
     "partymeister/core": "0.3.*",
     "setasign/fpdi-tcpdf": "^2.0",
     "tecnickcom/tcpdf": "^6.2",
-    "kwn/number-to-words": "^1.5.0",
+    "kwn/number-to-words": "^1.5.0"
   },
   "autoload": {
     "psr-4": {
