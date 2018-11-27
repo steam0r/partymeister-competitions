@@ -45,7 +45,7 @@
 {!! form_end($form) !!}
 
 @section ('right-sidebar')
-    <motor-cms-mediapool></motor-cms-mediapool>
+    <motor-media-mediapool></motor-media-mediapool>
 @endsection
 @section('view_scripts')
     <script type="text/javascript">

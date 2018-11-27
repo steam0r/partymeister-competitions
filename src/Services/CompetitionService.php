@@ -8,7 +8,7 @@ use Motor\Media\Models\FileAssociation;
 use Partymeister\Competitions\Events\CompetitionSaved;
 use Partymeister\Competitions\Models\Competition;
 use Motor\Backend\Services\BaseService;
-use Spatie\MediaLibrary\Media;
+use Spatie\MediaLibrary\Models\Media;
 
 class CompetitionService extends BaseService
 {

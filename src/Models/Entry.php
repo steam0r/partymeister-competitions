@@ -3,16 +3,15 @@
 namespace Partymeister\Competitions\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Motor\Core\Traits\Searchable;
 use Motor\Core\Traits\Filterable;
 
+use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
-use Spatie\MediaLibrary\Media;
 
-class Entry extends Model implements HasMediaConversions
+class Entry extends Model implements HasMedia
 {
 
     use HasMediaTrait;

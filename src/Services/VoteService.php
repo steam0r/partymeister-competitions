@@ -40,7 +40,7 @@ class VoteService extends BaseService
             $results[$competition->id]   = [
                 'id'          => $competition->id,
                 'name'        => $competition->name,
-                'has_comment' => (bool)$competition->vote_categories[0]->has_comment,
+                'has_comment' => isset($competition->vote_categories[0]) ? (bool)$competition->vote_categories[0]->has_comment : false,
                 'entries'     => []
             ];
             $maxPoints[$competition->id] = 0;
@@ -77,7 +77,7 @@ class VoteService extends BaseService
                             ->orderBy('prizegiving_sort_position', 'DESC')
                             ->get() as $competition) {
 
-            if ($competition->vote_categories[0]->has_special_vote) {
+            if (isset($competition->vote_categories[0]) && $competition->vote_categories[0]->has_special_vote) {
                 foreach ($competition->entries()->where('status', 1)->get() as $entry) {
                     $specialVotes = (int) $entry->special_votes;
                     $maxPoints    = max($specialVotes, $maxPoints);

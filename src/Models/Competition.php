@@ -10,12 +10,12 @@ use Culpa\Traits\CreatedBy;
 use Culpa\Traits\DeletedBy;
 use Culpa\Traits\UpdatedBy;
 use Motor\Media\Models\FileAssociation;
-use Partymeister\Competitions\Forms\Backend\CompetitionPrizeForm;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
-use Spatie\MediaLibrary\Media;
 
-class Competition extends Model implements HasMediaConversions
+use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+
+class Competition extends Model implements HasMedia
 {
 
     use HasMediaTrait;

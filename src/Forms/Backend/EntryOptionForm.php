@@ -14,8 +14,11 @@ class EntryOptionForm extends Form
     public function buildForm()
     {
         $selected = [];
-        foreach ($this->model as $option) {
-            $selected[] = $option->id;
+
+        if (isset($this->model['options'])) {
+            foreach ($this->model['options'] as $option) {
+                $selected[] = $option->id;
+            }
         }
 
         if (isset($this->data['competition']) && ! is_null($this->data['competition'])) {
