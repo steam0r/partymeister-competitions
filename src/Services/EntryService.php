@@ -41,7 +41,8 @@ class EntryService extends BaseService
 
     protected function addOptions()
 	{
-		foreach ($this->request->get('options', []) as $group) {
+	    $prefix = $this->form->getName() ? $this->form->getName().'.' : '';
+		foreach ($this->request->input($prefix.'options', []) as $group) {
 			if (is_array($group)) {
 				foreach ($group as $option => $id) {
 					$this->record->options()->attach($id);
@@ -55,7 +56,9 @@ class EntryService extends BaseService
 
     public function afterUpdate()
     {
-        if (count($this->request->get('options', [])) > 0) {
+        $prefix = $this->form->getName() ? $this->form->getName().'.' : '';
+
+        if (count($this->request->input($prefix.'options', [])) > 0) {
             $this->record->options()->detach();
             $this->addOptions();
         }
@@ -66,16 +69,19 @@ class EntryService extends BaseService
 
     protected function addImages()
     {
+        // We need this in case we have named forms
+        $prefix = $this->form->getName() !== '' ? $this->form->getName().'.' : '';
+
     	$numberOfWorkStages = $this->record->competition->competition_type->number_of_work_stages;
         if ($numberOfWorkStages > 0) {
             for ($i = 1; $i <= $numberOfWorkStages; $i++) {
-                $this->uploadFile($this->request->file('work_stage_' . $i), 'work_stage_' . $i, 'work_stage_' . $i);
+                $this->uploadFile($this->request->file($prefix.'work_stage_' . $i), 'work_stage_' . $i, 'work_stage_' . $i);
             }
         }
 
-        $this->uploadFile($this->request->file('screenshot'), 'screenshot');
-        $this->uploadFile($this->request->file('video'), 'video');
-        $this->uploadFile($this->request->file('audio'), 'audio');
-        $this->uploadFile($this->request->file('file'), 'file', 'file', null, true);
+        $this->uploadFile($this->request->file($prefix.'screenshot'), 'screenshot');
+        $this->uploadFile($this->request->file($prefix.'video'), 'video');
+        $this->uploadFile($this->request->file($prefix.'audio'), 'audio');
+        $this->uploadFile($this->request->file($prefix.'file'), 'file', 'file', null, true);
     }
 }

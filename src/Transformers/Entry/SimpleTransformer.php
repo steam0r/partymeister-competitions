@@ -2,6 +2,7 @@
 
 namespace Partymeister\Competitions\Transformers\Entry;
 
+use Illuminate\Support\Collection;
 use League\Fractal;
 use League\Fractal\ParamBag;
 use Partymeister\Competitions\Models\Entry;
@@ -27,10 +28,14 @@ class SimpleTransformer extends Fractal\TransformerAbstract
             $voteCategory = $entry->competition->vote_categories[0];
         }
 
-        $votes = Vote::where('entry_id', $entry->id)
-                     ->where('vote_category_id', $voteCategory->id)
-                     ->where('visitor_id', $params->get('visitor_id'))
-                     ->get();
+        if (is_null($voteCategory)) {
+            $votes = new Collection();
+        } else {
+            $votes = Vote::where('entry_id', $entry->id)
+                ->where('vote_category_id', $voteCategory->id)
+                ->where('visitor_id', $params->get('visitor_id'))
+                ->get();
+        }
 
         return $this->collection($votes, new \Partymeister\Competitions\Transformers\Vote\SimpleTransformer());
     }

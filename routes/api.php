@@ -27,3 +27,12 @@ Route::group([
 Route::post('api/sync/competition', 'Partymeister\Competitions\Http\Controllers\Api\SyncController@competition');
 Route::post('api/sync/entry', 'Partymeister\Competitions\Http\Controllers\Api\SyncController@entry');
 Route::post('api/sync/livevote', 'Partymeister\Competitions\Http\Controllers\Api\SyncController@livevote');
+
+Route::group([
+    'middleware' => [ 'web', 'auth:visitor', 'bindings' ],
+    'namespace'  => 'Partymeister\Competitions\Http\Controllers\Api\Frontend',
+    'prefix'     => 'ajax',
+    'as'         => 'ajax.',
+], function () {
+    Route::post('votes/{api_token}/submit', 'VotesController@store')->name('votes.submit');
+});

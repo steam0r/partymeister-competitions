@@ -11,7 +11,7 @@ Route::group([
     ]
 ], function () {
 
-    Route::group([ 'middleware' => [ 'permission' ] ], function () {
+    Route::group(['middleware' => ['permission']], function () {
         Route::resource('option_groups', 'OptionGroupsController');
         Route::resource('competition_types', 'CompetitionTypesController');
         Route::get('competitions/{competition}/playlist', 'Competitions\PlaylistsController@index')->name('competitions.playlist.index');
@@ -33,22 +33,53 @@ Route::group([
     });
 });
 
-Route::get('results', function(){
+Route::get('results', function () {
     $results = \Partymeister\Competitions\Services\VoteService::getAllVotesByRank();
 
     foreach ($results as $competition) {
-        echo $competition['name']."\r\n";
+        echo $competition['name'] . "\r\n";
         foreach ($competition['entries'] as $entry) {
-            echo $entry['points']."\t".$entry['title']."\t".$entry['author']."\r\n";
+            echo $entry['points'] . "\t" . $entry['title'] . "\t" . $entry['author'] . "\r\n";
         }
         echo "\r\n";
     }
 });
 
-Route::get('results-special', function(){
+Route::get('results-special', function () {
     $results = \Partymeister\Competitions\Services\VoteService::getAllSpecialVotesByRank();
 
     foreach ($results as $entry) {
-        echo $entry['special_votes']."\t".$entry['title']."\t".$entry['author']."\r\n";
+        echo $entry['special_votes'] . "\t" . $entry['title'] . "\t" . $entry['author'] . "\r\n";
     }
+});
+
+// Only add the route group if you don't already have one for the given namespace
+Route::group([
+    'as'         => 'component.',
+    'prefix'     => 'component',
+    'namespace'  => 'Partymeister\Competitions\Http\Controllers\Backend\Component',
+    'middleware' => [
+        'web',
+    ]
+], function () {
+    // You only need this part if you already have a component group for the given namespace
+    Route::get('votings', 'ComponentVotingsController@create')->name('votings.create');
+    Route::post('votings', 'ComponentVotingsController@store')->name('votings.store');
+    Route::get('votings/{component_voting}', 'ComponentVotingsController@edit')->name('votings.edit');
+    Route::patch('votings/{component_voting}', 'ComponentVotingsController@update')->name('votings.update');
+
+    Route::get('entries', 'ComponentEntriesController@create')->name('entries.create');
+    Route::post('entries', 'ComponentEntriesController@store')->name('entries.store');
+    Route::get('entries/{component_entry}', 'ComponentEntriesController@edit')->name('entries.edit');
+    Route::patch('entries/{component_entry}', 'ComponentEntriesController@update')->name('entries.update');
+
+    Route::get('entry-screenshots', 'ComponentEntryScreenshotsController@create')->name('entry-screenshots.create');
+    Route::post('entry-screenshots', 'ComponentEntryScreenshotsController@store')->name('entry-screenshots.store');
+    Route::get('entry-screenshots/{component_entry_screenshot}', 'ComponentEntryScreenshotsController@edit')->name('entry-screenshots.edit');
+    Route::patch('entry-screenshots/{component_entry_screenshot}', 'ComponentEntryScreenshotsController@update')->name('entry-screenshots.update');
+
+    Route::get('entry-uploads', 'ComponentEntryUploadsController@create')->name('entry-uploads.create');
+    Route::post('entry-uploads', 'ComponentEntryUploadsController@store')->name('entry-uploads.store');
+    Route::get('entry-uploads/{component_entry_upload}', 'ComponentEntryUploadsController@edit')->name('entry-uploads.edit');
+    Route::patch('entry-uploads/{component_entry_upload}', 'ComponentEntryUploadsController@update')->name('entry-uploads.update');
 });

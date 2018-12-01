@@ -29,6 +29,14 @@ class PartymeisterServiceProvider extends ServiceProvider
         $this->registerCommands();
         $this->migrations();
         $this->publishResourceAssets();
+        $this->components();
+    }
+
+
+    public function components()
+    {
+        $config = $this->app['config']->get('motor-cms-page-components', []);
+        $this->app['config']->set('motor-cms-page-components', array_replace_recursive(require __DIR__ . '/../../config/motor-cms-page-components.php', $config));
     }
 
 
@@ -71,8 +79,7 @@ class PartymeisterServiceProvider extends ServiceProvider
     public function permissions()
     {
         $config = $this->app['config']->get('motor-backend-permissions', []);
-        $this->app['config']->set('motor-backend-permissions',
-            array_replace_recursive(require __DIR__ . '/../../config/motor-backend-permissions.php', $config));
+        $this->app['config']->set('motor-backend-permissions', array_replace_recursive(require __DIR__ . '/../../config/motor-backend-permissions.php', $config));
     }
 
 
@@ -135,13 +142,29 @@ class PartymeisterServiceProvider extends ServiceProvider
         Route::bind('vote', function ($id) {
             return \Partymeister\Competitions\Models\Vote::findOrFail($id);
         });
+
+        // Components
+        Route::bind('component_voting', function ($id) {
+            return \Partymeister\Competitions\Models\Component\ComponentVoting::findOrFail($id);
+        });
+
+        Route::bind('component_entry', function ($id) {
+            return \Partymeister\Competitions\Models\Component\ComponentEntry::findOrFail($id);
+        });
+
+        Route::bind('component_entry_screenshot', function ($id) {
+            return \Partymeister\Competitions\Models\Component\ComponentEntryScreenshot::findOrFail($id);
+        });
+
+        Route::bind('component_entry_upload', function ($id) {
+            return \Partymeister\Competitions\Models\Component\ComponentEntryUpload::findOrFail($id);
+        });
     }
 
 
     public function navigationItems()
     {
         $config = $this->app['config']->get('motor-backend-navigation', []);
-        $this->app['config']->set('motor-backend-navigation',
-            array_replace_recursive(require __DIR__ . '/../../config/motor-backend-navigation.php', $config));
+        $this->app['config']->set('motor-backend-navigation', array_replace_recursive(require __DIR__ . '/../../config/motor-backend-navigation.php', $config));
     }
 }
