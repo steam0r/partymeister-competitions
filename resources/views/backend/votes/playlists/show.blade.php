@@ -1,7 +1,4 @@
 @extends('motor-backend::layouts.backend')
-<div class="loader loader-default"
-     data-text="&hearts; Generating slide previews and hiding the ugliness &hearts;"></div>
-
 @section('view_styles')
     @include('partymeister-slides::layouts.partials.slide_fonts')
     <style type="text/css">
@@ -149,6 +146,8 @@
             </div>
         </form>
     @endif
+    <div class="loader loader-default"
+         data-text="&hearts; Generating slide previews and hiding the ugliness &hearts;"></div>
 @endsection
 
 @if (!isset($message))

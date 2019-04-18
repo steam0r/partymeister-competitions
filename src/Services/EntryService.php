@@ -56,7 +56,10 @@ class EntryService extends BaseService
 
     public function afterUpdate()
     {
-        $prefix = $this->form->getName() ? $this->form->getName().'.' : '';
+        $prefix = '';
+        if (!is_null($this->form)) {
+            $prefix = $this->form->getName() ? $this->form->getName().'.' : '';
+        }
 
         if (count($this->request->input($prefix.'options', [])) > 0) {
             $this->record->options()->detach();
@@ -70,7 +73,10 @@ class EntryService extends BaseService
     protected function addImages()
     {
         // We need this in case we have named forms
-        $prefix = $this->form->getName() !== '' ? $this->form->getName().'.' : '';
+        $prefix = '';
+        if (!is_null($this->form)) {
+            $prefix = $this->form->getName() != null ? $this->form->getName().'.' : '';
+        }
 
     	$numberOfWorkStages = $this->record->competition->competition_type->number_of_work_stages;
         if ($numberOfWorkStages > 0) {

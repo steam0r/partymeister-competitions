@@ -42,6 +42,16 @@ class CompetitionService extends BaseService
                      ]);
     }
 
+    public function beforeUpdate()
+    {
+        if (isset($this->data['upload_enabled'])) {
+            $this->data['upload_enabled'] = (bool)$this->data['upload_enabled'];
+        }
+        if (isset($this->data['voting_enabled'])) {
+            $this->data['voting_enabled'] = (bool)$this->data['voting_enabled'];
+        }
+    }
+
 
     public function afterCreate()
     {

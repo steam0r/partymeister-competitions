@@ -50,9 +50,9 @@ class PlaylistsController extends Controller
                     'data'    => [
                         'competition' => [
                             'name'         => $competition->name,
-                            'is_anonymous' => (bool) $competition->competition_type->is_anonymous
+                            'is_anonymous' => (bool)$competition->competition_type->is_anonymous
                         ],
-                        'entries'     => [ 'data' => $data ]
+                        'entries'     => ['data' => $data]
                     ]
                 ];
 
@@ -71,8 +71,7 @@ class PlaylistsController extends Controller
                 return $m3u;
                 break;
             case 'slides':
-                $resource = $this->transformCollection($competition->sorted_entries,
-                    \Partymeister\Competitions\Transformers\EntryTransformer::class);
+                $resource = $this->transformCollection($competition->sorted_entries, \Partymeister\Competitions\Transformers\EntryTransformer::class);
 
                 $data    = $this->fractal->createData($resource)->toArray();
                 $entries = Arr::get($data, 'data');
@@ -87,7 +86,7 @@ class PlaylistsController extends Controller
                         $entries[$key]['description'] = ' ';
                     }
                     if ($key > 0) {
-                        $entries[$key]['previous_sort_position'] = ( strlen($key) == 1 ? '0' . $key : $key );
+                        $entries[$key]['previous_sort_position'] = (strlen($key) == 1 ? '0' . $key : $key);
                         $entries[$key]['previous_author']        = $entries[$key - 1]['author'];
                         $entries[$key]['previous_title']         = $entries[$key - 1]['title'];
                     } else {
@@ -97,7 +96,7 @@ class PlaylistsController extends Controller
                     }
 
                     foreach (array_get($entry, 'options.data', []) as $i => $option) {
-                        $entries[$key]['option_'.($i+1)] = $option['name'];
+                        $entries[$key]['option_' . ($i + 1)] = $option['name'];
                     }
                 }
 
@@ -112,6 +111,7 @@ class PlaylistsController extends Controller
 
                 shuffle($participants);
 
+                $firstEntryTemplate   = SlideTemplate::where('template_for', 'competition_entry_1')->first();
                 $entryTemplate        = SlideTemplate::where('template_for', 'competition')->first();
                 $comingupTemplate     = SlideTemplate::where('template_for', 'coming_up')->first();
                 $endTemplate          = SlideTemplate::where('template_for', 'end')->first();
@@ -121,8 +121,7 @@ class PlaylistsController extends Controller
                 foreach ($competition->file_associations as $fileAssociation) {
                     $videos[] = [
                         'file_id' => $fileAssociation->file->id,
-                        'data'    => MediaHelper::getFileInformation($fileAssociation->file, 'file', false,
-                            [ 'preview', 'thumb' ])
+                        'data'    => MediaHelper::getFileInformation($fileAssociation->file, 'file', false, ['preview', 'thumb'])
                     ];
                 }
 
@@ -137,8 +136,7 @@ class PlaylistsController extends Controller
 
                 if ($response === true) {
                     return view('partymeister-competitions::backend.competitions.playlists.show',
-                        compact('competition', 'entries', 'entryTemplate', 'comingupTemplate', 'endTemplate',
-                            'participantsTemplate', 'videos', 'participants'));
+                        compact('competition', 'entries', 'firstEntryTemplate', 'entryTemplate', 'comingupTemplate', 'endTemplate', 'participantsTemplate', 'videos', 'participants'));
                 } else {
                     return $response;
                 }
@@ -156,8 +154,7 @@ class PlaylistsController extends Controller
             if ($entry->competition->competition_type->is_anonymous) {
                 $output .= "#EXTINF:-1," . str_replace(' - ', '-', $entry->title) . "\r\n";
             } else {
-                $output .= "#EXTINF:-1," . str_replace(' - ', '-', $entry->author) . " - " . str_replace(' - ', '-',
-                        $entry->title) . "\r\n";
+                $output .= "#EXTINF:-1," . str_replace(' - ', '-', $entry->author) . " - " . str_replace(' - ', '-', $entry->title) . "\r\n";
             }
         }
 
@@ -168,7 +165,7 @@ class PlaylistsController extends Controller
     protected function checkIfCompetitionIsValid($competition)
     {
         // Check for entries with status 0 or 2 (unchecked and needs feedback)
-        if ($competition->entries()->whereIn('status', [ 0, 2 ])->count() > 0) {
+        if ($competition->entries()->whereIn('status', [0, 2])->count() > 0) {
             return view('partymeister-competitions::backend.competitions.playlists.show', [
                 'competition' => $competition,
                 'message'     => 'Not all entries are checked and/or disqualified!'
@@ -186,8 +183,7 @@ class PlaylistsController extends Controller
             $sort_position++;
         }
 
-        if ($competition->competition_type->has_composer && $competition->entries()->where('status', 1)
-                                                                         ->where('composer_not_member_of_copyright_collective', false)->count() > 0) {
+        if ($competition->competition_type->has_composer && $competition->entries()->where('status', 1)->where('composer_not_member_of_copyright_collective', false)->count() > 0) {
             if ($entry->sort_position != $sort_position) {
                 return view('partymeister-competitions::backend.competitions.playlists.show', [
                     'competition' => $competition,

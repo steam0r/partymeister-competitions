@@ -1,7 +1,4 @@
 @extends('motor-backend::layouts.backend')
-<div class="loader loader-default"
-     data-text="&hearts; Generating slide previews and hiding the ugliness &hearts;"></div>
-
 @section('view_styles')
     @include('partymeister-slides::layouts.partials.slide_fonts')
     <style type="text/css">
@@ -95,6 +92,8 @@
             </div>
         </form>
     @endif
+    <div class="loader loader-default"
+         data-text="&hearts; Generating slide previews and hiding the ugliness &hearts;"></div>
 @endsection
 
 @if (!isset($message))
@@ -107,18 +106,23 @@
             sm['comingup'] = $('#slidemeister-competition-comingup').slidemeister('#slidemeister-properties', slidemeisterProperties);
             sm['comingup'].data.load({!! $comingupTemplate->definitions !!}, {
                 'competition': '{{strtoupper($competition->name)}}',
-                'headline': 'COMING UP'
+                'headline': '{{config('partymeister-slides-names.coming_up')}}'
             }, false, true);
 
             sm['now'] = $('#slidemeister-competition-now').slidemeister('#slidemeister-properties', slidemeisterProperties);
             sm['now'].data.load({!! $comingupTemplate->definitions !!}, {
                 'competition': '{{strtoupper($competition->name)}}',
-                'headline': 'NOW'
+                'headline': '{{config('partymeister-slides-names.now')}}'
             }, false, true);
 
             @foreach($entries as $entry)
-                sm['entry_{{$entry['id']}}'] = $('#slidemeister-entry-{{$entry['id']}}').slidemeister('#slidemeister-properties', slidemeisterProperties);
-                sm['entry_{{$entry['id']}}'].data.load({!! $entryTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);
+                @if ($loop->first)
+                    sm['entry_{{$entry['id']}}'] = $('#slidemeister-entry-{{$entry['id']}}').slidemeister('#slidemeister-properties', slidemeisterProperties);
+                    sm['entry_{{$entry['id']}}'].data.load({!! $firstEntryTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);
+                @else
+                    sm['entry_{{$entry['id']}}'] = $('#slidemeister-entry-{{$entry['id']}}').slidemeister('#slidemeister-properties', slidemeisterProperties);
+                    sm['entry_{{$entry['id']}}'].data.load({!! $entryTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);
+                @endif
             @endforeach
 
             @if (count($participants) > 0)
@@ -132,7 +136,7 @@
             sm['end'] = $('#slidemeister-competition-end').slidemeister('#slidemeister-properties', slidemeisterProperties);
             sm['end'].data.load({!! $endTemplate->definitions !!}, {
                 'competition': '{{strtoupper($competition->name)}}',
-                'headline': 'END'
+                'headline': '{{config('partymeister-slides-names.end')}}'
             }, false, true);
 
             $('.competition-playlist-save').prop('disabled', false);
