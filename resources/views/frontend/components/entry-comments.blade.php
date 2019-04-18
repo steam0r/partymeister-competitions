@@ -1,17 +1,8 @@
-@section('view-styles')
-    <style type="text/css">
-        .unread {
-            background-color: #ff9fb1;
-            color: #0a0a0a;
-        }
-    </style>
-@endsection
-
 <h4>Messages for entry {{$record->name}}</h4>
 @if($comments->count() > 0)
-    <div class="@boxWrapper box-primary">
+    <div class="card">
         @foreach ($comments as $comment)
-            <div class="@boxHeader with-border">
+            <div class="card-divider">
                 @if ($comment->author != '')
                     <div class="float-right">{{$comment->author}}
                         on {{date('Y-m-d H:i', strtotime($comment->created_at))}}</div>
@@ -20,24 +11,22 @@
                         on {{date('Y-m-d H:i', strtotime($comment->created_at))}}</div>
                 @endif
             </div>
-            <div class="@boxBody @if(!$comment->read_by_visitor) unread @endif">
+            <div class="card-section @if(!$comment->read_by_visitor) unread @endif">
                 {!! nl2br($comment->message) !!}
             </div>
         @endforeach
     </div>
 @endif
 {!! form_start($entryCommentForm) !!}
-<div class="@boxWrapper box-primary">
-    <div class="@boxBody">
-        @if ($comments->where('read_by_visitor', false)->count() > 0)
-            <p>
-                <button type="submit" class="btn btn-block btn-warning mark-as-read">Mark all as read</button>
-            </p>
-        @endif
+<div class="card">
+    @if ($comments->where('read_by_visitor', false)->count() > 0)
+    <div class="card-divider">
+        <button type="submit" class="button warning small expanded mark-as-read">Mark all as read</button>
+    </div>
+    @endif
+    <div class="card-section">
         {!! form_row($entryCommentForm->message) !!}
         {!! form_row($entryCommentForm->mark_as_read) !!}
-    </div>
-    <div class="@boxFooter">
         {!! form_row($entryCommentForm->submit) !!}
     </div>
 </div>

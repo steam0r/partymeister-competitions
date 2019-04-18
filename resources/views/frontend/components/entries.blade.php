@@ -1,5 +1,5 @@
-<h4>
-    <a href="{{route('frontend.pages.index', ['slug' => $component->entry_edit_page->full_slug])}}" class="float-right btn btn-sm btn-success">Upload entry</a>
+<h4 class="clearfix">
+    <a href="{{route('frontend.pages.index', ['slug' => $component->entry_edit_page->full_slug])}}" class="float-right button success small">Upload entry</a>
     Your entries
 </h4>
 @if ($entries->count() == 0)

@@ -23,10 +23,11 @@
           method="post">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <h4>{{$competition->name}}</h4>
-        <div class="grid-x grid-margin-x">
+        <div class="grid-x grid-margin-x grid-margin-y entries" data-equalizer data-equalize-by-row="true">
             @foreach ($competition->entries()->where('status', 1)->orderBy('sort_position', 'ASC')->get() as $entry)
                 <div class="cell medium-6 small-12">
-                    <div class="card @if(isset($votes[1][$entry->id]) && $votes[1][$entry->id]['special_vote'] == 1) special-vote-highlight @endif" data-entry-id="{{$entry->id}}">
+
+                    <div class="card @if(isset($votes[1][$entry->id]) && $votes[1][$entry->id]['special_vote'] == 1) special-vote-highlight @endif" data-entry-id="{{$entry->id}}" data-equalizer-watch>
                         @if($entry->getFirstMedia('screenshot'))
                             <div class="image-wrapper">
                                 <a data-caption="{{$entry->title}} by {{$entry->author}}" data-fancybox="gallery"
@@ -61,19 +62,21 @@
                                 <div class="points" data-entry-id="{{$entry->id}}"
                                      data-vote-category-id="{{$voteCategory->id}}" data-negative="{{$voteCategory->has_negative}}" data-value="{{ (isset($votes[$voteCategory->id][$entry->id]) ? $votes[$voteCategory->id][$entry->id]['points'] : 0)}}" data-points="{{$voteCategory->points}}"></div>
                                 @if ($loop->last && $voteCategory->has_comment)
-                                    <input @if ($votingDeadlineOver)disabled @endif type="text" class="entry-comment" placeholder="Comment"
-                                           name="entry_comment[{{$competition->id}}][{{$entry->id}}]"
-                                           value="{{ (isset($votes[$voteCategory->id][$entry->id]) ? $votes[$voteCategory->id][$entry->id]['comment'] : '')}}">
-                                    <button class="btn btn-sm btn-success save-comment float-right">Send</button>
+                                    <div class="input-group">
+                                        <input @if ($votingDeadlineOver)disabled @endif class="input-group-field entry-comment" placeholder="Comment" type="text" name="entry_comment[{{$competition->id}}][{{$entry->id}}]"
+                                               value="{{ (isset($votes[$voteCategory->id][$entry->id]) ? $votes[$voteCategory->id][$entry->id]['comment'] : '')}}">
+                                        <div class="input-group-button">
+                                            <button class="button success save-comment">Send</button>
+                                        </div>
+                                    </div>
                                 @endif
                                 @if ($loop->last && $voteCategory->has_special_vote)
-
                                     <div>
-                                        <button class="btn btn-sm btn-success btn-block special-vote-on @if(isset($votes[$voteCategory->id][$entry->id]) && $votes[$voteCategory->id][$entry->id]['special_vote'] == 1) d-none @endif">
+                                        <button class="button success small expanded special-vote-on @if(isset($votes[$voteCategory->id][$entry->id]) && $votes[$voteCategory->id][$entry->id]['special_vote'] == 1) hide @endif">
                                             &hearts; My party
                                             favourite &hearts;
                                         </button>
-                                        <button class="btn btn-sm btn-warning btn-block special-vote-off @if (!isset($votes[$voteCategory->id][$entry->id]) || $votes[$voteCategory->id][$entry->id]['special_vote'] == 0)d-none @endif">
+                                        <button class="button warning small expanded special-vote-off @if (!isset($votes[$voteCategory->id][$entry->id]) || $votes[$voteCategory->id][$entry->id]['special_vote'] == 0) hide @endif">
                                             &#x2639; Not my
                                             favourite anymore &#x2639;
                                         </button>
@@ -83,7 +86,7 @@
                             @if ($entry->download != null)
                                 <div class="clearfix"></div>
                                 <a href="{{$entry->download->getUrl()}}" style="text-decoration: none !important">
-                                    <button type="button" class="btn btn-sm btn-block btn-success mt-3">
+                                    <button type="button" class="button small success expanded" style="margin-bottom: 50px;">
                                         Download
                                     </button>
                                 </a>
@@ -107,17 +110,17 @@
                 vote($(ratingElement).data('value'), ratingElement, true);
 
                 $('.special-vote-off').each(function (index, element) {
-                    if (!$(element).hasClass('d-none')) {
-                        $(element).addClass('d-none');
-                        $(element).parent().find('.special-vote-on').removeClass('d-none');
+                    if (!$(element).hasClass('hide')) {
+                        $(element).addClass('hide');
+                        $(element).parent().find('.special-vote-on').removeClass('hide');
                     }
                 });
-                $('.special-vote-off').addClass('d-none');
+                $('.special-vote-off').addClass('hide');
 
                 $('.entries div .card').removeClass('special-vote-highlight');
                 $(this).parent().parent().parent().addClass('special-vote-highlight');
-                $(this).addClass('d-none');
-                $(this).parent().find('.special-vote-off').removeClass('d-none');
+                $(this).addClass('hide');
+                $(this).parent().find('.special-vote-off').removeClass('hide');
             });
 
             $('.special-vote-off').on('click', function (e) {
@@ -127,8 +130,8 @@
                 vote($(ratingElement).data('value'), ratingElement, false);
 
                 $('.entries div .card').removeClass('special-vote-highlight');
-                $(this).addClass('d-none');
-                $(this).parent().find('.special-vote-on').removeClass('d-none');
+                $(this).addClass('hide');
+                $(this).parent().find('.special-vote-on').removeClass('hide');
             });
 
             var vote = function (rating, element, specialVote) {
@@ -156,7 +159,7 @@
 
             $('.save-comment').on('click', function(e) {
                 e.preventDefault();
-                var ratingElement = $(this).parent().find('.points');
+                var ratingElement = $(this).parents().find('.points');
                 vote($(ratingElement).data('value'), ratingElement);
             });
 

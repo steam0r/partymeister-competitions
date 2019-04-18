@@ -8,10 +8,10 @@
 @endif
 @if (!is_null($competition))
     <h4>{{$competition->name}}</h4>
-    <div class="grid-x grid-margin-x">
+    <div class="grid-x grid-margin-x grid-margin-y" data-equalizer data-equalize-by-row="true">
         @foreach ($competition->entries()->where('status', 1)->orderBy('sort_position', 'ASC')->get() as $entry)
             <div class="cell medium-6 small-12">
-                <div class="card">
+                <div class="card" data-equalizer-watch>
                     @if($entry->getFirstMedia('screenshot'))
                         <div class="image-wrapper">
                             <a data-caption="{{$entry->title}} by {{$entry->author}}" data-fancybox="gallery"
@@ -30,7 +30,7 @@
                         @if ($entry->download != null)
                             <div class="clearfix"></div>
                             <a href="{{$entry->download->getUrl()}}" style="text-decoration: none !important">
-                                <button type="button" class="btn btn-sm btn-block btn-success mt-3">
+                                <button type="button" class="button small success expanded">
                                     Download
                                 </button>
                             </a>

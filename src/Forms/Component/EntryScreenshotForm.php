@@ -28,7 +28,7 @@ class EntryScreenshotForm extends Form
         ]);
 
         $this->add('submit', 'submit', [
-            'attr'  => [ 'class' => 'button primary block' ],
+            'attr'  => [ 'class' => 'button success expanded' ],
             'label' => trans('partymeister-competitions::backend/entries.save')
         ]);
 

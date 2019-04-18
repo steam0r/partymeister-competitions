@@ -20,6 +20,7 @@ class EntryUploadForm extends Form
             $this->add('competition_id', 'select', ['attr' => ['class' => 'form-control reload-on-change'], 'label' => trans('partymeister-competitions::backend/competitions.competition'), 'empty_value' => trans('motor-backend::backend/global.please_choose'), 'choices' => $competitions]);
         } elseif (isset($this->getModel()[$this->getName()]) && $this->getModel()[$this->getName()]['competition_id'] > 0) {
             $data['competition'] = Competition::find($this->getModel()[$this->getname()]['competition_id']);
+            $data['competition_id'] = $data['competition']->name;
             $this->add('competition_id', 'static', ['attr' => ['class' => 'form-control reload-on-change'], 'label' => trans('partymeister-competitions::backend/competitions.competition'), 'empty_value' => trans('motor-backend::backend/global.please_choose')]);
         } else {
             $this->add('competition_id', 'select', ['attr' => ['class' => 'form-control reload-on-change'], 'label' => trans('partymeister-competitions::backend/competitions.competition'), 'empty_value' => trans('motor-backend::backend/global.please_choose'), 'choices' => $competitions]);
@@ -41,7 +42,7 @@ class EntryUploadForm extends Form
             ->add('author_city', 'text', ['label' => trans('partymeister-competitions::backend/entries.city'), 'rules' =>  'required'])
             ->add('author_country_iso_3166_1', 'select', ['label' => trans('partymeister-competitions::backend/entries.country'), 'default_value' => 'DE', 'choices' => \Symfony\Component\Intl\Intl::getRegionBundle()->getCountryNames()])
             ->add('options', 'form', ['wrapper' => [], 'class' => '\Partymeister\Competitions\Forms\Backend\EntryOptionForm', 'label' => false, 'data' => $data])
-            ->add('submit', 'submit', ['attr' => ['class' => 'btn btn-primary btn-block'], 'label' => trans('partymeister-competitions::backend/entries.save')]);
+            ->add('submit', 'submit', ['attr' => ['class' => 'success button expanded'], 'label' => trans('partymeister-competitions::backend/entries.save')]);
         $rules = 'required';
 
         if ($this->getModel() && $this->getModel()[$this->getName()]['id'] > 0) {
