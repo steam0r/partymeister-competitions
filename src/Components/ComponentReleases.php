@@ -27,7 +27,10 @@ class ComponentReleases {
             $this->competition = Competition::where('voting_enabled', TRUE)->orderBy('updated_at', 'ASC')->first();
         }
 
-        \View::share('activeCompetitionId', $this->competition->id);
+        if (!is_null($this->competition)) {
+            \View::share('activeCompetitionId', $this->competition->id);
+        }
+
 
 
         return $this->render();

@@ -86,7 +86,9 @@ class ComponentVotings {
             }
         }
 
-        \View::share('activeCompetitionId', $competition->id);
+        if (!is_null($competition)) {
+            \View::share('activeCompetitionId', $competition->id);
+        }
 
         $this->viewData = [
             'competition'           => $competition,
