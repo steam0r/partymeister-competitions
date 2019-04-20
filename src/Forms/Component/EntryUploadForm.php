@@ -63,6 +63,11 @@ class EntryUploadForm extends Form
             if ($data['competition']->competition_type->has_video) {
                 $this->add('video', 'file_video', ['label' =>  trans('partymeister-competitions::backend/entries.video'), 'model' => Entry::class]);
             }
+
+            if ($data['competition']->competition_type->has_config_file) {
+                $this->add('config_file', 'file_file', ['label' =>  trans('partymeister-competitions::backend/entries.config_file'), 'model' => Entry::class]);
+            }
+
 //            if ($data['competition']->competition_type->has_audio) {
 //                $this->add('audio', 'file_audio', ['label' =>  trans('partymeister-competitions::backend/entries.audio'), 'model' => Entry::class]);
 //            }

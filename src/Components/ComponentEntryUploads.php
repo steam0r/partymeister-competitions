@@ -10,6 +10,7 @@ use Motor\CMS\Models\PageVersionComponent;
 use Partymeister\Competitions\Forms\Component\EntryUploadForm;
 use Partymeister\Competitions\Models\Entry;
 use Partymeister\Competitions\Services\EntryService;
+use Partymeister\Core\Services\StuhlService;
 
 class ComponentEntryUploads
 {
@@ -92,7 +93,10 @@ class ComponentEntryUploads
             return redirect()->back()->withErrors($this->entryUploadForm->getErrors())->withInput();
         }
 
-        EntryService::createWithForm($this->request, $this->entryUploadForm);
+        $record = EntryService::createWithForm($this->request, $this->entryUploadForm)->getResult();
+
+        //StuhlService::send($record->visitor->name . ' just added the entry ' . $record->title . ' in the ' . $record->competition->name . ' competition!');
+
 
         return redirect(route('frontend.pages.index', ['slug' => $this->component->entries_page->full_slug]));
     }
@@ -121,7 +125,9 @@ class ComponentEntryUploads
             return redirect()->back()->withErrors($this->entryUploadForm->getErrors())->withInput();
         }
 
-        EntryService::updateWithForm($this->record, $this->request, $this->entryUploadForm);
+        $record = EntryService::updateWithForm($this->record, $this->request, $this->entryUploadForm)->getResult();
+
+        StuhlService::send($record->visitor->name . ' just updated the entry ' . $record->title . ' in the ' . $record->competition->name . ' competition!');
 
         return redirect(route('frontend.pages.index', ['slug' => $this->component->entries_page->full_slug]));
     }

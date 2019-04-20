@@ -53,6 +53,11 @@
                 {!! form_label($form->number_of_work_stages) !!}
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-3">
+                {!! form_row($form->has_config_file) !!}
+            </div>
+        </div>
     </div>
     <!-- /.box-body -->
 

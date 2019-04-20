@@ -10,6 +10,7 @@ use Motor\CMS\Models\PageVersionComponent;
 use Partymeister\Competitions\Forms\Component\EntryScreenshotForm;
 use Partymeister\Competitions\Models\Entry;
 use Partymeister\Competitions\Services\EntryService;
+use Partymeister\Core\Services\StuhlService;
 
 class ComponentEntryScreenshots
 {
@@ -85,8 +86,9 @@ class ComponentEntryScreenshots
             return redirect()->back()->withErrors($this->entryScreenshotForm->getErrors())->withInput();
         }
 
-        EntryService::updateWithForm($this->record, $this->request, $this->entryScreenshotForm);
+        $record = EntryService::updateWithForm($this->record, $this->request, $this->entryScreenshotForm)->getResult();
 
+        StuhlService::send($record->visitor->name . ' just updated the screenshot for the entry ' . $record->title . ' in the ' . $record->competition->name . ' competition!');
         return redirect(route('frontend.pages.index', ['slug' => $this->component->entries_page->full_slug]));
     }
 

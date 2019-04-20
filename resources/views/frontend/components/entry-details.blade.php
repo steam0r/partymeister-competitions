@@ -110,15 +110,15 @@
 
 <div class="row clearfix">
     <div class="medium-12">
-        <h3>Screenshot</h3>
-        <div class="card">
-            @if($record->getFirstMedia('screenshot'))
+        @if($record->getFirstMedia('screenshot'))
+            <h3>Screenshot</h3>
+            <div class="card">
                 <a data-caption="{{$record->title}} by {{$record->author}}" data-fancybox="gallery"
                    href="{{$record->getFirstMedia('screenshot')->getUrl('preview')}}">
                     <img src="{{$record->getFirstMedia('screenshot')->getUrl('preview')}}" class="img-fluid">
                 </a>
-            @endif
-        </div>
+            </div>
+        @endif
         <h3>Beamslide preview</h3>
         <div id="slidemeister-competition-preview" class="slidemeister-instance"></div>
     </div>
@@ -148,7 +148,7 @@
             <h3>Files</h3>
             @foreach($record->getMedia('file') as $file)
                 <div class="float-left">
-                    <a :href="file.url">{{ $file->file_name }}</a>
+                    <a href="{{$file->getUrl()}}">{{ $file->file_name }}</a>
                 </div>
                 <div class="float-right">
                     {{trans('motor-backend::backend/global.uploaded')}} {{ $file->created_at }}<br>
@@ -157,79 +157,90 @@
             @endforeach
         </div>
     @endif
-    <p></p>
 
-    <div class="grid-x">
+    @if($record->getMedia('config_file')->count() > 0)
+        <div class="medium-12">
+            <h3>Config file</h3>
+            <div class="float-left">
+                <a href="{{ $record->getFirstMedia('config_file')->getUrl() }}">{{ $record->getFirstMedia('config_file')->file_name }}</a>
+            </div>
+            <div class="float-right">
+                {{trans('motor-backend::backend/global.uploaded')}} {{ $record->getFirstMedia('config_file')->created_at }}<br>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <p></p>
+    @endif
+
+    <div class="medium-6">
+        <h3>{{trans('partymeister-competitions::backend/entries.author_info')}}</h3>
+        <dl class="row">
+            <dt class="small-4">
+                {{trans('partymeister-competitions::backend/entries.name')}}
+            </dt>
+            <dd class="small-8">
+                {{ $record->author_name }}
+            </dd>
+
+            <dt class="small-4">
+                {{trans('partymeister-competitions::backend/entries.email')}}
+            </dt>
+            <dd class="small-8">
+                {{ $record->author_email }}
+            </dd>
+
+            <dt class="small-4">
+                {{trans('partymeister-competitions::backend/entries.phone')}}
+            </dt>
+            <dd class="small-8">
+                {{ $record->author_phone }}
+            </dd>
+
+            <dt class="small-4">
+                {{trans('partymeister-competitions::backend/entries.address')}}
+            </dt>
+            <dd class="small-8">
+                {{ $record->author_address }} {{ $record->author_zip }} {{ $record->author_city }} {{
+                    $record->author_country }}
+            </dd>
+        </dl>
+    </div>
+
+    @if ($record->competition->competition_type->has_composer)
         <div class="medium-6">
-            <h3>{{trans('partymeister-competitions::backend/entries.author_info')}}</h3>
+            <h3>{{trans('partymeister-competitions::backend/entries.composer_info')}}</h3>
             <dl class="row">
                 <dt class="small-4">
                     {{trans('partymeister-competitions::backend/entries.name')}}
                 </dt>
                 <dd class="small-8">
-                    {{ $record->author_name }}
+                    {{ $record->composer_name }}
                 </dd>
 
                 <dt class="small-4">
                     {{trans('partymeister-competitions::backend/entries.email')}}
                 </dt>
                 <dd class="small-8">
-                    {{ $record->author_email }}
+                    {{ $record->composer_email }}
                 </dd>
 
                 <dt class="small-4">
                     {{trans('partymeister-competitions::backend/entries.phone')}}
                 </dt>
                 <dd class="small-8">
-                    {{ $record->author_phone }}
+                    {{ $record->composer_phone }}
                 </dd>
 
                 <dt class="small-4">
                     {{trans('partymeister-competitions::backend/entries.address')}}
                 </dt>
                 <dd class="small-8">
-                    {{ $record->author_address }} {{ $record->author_zip }} {{ $record->author_city }} {{
-                    $record->author_country }}
+                    {{ $record->composer_address }} {{ $record->composer_zip }} {{ $record->composer_city }}
+                    {{ $record->composer_country }}
                 </dd>
             </dl>
         </div>
-
-        @if ($record->competition->competition_type->has_composer)
-            <div class="medium-6">
-                <h3>{{trans('partymeister-competitions::backend/entries.composer_info')}}</h3>
-                <dl class="row">
-                    <dt class="small-4">
-                        {{trans('partymeister-competitions::backend/entries.name')}}
-                    </dt>
-                    <dd class="small-8">
-                        {{ $record->composer_name }}
-                    </dd>
-
-                    <dt class="small-4">
-                        {{trans('partymeister-competitions::backend/entries.email')}}
-                    </dt>
-                    <dd class="small-8">
-                        {{ $record->composer_email }}
-                    </dd>
-
-                    <dt class="small-4">
-                        {{trans('partymeister-competitions::backend/entries.phone')}}
-                    </dt>
-                    <dd class="small-8">
-                        {{ $record->composer_phone }}
-                    </dd>
-
-                    <dt class="small-4">
-                        {{trans('partymeister-competitions::backend/entries.address')}}
-                    </dt>
-                    <dd class="small-8">
-                        {{ $record->composer_address }} {{ $record->composer_zip }} {{ $record->composer_city }}
-                        {{ $record->composer_country }}
-                    </dd>
-                </dl>
-            </div>
-        @endif
-    </div>
+    @endif
 </div>
 
 

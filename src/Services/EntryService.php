@@ -89,5 +89,6 @@ class EntryService extends BaseService
         $this->uploadFile($this->request->file($prefix.'video'), 'video');
         $this->uploadFile($this->request->file($prefix.'audio'), 'audio');
         $this->uploadFile($this->request->file($prefix.'file'), 'file', 'file', null, true);
+        $this->uploadFile($this->request->file($prefix.'config_file'), 'config_file', 'config_file');
     }
 }

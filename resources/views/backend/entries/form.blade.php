@@ -82,6 +82,9 @@
             @endif
 
             {!! form_row($form->file) !!}
+            @if ($form->has('config_file'))
+                {!! form_row($form->config_file) !!}
+            @endif
             {!! form_row($form->final_file_media_id) !!}
         </div>
         <!-- /.box-body -->

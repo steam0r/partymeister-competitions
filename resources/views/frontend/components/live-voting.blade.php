@@ -8,8 +8,8 @@
             <div style="text-align: center;">
                 <div data-value="0" @click="updateVote(entry, 0)"
                      v-bind:class="{ 'partymeister-rating-wrapper': true, 'partymeister-rating-cancel-on': (entry.vote.data[0] && entry.vote.data[0].points) == 0, 'partymeister-rating-cancel-off': (entry.vote.data[0] && entry.vote.data[0].points) != 0}"></div>
-                <div data-value="-1" @click="updateVote(entry, -1)"
-                     v-bind:class="{ 'partymeister-rating-wrapper': true, 'partymeister-rating-negative-on': (entry.vote.data[0] && entry.vote.data[0].points) == -1, 'partymeister-rating-negative-off': (entry.vote.data[0] && entry.vote.data[0].points) != -1}"></div>
+{{--                <div data-value="-1" @click="updateVote(entry, -1)"--}}
+{{--                     v-bind:class="{ 'partymeister-rating-wrapper': true, 'partymeister-rating-negative-on': (entry.vote.data[0] && entry.vote.data[0].points) == -1, 'partymeister-rating-negative-off': (entry.vote.data[0] && entry.vote.data[0].points) != -1}"></div>--}}
                 <template v-for="points in entry.vote_category_points">
                     <div v-bind:data-value="points" @click="updateVote(entry, points)"
                          v-bind:class="{ 'partymeister-rating-wrapper': true, 'partymeister-rating-star-on': (entry.vote.data[0] && entry.vote.data[0].points) >= points, 'partymeister-rating-star-off': (entry.vote.data[0] && entry.vote.data[0].points) < points}"></div>
@@ -137,4 +137,4 @@
             }
         });
     </script>
-@append
+@endsection

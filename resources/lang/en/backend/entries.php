@@ -32,6 +32,7 @@ return [
     'last_file_uploaded_at'                       => 'Last file upload',
     'final_file_media_id'                         => 'Final file',
     'choose'                                      => '=== Select final file for release ===',
+    'config_file'                                 => 'Config (not to be released, for compo only)',
 
     'name'            => 'Name',
     'email'           => 'Email',

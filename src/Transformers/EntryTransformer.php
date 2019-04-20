@@ -22,14 +22,14 @@ class EntryTransformer extends Fractal\TransformerAbstract
      *
      * @var array
      */
-    protected $availableIncludes = ['competition', 'files', 'screenshot', 'video', 'audio', 'work_stages', 'options'];
+    protected $availableIncludes = ['competition', 'files', 'screenshot', 'video', 'audio', 'work_stages', 'config_file', 'options'];
 
     /**
      * List of resources to automatically include
      *
      * @var array
      */
-    protected $defaultIncludes = [ 'competition', 'files', 'screenshot', 'video', 'audio', 'work_stages', 'options' ];
+    protected $defaultIncludes = [ 'competition', 'files', 'screenshot', 'video', 'audio', 'work_stages', 'config_file', 'options' ];
 
 
     /**
@@ -148,6 +148,19 @@ class EntryTransformer extends Fractal\TransformerAbstract
         }
     }
 
+
+    /**
+     * Include config file
+     *
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includeConfigFile(Entry $record)
+    {
+        $media = $record->getFirstMedia('config_file');
+        if (!is_null($media)) {
+            return $this->item($media, new MediaTransformer());
+        }
+    }
 
     /**
      * Include audio

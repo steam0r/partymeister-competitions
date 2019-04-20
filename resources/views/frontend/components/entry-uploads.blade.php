@@ -69,6 +69,11 @@
                             {!! form_row($entryUploadForm->video) !!}
                         </div>
                     @endif
+                        @if ($entryUploadForm->has('config_file'))
+                            <div class="col-md-3">
+                                {!! form_row($entryUploadForm->config_file) !!}
+                            </div>
+                        @endif
                 </div>
 
                 @if ($entryUploadForm->has('work_stage_1'))

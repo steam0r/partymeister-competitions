@@ -26,4 +26,5 @@ return [
     'is_anonymous'            => 'Is anonymous (author omitted)',
     'file_is_optional'        => 'File upload optional',
     'has_remote_entries'      => 'Remote entries allowed',
+    'has_config_file'         => 'Has config file as separate upload',
 ];

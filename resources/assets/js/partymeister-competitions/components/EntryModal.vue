@@ -59,7 +59,7 @@
                                 </dd>
 
                                 <dt class="col-sm-4">
-                                    {{$t('partymeister-competitions.backen./entries.organizer_description')}}
+                                    {{$t('partymeister-competitions.backend.entries.organizer_description')}}
                                 </dt>
                                 <dd class="col-sm-8">
                                     <p v-html="nl2br(entry.organizer_description)"></p>
@@ -116,6 +116,15 @@
                                     </dd>
                                 </template>
 
+                                <template v-if="entry.config_file">
+                                    <div class="col-md-6">
+                                        <h4 style="margin-top: 0.5rem;">
+                                            {{$t('partymeister-competitions.backend.entries.config_file')}}</h4>
+                                        {{$t('motor-backend.backend.global.uploaded')}} {{ entry.config_file.data.created_at
+                                        }}<br>
+                                        <a :href="entry.config_file.data.url">{{ entry.config_file.data.file_name }}</a>
+                                    </div>
+                                </template>
                             </dl>
                         </div>
                     </div>
@@ -268,7 +277,6 @@
             route: route
         }
     });
-
 
     export default {
         name: 'partymeister-competitions-entry-modal',

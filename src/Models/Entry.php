@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Motor\Core\Traits\Searchable;
 use Motor\Core\Traits\Filterable;
 
+use Partymeister\Core\Models\Visitor;
 use Spatie\MediaLibrary\Models\Media;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -203,5 +204,10 @@ class Entry extends Model implements HasMedia
     public function comments()
     {
         return $this->morphMany('Partymeister\Competitions\Models\Comment', 'model');
+    }
+
+    public function visitor()
+    {
+        return $this->belongsTo(Visitor::class);
     }
 }

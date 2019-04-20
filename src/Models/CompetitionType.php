@@ -22,7 +22,7 @@ class CompetitionType extends Model
      *
      * @var array
      */
-    protected $blameable = [ 'created', 'updated', 'deleted' ];
+    protected $blameable = ['created', 'updated', 'deleted'];
 
     /**
      * Searchable columns for the searchable trait
@@ -51,8 +51,10 @@ class CompetitionType extends Model
         'is_anonymous',
         'number_of_work_stages',
         'has_remote_entries',
-        'file_is_optional'
+        'file_is_optional',
+        'has_config_file',
     ];
+
 
     public function competitions()
     {
@@ -99,8 +101,13 @@ class CompetitionType extends Model
         if ($this->file_is_optional) {
             $properties[] = 'file_is_optional';
         }
+        if ($this->has_config_file) {
+            $properties[] = 'has_config_file';
+        }
+
         return $properties;
     }
+
 
     public function getTranslatedPropertiesAttribute()
     {
@@ -109,9 +116,10 @@ class CompetitionType extends Model
             if ($property == 'number_of_work_stages') {
                 $properties[$index] = trans('partymeister-competitions::backend/competition_types.n_number_of_work_stages', ['number' => $this->number_of_work_stages]);
             } else {
-                $properties[$index] = trans('partymeister-competitions::backend/competition_types.'.$property);
+                $properties[$index] = trans('partymeister-competitions::backend/competition_types.' . $property);
             }
         }
+
         return $properties;
     }
 }

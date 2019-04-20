@@ -52,12 +52,14 @@ class EntryForm extends Form
             ->add('submit', 'submit', ['attr' => ['class' => 'btn btn-primary'], 'label' => trans('partymeister-competitions::backend/entries.save')])
             ->add('file', 'file_file', ['label' =>  trans('partymeister-competitions::backend/entries.file'), 'model' => Entry::class]);
 
-
         if (isset($data['competition'])) {
             if ($data['competition']->competition_type->has_screenshot) {
                 for($i=1; $i<=$data['competition']->competition_type->number_of_work_stages; $i++) {
                     $this->add('work_stage_'.$i, 'file_image', ['label' =>  trans('partymeister-competitions::backend/entries.work_stage').' '.$i, 'model' => Entry::class]);
                 }
+            }
+            if ($data['competition']->competition_type->has_config_file) {
+                $this->add('config_file', 'file_file', ['label' =>  trans('partymeister-competitions::backend/entries.config_file'), 'model' => Entry::class]);
             }
             if ($data['competition']->competition_type->has_screenshot) {
                 $this->add('screenshot', 'file_image', ['label' =>  trans('partymeister-competitions::backend/entries.screenshot'), 'model' => Entry::class]);
