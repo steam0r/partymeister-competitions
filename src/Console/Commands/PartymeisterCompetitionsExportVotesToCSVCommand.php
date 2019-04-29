@@ -42,10 +42,9 @@ class PartymeisterCompetitionsExportVotesToCSVCommand extends Command
         foreach ($results as $competition){
             foreach ($competition['entries'] as $entry) {
 
-                $csv .= $competition['id'].';'.$entry['id'].';'.$entry['points']."\n";
+                $csv .= "\"".$competition['name'].'";"'.$entry['rank'].'";"'.$entry['title'].' - '.$entry['author'].'";"'.$entry['points']."\"\n";
             }
         }
-
         file_put_contents('votes.csv', $csv);
     }
 }
