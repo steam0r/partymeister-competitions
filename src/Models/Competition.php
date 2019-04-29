@@ -15,6 +15,55 @@ use Spatie\MediaLibrary\Models\Media;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
+/**
+ * Partymeister\Competitions\Models\Competition
+ *
+ * @property int $id
+ * @property int|null $competition_type_id
+ * @property int $sort_position
+ * @property int $prizegiving_sort_position
+ * @property string $name
+ * @property int $has_prizegiving
+ * @property int $upload_enabled
+ * @property int $voting_enabled
+ * @property int $created_by
+ * @property int $updated_by
+ * @property int|null $deleted_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Partymeister\Competitions\Models\CompetitionType|null $competition_type
+ * @property-read \Motor\Backend\Models\User $creator
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Partymeister\Competitions\Models\Entry[] $entries
+ * @property-read \Motor\Backend\Models\User|null $eraser
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Motor\Media\Models\FileAssociation[] $file_associations
+ * @property-read mixed $entry_count
+ * @property-read mixed $sorted_entries
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Models\Media[] $media
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Partymeister\Competitions\Models\OptionGroup[] $option_groups
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Partymeister\Competitions\Models\CompetitionPrize[] $prizes
+ * @property-read \Motor\Backend\Models\User $updater
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Partymeister\Competitions\Models\VoteCategory[] $vote_categories
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition filteredBy(\Motor\Core\Filter\Filter $filter, $column)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition filteredByMultiple(\Motor\Core\Filter\Filter $filter)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition search($q, $full_text = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereCompetitionTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereHasPrizegiving($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition wherePrizegivingSortPosition($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereSortPosition($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereUploadEnabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Competition whereVotingEnabled($value)
+ * @mixin \Eloquent
+ */
 class Competition extends Model implements HasMedia
 {
 

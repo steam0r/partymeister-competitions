@@ -5,6 +5,24 @@ namespace Partymeister\Competitions\Models\Component;
 use Motor\CMS\Models\ComponentBaseModel;
 use Motor\CMS\Models\Navigation;
 
+/**
+ * Partymeister\Competitions\Models\Component\ComponentVoting
+ *
+ * @property int $id
+ * @property int|null $live_voting_page_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Motor\CMS\Models\PageVersionComponent[] $component
+ * @property-read \Motor\CMS\Models\Navigation|null $live_voting_page
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentVoting newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentVoting newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentVoting query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentVoting whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentVoting whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentVoting whereLiveVotingPageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentVoting whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class ComponentVoting extends ComponentBaseModel
 {
     /**

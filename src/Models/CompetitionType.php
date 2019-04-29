@@ -10,6 +10,63 @@ use Culpa\Traits\CreatedBy;
 use Culpa\Traits\DeletedBy;
 use Culpa\Traits\UpdatedBy;
 
+/**
+ * Partymeister\Competitions\Models\CompetitionType
+ *
+ * @property int $id
+ * @property string $name
+ * @property int $has_platform
+ * @property int $has_filesize
+ * @property int $has_screenshot
+ * @property int $has_audio
+ * @property int $has_video
+ * @property int $has_recordings
+ * @property int $has_composer
+ * @property int $has_running_time
+ * @property int $is_anonymous
+ * @property int $number_of_work_stages
+ * @property int $has_remote_entries
+ * @property int $file_is_optional
+ * @property int $has_config_file
+ * @property int $created_by
+ * @property int $updated_by
+ * @property int|null $deleted_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Partymeister\Competitions\Models\Competition[] $competitions
+ * @property-read \Motor\Backend\Models\User $creator
+ * @property-read \Motor\Backend\Models\User|null $eraser
+ * @property-read mixed $properties
+ * @property-read mixed $translated_properties
+ * @property-read \Motor\Backend\Models\User $updater
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType filteredBy(\Motor\Core\Filter\Filter $filter, $column)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType filteredByMultiple(\Motor\Core\Filter\Filter $filter)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType search($q, $full_text = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereFileIsOptional($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasAudio($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasComposer($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasConfigFile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasFilesize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasPlatform($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasRecordings($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasRemoteEntries($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasRunningTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasScreenshot($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasVideo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereIsAnonymous($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereNumberOfWorkStages($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereUpdatedBy($value)
+ * @mixin \Eloquent
+ */
 class CompetitionType extends Model
 {
 
