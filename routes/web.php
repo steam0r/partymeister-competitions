@@ -33,25 +33,26 @@ Route::group([
     });
 });
 
-Route::get('results', function () {
-    $results = \Partymeister\Competitions\Services\VoteService::getAllVotesByRank();
-
-    foreach ($results as $competition) {
-        echo $competition['name'] . "\r\n";
-        foreach ($competition['entries'] as $entry) {
-            echo $entry['points'] . "\t" . $entry['title'] . "\t" . $entry['author'] . "\r\n";
-        }
-        echo "\r\n";
-    }
-});
-
-Route::get('results-special', function () {
-    $results = \Partymeister\Competitions\Services\VoteService::getAllSpecialVotesByRank();
-
-    foreach ($results as $entry) {
-        echo $entry['special_votes'] . "\t" . $entry['title'] . "\t" . $entry['author'] . "\r\n";
-    }
-});
+// FIXME: build this with an actual controller so this doesn't break route caching
+//Route::get('results', function () {
+//    $results = \Partymeister\Competitions\Services\VoteService::getAllVotesByRank();
+//
+//    foreach ($results as $competition) {
+//        echo $competition['name'] . "\r\n";
+//        foreach ($competition['entries'] as $entry) {
+//            echo $entry['points'] . "\t" . $entry['title'] . "\t" . $entry['author'] . "\r\n";
+//        }
+//        echo "\r\n";
+//    }
+//});
+//
+//Route::get('results-special', function () {
+//    $results = \Partymeister\Competitions\Services\VoteService::getAllSpecialVotesByRank();
+//
+//    foreach ($results as $entry) {
+//        echo $entry['special_votes'] . "\t" . $entry['title'] . "\t" . $entry['author'] . "\r\n";
+//    }
+//});
 
 // Only add the route group if you don't already have one for the given namespace
 Route::group([
