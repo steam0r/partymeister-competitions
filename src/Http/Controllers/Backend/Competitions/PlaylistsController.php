@@ -95,7 +95,7 @@ class PlaylistsController extends Controller
                         $entries[$key]['previous_title']         = ' ';
                     }
 
-                    foreach (array_get($entry, 'options.data', []) as $i => $option) {
+                    foreach (Arr::get($entry, 'options.data', []) as $i => $option) {
                         $entries[$key]['option_' . ($i + 1)] = $option['name'];
                     }
                 }

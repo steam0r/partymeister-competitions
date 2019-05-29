@@ -2,6 +2,7 @@
 
 namespace Partymeister\Competitions\Services;
 
+use Illuminate\Support\Arr;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\CompetitionPrize;
 use Motor\Backend\Services\BaseService;
@@ -24,8 +25,8 @@ class CompetitionPrizeService extends BaseService
                 $p = new CompetitionPrize();
                 $p->competition_id = $competition->id;
                 $p->rank = $i;
-                $p->amount = array_get($request->all(), 'amount.'.$competition->id.'.'.$i);
-                $p->additional = array_get($request->all(), 'additional.'.$competition->id.'.'.$i);
+                $p->amount = Arr::get($request->all(), 'amount.'.$competition->id.'.'.$i);
+                $p->additional = Arr::get($request->all(), 'additional.'.$competition->id.'.'.$i);
                 $p->save();
             }
         }

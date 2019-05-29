@@ -3,6 +3,7 @@
 namespace Partymeister\Competitions\Services;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Motor\Core\Filter\Renderers\SelectRenderer;
 use Motor\Media\Models\FileAssociation;
 use Partymeister\Competitions\Events\CompetitionSaved;
@@ -101,7 +102,7 @@ class CompetitionService extends BaseService
             mkdir(base_path('releases'));
         }
 
-        $directory = base_path('releases/' . str_slug($competition->name));
+        $directory = base_path('releases/' . Str::slug($competition->name));
 
         if ( ! is_dir($directory)) {
             mkdir($directory);

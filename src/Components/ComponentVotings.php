@@ -4,6 +4,7 @@ namespace Partymeister\Competitions\Components;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Motor\CMS\Models\PageVersionComponent;
 use Partymeister\Competitions\Models\Competition;
@@ -125,7 +126,7 @@ class ComponentVotings {
                     $vote->vote_category_id = $voteCategoryId;
                     $vote->competition_id   = $competitionId;
                     $vote->entry_id         = $entryId;
-                    $vote->comment          = array_get($this->request->all(),
+                    $vote->comment          = Arr::get($this->request->all(),
                         'entry_comment.' . $competitionId . '.' . $entryId);
                     $vote->points           = $points;
                     $vote->visitor_id       = Auth::guard('visitor')->user()->id;

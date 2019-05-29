@@ -2,9 +2,9 @@
 
 namespace Partymeister\Competitions\PDF;
 
-use setasign\Fpdi\TcpdfFpdi;
+use setasign\Fpdi\Tcpdf\Fpdi;
 
-class PDF extends TcpdfFpdi
+class PDF extends Fpdi
 {
 
     protected $fpdi_templates = [];

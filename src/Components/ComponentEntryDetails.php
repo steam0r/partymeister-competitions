@@ -3,6 +3,7 @@
 namespace Partymeister\Competitions\Components;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Motor\CMS\Models\PageVersionComponent;
 use Partymeister\Competitions\Models\Entry;
@@ -44,7 +45,7 @@ class ComponentEntryDetails {
 
         $entry = $data['data'];
 
-        foreach (array_get($entry, 'options.data', []) as $i => $option) {
+        foreach (Arr::get($entry, 'options.data', []) as $i => $option) {
             $entry['option_'.($i+1)] = $option['name'];
         }
 
