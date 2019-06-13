@@ -8,6 +8,7 @@ Route::group([
     Route::resource('option_groups', 'OptionGroupsController');
     Route::resource('competition_types', 'CompetitionTypesController');
     Route::resource('competitions', 'CompetitionsController');
+    Route::get('competitions/{competition}/playlist', 'Competitions\PlaylistsController@index')->name('competitions.playlist.index');
     Route::resource('vote_categories', 'VoteCategoriesController');
     Route::resource('entries', 'EntriesController');
     Route::resource('access_keys', 'AccessKeysController');
