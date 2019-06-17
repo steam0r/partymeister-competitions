@@ -13,6 +13,7 @@ Route::group([
     Route::resource('entries', 'EntriesController');
     Route::resource('access_keys', 'AccessKeysController');
     Route::resource('competition_prizes', 'CompetitionPrizesController');
+    Route::resource('votes/results', 'Votes\ResultsController');
     Route::resource('votes', 'VotesController');
 });
 
