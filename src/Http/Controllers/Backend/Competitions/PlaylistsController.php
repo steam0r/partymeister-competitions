@@ -71,7 +71,7 @@ class PlaylistsController extends Controller
                 return $m3u;
                 break;
             case 'slides':
-                $resource = $this->transformCollection($competition->sorted_entries, \Partymeister\Competitions\Transformers\EntryTransformer::class);
+                $resource = $this->transformCollection($competition->sorted_entries, \Partymeister\Competitions\Transformers\Entry\SlideTransformer::class);
 
                 $data    = $this->fractal->createData($resource)->toArray();
                 $entries = Arr::get($data, 'data');
