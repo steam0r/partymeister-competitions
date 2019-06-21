@@ -41,7 +41,7 @@ class ComponentEntryDetails {
         }
 
         $data = fractal($record,
-            \Partymeister\Competitions\Transformers\EntryTransformer::class)->toArray();
+            \Partymeister\Competitions\Transformers\Entry\SlideTransformer::class)->toArray();
 
         $entry = $data['data'];
 
