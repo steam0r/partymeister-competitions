@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" :id="id" tabindex="-1" role="dialog" :aria-labelledby="label">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xlg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">
@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-sm-6">
                             <dl class="row">
-                                <template v-if="entry.options">
+                                <template v-if="entry.options.data && entry.options.data.length > 0">
                                     <dt class="col-sm-4">
                                         {{$t('partymeister-competitions.backend.entries.option_info')}}
                                     </dt>
@@ -77,10 +77,12 @@
                                             <li v-for="option in entry.options.data">{{ option.name }}</li>
                                         </ul>
                                     </dd>
+                                </template>
+                                <template v-if="entry.custom_option != ''">
                                     <dt class="col-sm-4">
                                         {{$t('partymeister-competitions.backend.entries.custom_option_short')}}
                                     </dt>
-                                    <dd class="col-sm-8" v-if="entry.custom_option != ''">
+                                    <dd class="col-sm-8">
                                         {{ entry.custom_option }}
                                     </dd>
                                 </template>
@@ -110,7 +112,7 @@
                                             <li v-for="(file, index) in entry.files.data" style="margin-bottom: 5px;">
                                                 {{$t('motor-backend.backend.global.uploaded')}} {{ file.created_at
                                                 }}<br>
-                                                <a :href="file.url">{{ file.file_name }}</a>
+                                                <a :href="file.url">{{ wordwrap(file.file_name, 25) }}</a>
                                             </li>
                                         </ul>
                                     </dd>
@@ -227,7 +229,7 @@
                                     </dd>
 
                                     <dt class="col-sm-4">
-                                        {{$t('partymeister-competitions.backend:entries.phone')}}
+                                        {{$t('partymeister-competitions.backend.entries.phone')}}
                                     </dt>
                                     <dd class="col-sm-8">
                                         {{ entry.composer_phone }}

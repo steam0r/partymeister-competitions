@@ -63,9 +63,12 @@ class EntryService extends BaseService
             $prefix = $this->form->getName() ? $this->form->getName() . '.' : '';
         }
 
+
         if (count($this->request->input($prefix . 'options', [])) > 0) {
             $this->record->options()->detach();
             $this->addOptions();
+        } else {
+            $this->record->options()->detach();
         }
         $this->addImages();
         event(new EntrySaved($this->record));
