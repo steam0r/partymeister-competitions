@@ -46,7 +46,7 @@ class EntryService extends BaseService
         $prefix = $this->form->getName() ? $this->form->getName() . '.' : '';
         foreach ($this->request->input($prefix . 'options', []) as $group) {
             if (is_array($group)) {
-                foreach ($group as $option => $id) {
+                foreach ($group as $id) {
                     $this->record->options()->attach($id);
                 }
             } else {

@@ -104,7 +104,7 @@ class ComponentVotings {
 
     protected function post()
     {
-        dd("POST to Voting: Is this really happening?");
+        // Fixme: this is apparently never called
         foreach ($this->request->get('entry', []) as $competitionId => $voteCategories) {
             foreach ($voteCategories as $voteCategoryId => $entries) {
                 foreach ($entries as $entryId => $points) {

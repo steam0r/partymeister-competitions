@@ -15,7 +15,9 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class CompetitionPrizesController extends Controller
 {
+
     use FormBuilderTrait;
+
 
     /**
      * Display a listing of the resource.
@@ -27,8 +29,8 @@ class CompetitionPrizesController extends Controller
         $grid = new CompetitionPrizeGrid(CompetitionPrize::class);
 
         $service = CompetitionPrizeService::collection($grid);
-        $grid->filter = $service->getFilter();
-        $paginator    = $service->getPaginator();
+        $grid->setFilter($service->getFilter());
+        $paginator = $service->getPaginator();
 
         return view('partymeister-competitions::backend.competition_prizes.index', compact('paginator', 'grid'));
     }
@@ -56,7 +58,7 @@ class CompetitionPrizesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -80,7 +82,7 @@ class CompetitionPrizesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -93,7 +95,7 @@ class CompetitionPrizesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -113,8 +115,8 @@ class CompetitionPrizesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -138,7 +140,7 @@ class CompetitionPrizesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */

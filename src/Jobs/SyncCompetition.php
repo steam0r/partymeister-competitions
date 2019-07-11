@@ -48,7 +48,7 @@ class SyncCompetition implements ShouldQueue
         $request = new Request('POST', config('partymeister-competitions-sync.server').config('partymeister-competitions-sync.api.competition'), [ 'content-type' => 'application/json' ], $data);
 
         try {
-            $response = $client->send($request);
+            $client->send($request);
         } catch (\Exception $e) {
             Log::warning($e->getMessage());
         }

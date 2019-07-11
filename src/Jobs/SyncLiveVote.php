@@ -56,7 +56,7 @@ class SyncLiveVote implements ShouldQueue
         $request = new Request('POST', config('partymeister-competitions-sync.server').config('partymeister-competitions-sync.api.livevote'), [ 'content-type' => 'application/json' ], json_encode($data));
 
         try {
-            $response = $client->send($request);
+            $client->send($request);
         } catch (\Exception $e) {
             Log::warning($e->getMessage());
         }

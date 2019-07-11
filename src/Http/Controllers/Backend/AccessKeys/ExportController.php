@@ -18,11 +18,9 @@ class ExportController extends Controller
      */
     public function csv()
     {
-        $csv   = '';
-        $count = 0;
+        $csv = '';
 
-        foreach (AccessKey::all() as $key => $row) {
-            $count++;
+        foreach (AccessKey::all() as $row) {
             $csv .= "\"$row->access_key\"\n";
         }
 
@@ -38,7 +36,7 @@ class ExportController extends Controller
         $pdf = new \Partymeister\Competitions\PDF\AccessKey();
         $pdf->generate();
 
-         //Send the file content as the response
+        //Send the file content as the response
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->output('accesskey.pdf', 'S');
         }, 'access-keys.pdf');

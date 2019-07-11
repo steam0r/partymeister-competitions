@@ -28,8 +28,10 @@ class ComponentEntryUploads
     protected $request;
 
 
-    public function __construct(PageVersionComponent $pageVersionComponent, \Partymeister\Competitions\Models\Component\ComponentEntryUpload $component)
-    {
+    public function __construct(
+        PageVersionComponent $pageVersionComponent,
+        \Partymeister\Competitions\Models\Component\ComponentEntryUpload $component
+    ) {
         $this->component            = $component;
         $this->pageVersionComponent = $pageVersionComponent;
     }
@@ -86,37 +88,29 @@ class ComponentEntryUploads
     protected function post()
     {
         // It will automatically use current request, get the rules, and do the validation
-        if ((int)$this->request->input($this->entryUploadForm->getName() . '.reload_on_change') == 1) {
+        if ((int) $this->request->input($this->entryUploadForm->getName() . '.reload_on_change') == 1) {
             return redirect()->back()->withInput();
         }
         if ( ! $this->entryUploadForm->isValid()) {
             return redirect()->back()->withErrors($this->entryUploadForm->getErrors())->withInput();
         }
 
-        $record = EntryService::createWithForm($this->request, $this->entryUploadForm)->getResult();
+        EntryService::createWithForm($this->request, $this->entryUploadForm)->getResult();
 
-        //StuhlService::send($record->visitor->name . ' just added the entry ' . $record->title . ' in the ' . $record->competition->name . ' competition!');
-
-
-        return redirect(route('frontend.pages.index', ['slug' => $this->component->entries_page->full_slug]));
+        return redirect(route('frontend.pages.index', [ 'slug' => $this->component->entries_page->full_slug ]));
     }
 
 
     protected function patch()
     {
         if ( ! $this->record->competition->upload_enabled && ! $this->record->upload_enabled) {
-            return redirect(route('frontend.pages.index', ['slug' => $this->component->entries_page->full_slug]));
+            return redirect(route('frontend.pages.index', [ 'slug' => $this->component->entries_page->full_slug ]));
         }
 
         $this->entryUploadForm->getField('file')->setOption('rules', '');
-//        if ($record->competition->competition_type->number_of_work_stages > 0) {
-//            for ($i = 1; $i <= $record->competition->competition_type->number_of_work_stages; $i++) {
-////                $form->getField('work_stage_' . $i)->setOption('rules', '');
-//            }
-//        }
 
         // It will automatically use current request, get the rules, and do the validation
-        if ((int)$this->request->input($this->entryUploadForm->getName() . '.reload_on_change') == 1) {
+        if ((int) $this->request->input($this->entryUploadForm->getName() . '.reload_on_change') == 1) {
             return redirect()->back()->withInput();
         }
 
@@ -129,14 +123,18 @@ class ComponentEntryUploads
 
         StuhlService::send($record->visitor->name . ' just updated the entry ' . $record->title . ' in the ' . $record->competition->name . ' competition!');
 
-        return redirect(route('frontend.pages.index', ['slug' => $this->component->entries_page->full_slug]));
+        return redirect(route('frontend.pages.index', [ 'slug' => $this->component->entries_page->full_slug ]));
     }
 
 
     public function render()
     {
         return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
-            ['entryUploadForm' => $this->entryUploadForm, 'record' => $this->record, 'component' => $this->component]);
+            [
+                'entryUploadForm' => $this->entryUploadForm,
+                'record'          => $this->record,
+                'component'       => $this->component
+            ]);
     }
 
 }

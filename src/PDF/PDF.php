@@ -18,7 +18,7 @@ class PDF extends Fpdi
 
     public function AddFont($family, $style = '', $fontfile = '', $subset = 'default')
     {
-        if ( ! empty($fontfile)) {
+        if ($fontfile !== '') {
             $file = base_path() . '/vendor/tcpdf/fonts/' . $fontfile . '.php';
             if ( ! is_file($file)) {
                 $file = public_path() . '/pdf/fonts/' . $fontfile . '.php';
