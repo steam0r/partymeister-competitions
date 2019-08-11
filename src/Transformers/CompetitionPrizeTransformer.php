@@ -5,8 +5,13 @@ namespace Partymeister\Competitions\Transformers;
 use League\Fractal;
 use Partymeister\Competitions\Models\CompetitionPrize;
 
+/**
+ * Class CompetitionPrizeTransformer
+ * @package Partymeister\Competitions\Transformers
+ */
 class CompetitionPrizeTransformer extends Fractal\TransformerAbstract
 {
+
     /**
      * List of resources possible to include
      *
@@ -25,7 +30,7 @@ class CompetitionPrizeTransformer extends Fractal\TransformerAbstract
     public function transform(CompetitionPrize $record)
     {
         return [
-            'id'        => (int) $record->id
+            'id' => (int) $record->id
         ];
     }
 }

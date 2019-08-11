@@ -5,9 +5,16 @@ namespace Partymeister\Competitions\Forms\Backend;
 use Kris\LaravelFormBuilder\Form;
 use Partymeister\Competitions\Services\VoteService;
 
+/**
+ * Class VoteForm
+ * @package Partymeister\Competitions\Forms\Backend
+ */
 class VoteForm extends Form
 {
 
+    /**
+     * @return mixed|void
+     */
     public function buildForm()
     {
         $results = VoteService::getAllVotesByRank();
@@ -18,8 +25,8 @@ class VoteForm extends Form
             }
         }
         $this->add('submit', 'submit', [
-                'attr'  => [ 'class' => 'btn btn-primary' ],
-                'label' => trans('partymeister-competitions::backend/votes.save')
-            ]);
+            'attr'  => [ 'class' => 'btn btn-primary' ],
+            'label' => trans('partymeister-competitions::backend/votes.save')
+        ]);
     }
 }

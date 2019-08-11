@@ -2,11 +2,15 @@
 
 namespace Partymeister\Competitions\Providers;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
+/**
+ * Class EventServiceProvider
+ * @package Partymeister\Competitions\Providers
+ */
 class EventServiceProvider extends ServiceProvider
 {
+
     /**
      * The event listener mappings for the application.
      *
@@ -16,13 +20,14 @@ class EventServiceProvider extends ServiceProvider
         'Partymeister\Competitions\Events\CompetitionSaved' => [
             'Partymeister\Competitions\Listeners\SyncCompetition',
         ],
-        'Partymeister\Competitions\Events\EntrySaved' => [
+        'Partymeister\Competitions\Events\EntrySaved'       => [
             'Partymeister\Competitions\Listeners\SyncEntry',
         ],
-        'Partymeister\Competitions\Events\LiveVoteUpdated' => [
+        'Partymeister\Competitions\Events\LiveVoteUpdated'  => [
             'Partymeister\Competitions\Listeners\SyncLiveVote',
         ],
     ];
+
 
     /**
      * Register any events for your application.

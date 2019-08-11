@@ -2,21 +2,29 @@
 
 namespace Partymeister\Competitions\Http\Controllers\Backend\CompetitionPrizes;
 
+use Illuminate\Http\Response;
 use Motor\Backend\Http\Controllers\Controller;
-
 use Partymeister\Competitions\Http\Requests\Backend\CompetitionPrizeRequest;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
 use Partymeister\Competitions\PDF\Prize;
 use Partymeister\Competitions\Services\VoteService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
+/**
+ * Class ExportController
+ * @package Partymeister\Competitions\Http\Controllers\Backend\CompetitionPrizes
+ */
 class ExportController extends Controller
 {
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return StreamedResponse
+     * @throws \setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException
+     * @throws \setasign\Fpdi\PdfParser\Filter\FilterException
+     * @throws \setasign\Fpdi\PdfParser\PdfParserException
+     * @throws \setasign\Fpdi\PdfParser\Type\PdfTypeException
+     * @throws \setasign\Fpdi\PdfReader\PdfReaderException
      */
     public function receipt()
     {
@@ -39,6 +47,15 @@ class ExportController extends Controller
     }
 
 
+    /**
+     * @param CompetitionPrizeRequest $request
+     * @return StreamedResponse
+     * @throws \setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException
+     * @throws \setasign\Fpdi\PdfParser\Filter\FilterException
+     * @throws \setasign\Fpdi\PdfParser\PdfParserException
+     * @throws \setasign\Fpdi\PdfParser\Type\PdfTypeException
+     * @throws \setasign\Fpdi\PdfReader\PdfReaderException
+     */
     public function prizesheet(CompetitionPrizeRequest $request)
     {
         $pdf = new Prize();

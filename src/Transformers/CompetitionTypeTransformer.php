@@ -3,8 +3,13 @@
 namespace Partymeister\Competitions\Transformers;
 
 use League\Fractal;
+use League\Fractal\Resource\Collection;
 use Partymeister\Competitions\Models\CompetitionType;
 
+/**
+ * Class CompetitionTypeTransformer
+ * @package Partymeister\Competitions\Transformers
+ */
 class CompetitionTypeTransformer extends Fractal\TransformerAbstract
 {
 
@@ -46,7 +51,8 @@ class CompetitionTypeTransformer extends Fractal\TransformerAbstract
     /**
      * Include competitions
      *
-     * @return \League\Fractal\Resource\Collection
+     * @param CompetitionType $record
+     * @return Collection
      */
     public function includeOptions(CompetitionType $record)
     {

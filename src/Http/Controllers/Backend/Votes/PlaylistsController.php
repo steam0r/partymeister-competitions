@@ -2,34 +2,30 @@
 
 namespace Partymeister\Competitions\Http\Controllers\Backend\Votes;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use League\Fractal\Resource\ResourceAbstract;
-use Motor\Backend\Helpers\MediaHelper;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Motor\Backend\Http\Controllers\Controller;
-
-use Motor\Backend\Models\Category;
-use Partymeister\Competitions\Helpers\CallbackHelper;
-use Partymeister\Competitions\Models\Competition;
-
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Partymeister\Competitions\Services\CompetitionService;
 use Partymeister\Competitions\Services\VoteService;
-use Partymeister\Competitions\Transformers\Competition\EntryTransformer;
-use Partymeister\Core\Models\Callback;
-use Partymeister\Slides\Models\Playlist;
-use Partymeister\Slides\Models\Slide;
 use Partymeister\Slides\Models\SlideTemplate;
-use Partymeister\Slides\Models\Transition;
 use Partymeister\Slides\Services\PlaylistService;
 
+/**
+ * Class PlaylistsController
+ * @package Partymeister\Competitions\Http\Controllers\Backend\Votes
+ */
 class PlaylistsController extends Controller
 {
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Redirector
+     */
     public function store(Request $request)
     {
         PlaylistService::generatePrizegivingPlaylist($request->all());
+
         return redirect(route('backend.votes.index'));
     }
 
@@ -37,7 +33,8 @@ class PlaylistsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -50,7 +47,6 @@ class PlaylistsController extends Controller
             }
         }
         shuffle($specialVotes);
-
 
         $comments = [];
         foreach ($results as $competition) {
@@ -116,16 +112,17 @@ class PlaylistsController extends Controller
             $renderWinners = true;
         }
 
-        $renderSupport = true;
-        $renderNow = true;
+        $renderSupport      = true;
+        $renderNow          = true;
         $renderCompetitions = true;
-        $renderComments = true;
-        $renderBars = true;
-        $renderWinners = true;
+        $renderComments     = true;
+        $renderBars         = true;
+        $renderWinners      = true;
 
         return view('partymeister-competitions::backend.votes.playlists.show',
             compact('results', 'comments', 'commentsTemplate', 'specialVotes', 'prizegivingTemplate',
-                'comingupTemplate', 'endTemplate', 'renderSupport', 'renderCompetitions', 'renderBars', 'renderWinners', 'renderComments', 'renderNow'));
+                'comingupTemplate', 'endTemplate', 'renderSupport', 'renderCompetitions', 'renderBars', 'renderWinners',
+                'renderComments', 'renderNow'));
 
     }
 }

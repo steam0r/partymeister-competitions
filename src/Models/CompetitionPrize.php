@@ -2,48 +2,54 @@
 
 namespace Partymeister\Competitions\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Motor\Core\Traits\Searchable;
-use Motor\Core\Traits\Filterable;
 use Culpa\Traits\Blameable;
 use Culpa\Traits\CreatedBy;
 use Culpa\Traits\DeletedBy;
 use Culpa\Traits\UpdatedBy;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
+use Motor\Backend\Models\User;
+use Motor\Core\Filter\Filter;
+use Motor\Core\Traits\Filterable;
+use Motor\Core\Traits\Searchable;
 
 /**
  * Partymeister\Competitions\Models\CompetitionPrize
  *
- * @property int $id
- * @property int $competition_id
- * @property string $amount
- * @property string $additional
- * @property string $rank
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $created_by
- * @property int $updated_by
- * @property int|null $deleted_by
- * @property-read \Partymeister\Competitions\Models\Competition $competition
- * @property-read \Motor\Backend\Models\User $creator
- * @property-read \Motor\Backend\Models\User|null $eraser
- * @property-read \Motor\Backend\Models\User $updater
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize filteredBy(\Motor\Core\Filter\Filter $filter, $column)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize filteredByMultiple(\Motor\Core\Filter\Filter $filter)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize search($q, $full_text = false)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize whereAdditional($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize whereAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize whereCompetitionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize whereRank($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionPrize whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @property int                                                $id
+ * @property int                                                $competition_id
+ * @property string                                             $amount
+ * @property string                          $additional
+ * @property string                          $rank
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property int                             $created_by
+ * @property int                             $updated_by
+ * @property int|null                        $deleted_by
+ * @property-read Competition                $competition
+ * @property-read User                       $creator
+ * @property-read User|null                  $eraser
+ * @property-read User                       $updater
+ * @method static Builder|CompetitionPrize filteredBy( Filter $filter, $column )
+ * @method static Builder|CompetitionPrize filteredByMultiple( Filter $filter )
+ * @method static Builder|CompetitionPrize newModelQuery()
+ * @method static Builder|CompetitionPrize newQuery()
+ * @method static Builder|CompetitionPrize query()
+ * @method static Builder|CompetitionPrize search( $q, $full_text = false )
+ * @method static Builder|CompetitionPrize whereAdditional( $value )
+ * @method static Builder|CompetitionPrize whereAmount( $value )
+ * @method static Builder|CompetitionPrize whereCompetitionId( $value )
+ * @method static Builder|CompetitionPrize whereCreatedAt( $value )
+ * @method static Builder|CompetitionPrize whereCreatedBy( $value )
+ * @method static Builder|CompetitionPrize whereDeletedBy( $value )
+ * @method static Builder|CompetitionPrize whereId( $value )
+ * @method static Builder|CompetitionPrize whereRank( $value )
+ * @method static Builder|CompetitionPrize whereUpdatedAt( $value )
+ * @method static Builder|CompetitionPrize whereUpdatedBy( $value )
+ * @mixin Eloquent
  */
 class CompetitionPrize extends Model
 {
@@ -83,6 +89,9 @@ class CompetitionPrize extends Model
     ];
 
 
+    /**
+     * @return BelongsTo
+     */
     public function competition()
     {
         return $this->belongsTo(Competition::class);

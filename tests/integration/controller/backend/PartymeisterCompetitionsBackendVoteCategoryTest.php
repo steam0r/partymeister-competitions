@@ -5,19 +5,37 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Partymeister\Competitions\Models\VoteCategory;
 
+/**
+ * Class PartymeisterCompetitionsBackendVoteCategoryTest
+ */
 class PartymeisterCompetitionsBackendVoteCategoryTest extends TestCase
 {
 
     use DatabaseTransactions;
 
+    /**
+     * @var
+     */
     protected $user;
 
+    /**
+     * @var
+     */
     protected $readPermission;
 
+    /**
+     * @var
+     */
     protected $writePermission;
 
+    /**
+     * @var
+     */
     protected $deletePermission;
 
+    /**
+     * @var array
+     */
     protected $tables = [
         'vote_categories',
         'users',

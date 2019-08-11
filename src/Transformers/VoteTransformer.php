@@ -5,8 +5,13 @@ namespace Partymeister\Competitions\Transformers;
 use League\Fractal;
 use Partymeister\Competitions\Models\Vote;
 
+/**
+ * Class VoteTransformer
+ * @package Partymeister\Competitions\Transformers
+ */
 class VoteTransformer extends Fractal\TransformerAbstract
 {
+
     /**
      * List of resources possible to include
      *
@@ -25,7 +30,7 @@ class VoteTransformer extends Fractal\TransformerAbstract
     public function transform(Vote $record)
     {
         return [
-            'id'        => (int) $record->id
+            'id' => (int) $record->id
         ];
     }
 }

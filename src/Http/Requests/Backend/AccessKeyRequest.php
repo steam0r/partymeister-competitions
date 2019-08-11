@@ -4,6 +4,10 @@ namespace Partymeister\Competitions\Http\Requests\Backend;
 
 use Motor\Backend\Http\Requests\Request;
 
+/**
+ * Class AccessKeyRequest
+ * @package Partymeister\Competitions\Http\Requests\Backend
+ */
 class AccessKeyRequest extends Request
 {
 

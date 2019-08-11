@@ -2,20 +2,48 @@
 
 namespace Partymeister\Competitions\PDF;
 
+use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
+use setasign\Fpdi\PdfParser\Filter\FilterException;
+use setasign\Fpdi\PdfParser\PdfParserException;
+use setasign\Fpdi\PdfParser\Type\PdfTypeException;
+use setasign\Fpdi\PdfReader\PdfReaderException;
 use setasign\Fpdi\Tcpdf\Fpdi;
 
+/**
+ * Class PDF
+ * @package Partymeister\Competitions\PDF
+ */
 class PDF extends Fpdi
 {
 
+    /**
+     * @var array
+     */
     protected $fpdi_templates = [];
 
+    /**
+     * @var bool
+     */
     protected $StartY = false;
 
+    /**
+     * @var
+     */
     protected $FontSpacing;
 
+    /**
+     * @var array
+     */
     protected $FontStyles = [];
 
 
+    /**
+     * @param        $family
+     * @param string $style
+     * @param string $fontfile
+     * @param string $subset
+     * @return array
+     */
     public function AddFont($family, $style = '', $fontfile = '', $subset = 'default')
     {
         if ($fontfile !== '') {
@@ -45,48 +73,38 @@ class PDF extends Fpdi
     }
     */
 
+    /**
+     * @param int $spacing
+     */
     public function SetFontSpacing($spacing = 0)
     {
         $this->FontSpacing = $spacing;
     }
 
 
-    protected function getCellCode(
-        $w,
-        $h = 0,
-        $txt = '',
-        $border = 0,
-        $ln = 0,
-        $align = '',
-        $fill = 0,
-        $link = '',
-        $stretch = 0,
-        $ignore_min_height = false,
-        $calign = 'T',
-        $valign = 'M'
-    ) {
-        $rs = '';
-        if ($this->FontSpacing > 0) {
-            $rs .= sprintf('BT %.2F Tc ET ', $this->FontSpacing);
-        }
-
-        return $rs . parent::getCellCode($w, $h, $txt, $border, $ln, $align, $fill, $link, $stretch, $ignore_min_height,
-                $calign, $valign);
-    }
-
-
+    /**
+     * @param       $name
+     * @param       $family
+     * @param       $style
+     * @param       $size
+     * @param int   $spacing
+     * @param array $color
+     */
     public function AddStyle($name, $family, $style, $size, $spacing = 0, $color = [])
     {
         $this->FontStyles[$name] = [
-            'family' => $family,
-            'style' => $style,
-            'size' => $size,
+            'family'  => $family,
+            'style'   => $style,
+            'size'    => $size,
             'spacing' => $spacing,
-            'color' => $color
+            'color'   => $color
         ];
     }
 
 
+    /**
+     * @param $style
+     */
     public function SetStyle($style)
     {
         $style = $this->FontStyles[$style];
@@ -100,6 +118,16 @@ class PDF extends Fpdi
     }
 
 
+    /**
+     * @param     $alias
+     * @param     $path
+     * @param int $page
+     * @throws CrossReferenceException
+     * @throws FilterException
+     * @throws PdfParserException
+     * @throws PdfTypeException
+     * @throws PdfReaderException
+     */
     public function SetTemplate($alias, $path, $page = 1)
     {
         $this->setSourceFile($path . '.pdf');
@@ -107,7 +135,16 @@ class PDF extends Fpdi
     }
 
 
-    public function UseTemplate($alias, $x = 0, $y = 0, $width = NULL, $height = NULL, $adjustPageSize = false)
+    /**
+     * @param mixed $alias
+     * @param int   $x
+     * @param int   $y
+     * @param null  $width
+     * @param null  $height
+     * @param bool  $adjustPageSize
+     * @return array|void
+     */
+    public function UseTemplate($alias, $x = 0, $y = 0, $width = null, $height = null, $adjustPageSize = false)
     {
         parent::UseTemplate($this->fpdi_templates[$alias], $x, $y, $width, $height, $adjustPageSize);
     }
@@ -123,6 +160,11 @@ class PDF extends Fpdi
     }
 
 
+    /**
+     * @param       $render_method
+     * @param array $arguments
+     * @param bool  $page_break_method
+     */
     public function RenderParagraph($render_method, $arguments = [], $page_break_method = false)
     {
         $pdf = clone $this;
@@ -147,5 +189,44 @@ class PDF extends Fpdi
         } else {
             $this->$render_method($arguments);
         }
+    }
+
+
+    /**
+     * @param        $w
+     * @param int    $h
+     * @param string $txt
+     * @param int    $border
+     * @param int    $ln
+     * @param string $align
+     * @param int    $fill
+     * @param string $link
+     * @param int    $stretch
+     * @param bool   $ignore_min_height
+     * @param string $calign
+     * @param string $valign
+     * @return string
+     */
+    protected function getCellCode(
+        $w,
+        $h = 0,
+        $txt = '',
+        $border = 0,
+        $ln = 0,
+        $align = '',
+        $fill = 0,
+        $link = '',
+        $stretch = 0,
+        $ignore_min_height = false,
+        $calign = 'T',
+        $valign = 'M'
+    ) {
+        $rs = '';
+        if ($this->FontSpacing > 0) {
+            $rs .= sprintf('BT %.2F Tc ET ', $this->FontSpacing);
+        }
+
+        return $rs . parent::getCellCode($w, $h, $txt, $border, $ln, $align, $fill, $link, $stretch, $ignore_min_height,
+                $calign, $valign);
     }
 }

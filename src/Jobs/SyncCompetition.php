@@ -2,29 +2,38 @@
 
 namespace Partymeister\Competitions\Jobs;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Transformers\CompetitionTransformer;
 
+/**
+ * Class SyncCompetition
+ * @package Partymeister\Competitions\Jobs
+ */
 class SyncCompetition implements ShouldQueue
 {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * @var Competition
+     */
     public $competition;
 
 
     /**
      * Create a new job instance.
      *
-     * @return void
+     * SyncCompetition constructor.
+     * @param Competition $competition
      */
     public function __construct(Competition $competition)
     {
@@ -35,7 +44,7 @@ class SyncCompetition implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function handle()
     {
@@ -45,11 +54,13 @@ class SyncCompetition implements ShouldQueue
             'verify' => false
         ]);
 
-        $request = new Request('POST', config('partymeister-competitions-sync.server').config('partymeister-competitions-sync.api.competition'), [ 'content-type' => 'application/json' ], $data);
+        $request = new Request('POST',
+            config('partymeister-competitions-sync.server') . config('partymeister-competitions-sync.api.competition'),
+            [ 'content-type' => 'application/json' ], $data);
 
         try {
             $client->send($request);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::warning($e->getMessage());
         }
     }

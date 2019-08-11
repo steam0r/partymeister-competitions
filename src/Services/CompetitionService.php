@@ -2,18 +2,26 @@
 
 namespace Partymeister\Competitions\Services;
 
+use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Motor\Backend\Services\BaseService;
 use Motor\Core\Filter\Renderers\SelectRenderer;
 use Motor\Media\Models\FileAssociation;
 use Partymeister\Competitions\Events\CompetitionSaved;
 use Partymeister\Competitions\Models\Competition;
-use Motor\Backend\Services\BaseService;
 use Spatie\MediaLibrary\Models\Media;
 
+/**
+ * Class CompetitionService
+ * @package Partymeister\Competitions\Services
+ */
 class CompetitionService extends BaseService
 {
 
+    /**
+     * @var string
+     */
     protected $model = Competition::class;
 
 
@@ -43,30 +51,15 @@ class CompetitionService extends BaseService
                      ]);
     }
 
+
     public function beforeUpdate()
     {
         if (isset($this->data['upload_enabled'])) {
-            $this->data['upload_enabled'] = (bool)$this->data['upload_enabled'];
+            $this->data['upload_enabled'] = (bool) $this->data['upload_enabled'];
         }
         if (isset($this->data['voting_enabled'])) {
-            $this->data['voting_enabled'] = (bool)$this->data['voting_enabled'];
+            $this->data['voting_enabled'] = (bool) $this->data['voting_enabled'];
         }
-    }
-
-
-    public function afterCreate()
-    {
-        foreach ($this->request->get('option_groups', []) as $id) {
-            $this->record->option_groups()->attach($id);
-        }
-        if ($this->request->get('vote_categories', null) > 0) {
-            $this->record->vote_categories()->attach($this->request->get('vote_categories'));
-        }
-        $this->addFileAssociation('video_1');
-        $this->addFileAssociation('video_2');
-        $this->addFileAssociation('video_3');
-
-        event(new CompetitionSaved($this->record));
     }
 
 
@@ -92,9 +85,12 @@ class CompetitionService extends BaseService
     }
 
 
+    /**
+     * @param $competition
+     */
     public static function hardLinkReleases($competition)
     {
-        if (!$competition->voting_enabled) {
+        if ( ! $competition->voting_enabled) {
             return;
         }
 
@@ -115,7 +111,7 @@ class CompetitionService extends BaseService
                     unlink($file);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::channel('debug')->info($e->getMessage());
         }
 
@@ -135,6 +131,25 @@ class CompetitionService extends BaseService
     }
 
 
+    public function afterCreate()
+    {
+        foreach ($this->request->get('option_groups', []) as $id) {
+            $this->record->option_groups()->attach($id);
+        }
+        if ($this->request->get('vote_categories', null) > 0) {
+            $this->record->vote_categories()->attach($this->request->get('vote_categories'));
+        }
+        $this->addFileAssociation('video_1');
+        $this->addFileAssociation('video_2');
+        $this->addFileAssociation('video_3');
+
+        event(new CompetitionSaved($this->record));
+    }
+
+
+    /**
+     * @param $field
+     */
     protected function addFileAssociation($field)
     {
         if ($this->request->get($field) == '' || $this->request->get($field) == 'deleted') {

@@ -3,37 +3,43 @@
 namespace Partymeister\Competitions\Events;
 
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 use Partymeister\Competitions\Models\Entry;
-use Partymeister\Slides\Models\Playlist;
-use Partymeister\Slides\Models\Slide;
 
+/**
+ * Class EntrySaved
+ * @package Partymeister\Competitions\Events
+ */
 class EntrySaved
 {
+
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /**
+     * @var Entry
+     */
     public $entry;
+
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * EntrySaved constructor.
+     * @param Entry $entry
      */
     public function __construct(Entry $entry)
     {
         $this->entry = $entry;
     }
 
+
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel|array
      */
     public function broadcastOn()
     {

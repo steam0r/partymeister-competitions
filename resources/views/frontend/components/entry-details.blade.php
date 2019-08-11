@@ -251,12 +251,12 @@
         $(document).ready(function () {
 
             function resize() {
-                var width = $('#slidemeister-competition-preview').parent().width();
-                var zoom = width / 960;
+                let width = $('#slidemeister-competition-preview').parent().width();
+                let zoom = width / 960;
                 $('#slidemeister-competition-preview').css('zoom', zoom);
             }
 
-            var sm = $('#slidemeister-competition-preview').slidemeister('#slidemeister-properties', slidemeisterProperties);
+            let sm = $('#slidemeister-competition-preview').slidemeister('#slidemeister-properties', slidemeisterProperties);
             sm.data.load({!! $competitionTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);
             resize();
 

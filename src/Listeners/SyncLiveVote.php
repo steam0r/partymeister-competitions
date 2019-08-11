@@ -2,14 +2,16 @@
 
 namespace Partymeister\Competitions\Listeners;
 
-use Partymeister\Competitions\Events\CompetitionSaved;
 use Partymeister\Competitions\Events\LiveVoteUpdated;
 use Partymeister\Core\Events\EventSaved;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * Class SyncLiveVote
+ * @package Partymeister\Competitions\Listeners
+ */
 class SyncLiveVote
 {
+
     /**
      * Create the event listener.
      *
@@ -20,11 +22,11 @@ class SyncLiveVote
         //
     }
 
+
     /**
      * Handle the event.
      *
-     * @param  EventSaved  $event
-     * @return void
+     * @param LiveVoteUpdated $event
      */
     public function handle(LiveVoteUpdated $event)
     {

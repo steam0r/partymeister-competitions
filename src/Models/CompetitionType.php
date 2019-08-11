@@ -2,70 +2,77 @@
 
 namespace Partymeister\Competitions\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Motor\Core\Traits\Searchable;
-use Motor\Core\Traits\Filterable;
 use Culpa\Traits\Blameable;
 use Culpa\Traits\CreatedBy;
 use Culpa\Traits\DeletedBy;
 use Culpa\Traits\UpdatedBy;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
+use Motor\Backend\Models\User;
+use Motor\Core\Filter\Filter;
+use Motor\Core\Traits\Filterable;
+use Motor\Core\Traits\Searchable;
 
 /**
  * Partymeister\Competitions\Models\CompetitionType
  *
- * @property int $id
- * @property string $name
- * @property int $has_platform
- * @property int $has_filesize
- * @property int $has_screenshot
- * @property int $has_audio
- * @property int $has_video
- * @property int $has_recordings
- * @property int $has_composer
- * @property int $has_running_time
- * @property int $is_anonymous
- * @property int $number_of_work_stages
- * @property int $has_remote_entries
- * @property int $file_is_optional
- * @property int $has_config_file
- * @property int $created_by
- * @property int $updated_by
- * @property int|null $deleted_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Partymeister\Competitions\Models\Competition[] $competitions
- * @property-read \Motor\Backend\Models\User $creator
- * @property-read \Motor\Backend\Models\User|null $eraser
- * @property-read mixed $properties
- * @property-read mixed $translated_properties
- * @property-read \Motor\Backend\Models\User $updater
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType filteredBy(\Motor\Core\Filter\Filter $filter, $column)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType filteredByMultiple(\Motor\Core\Filter\Filter $filter)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType search($q, $full_text = false)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereFileIsOptional($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasAudio($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasComposer($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasConfigFile($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasFilesize($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasPlatform($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasRecordings($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasRemoteEntries($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasRunningTime($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasScreenshot($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereHasVideo($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereIsAnonymous($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereNumberOfWorkStages($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\CompetitionType whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @property int                                                                                           $id
+ * @property string                                                                                        $name
+ * @property int                                                                                           $has_platform
+ * @property int                                                                                           $has_filesize
+ * @property int                                                                                           $has_screenshot
+ * @property int                                                                                           $has_audio
+ * @property int                                                                                           $has_video
+ * @property int                                                                                           $has_recordings
+ * @property int                                                                                           $has_composer
+ * @property int                                                                                           $has_running_time
+ * @property int                                                                                           $is_anonymous
+ * @property int                                                                                           $number_of_work_stages
+ * @property int                                                                                           $has_remote_entries
+ * @property int                                                                                           $file_is_optional
+ * @property int                                                                                           $has_config_file
+ * @property int                                                                                           $created_by
+ * @property int                                                         $updated_by
+ * @property int|null                                                    $deleted_by
+ * @property Carbon|null                             $created_at
+ * @property Carbon|null                             $updated_at
+ * @property-read Collection|Competition[] $competitions
+ * @property-read User                                                   $creator
+ * @property-read User|null                                              $eraser
+ * @property-read mixed                                                  $properties
+ * @property-read mixed                                                  $translated_properties
+ * @property-read User                                                   $updater
+ * @method static Builder|CompetitionType filteredBy( Filter $filter, $column )
+ * @method static Builder|CompetitionType filteredByMultiple( Filter $filter )
+ * @method static Builder|CompetitionType newModelQuery()
+ * @method static Builder|CompetitionType newQuery()
+ * @method static Builder|CompetitionType query()
+ * @method static Builder|CompetitionType search( $q, $full_text = false )
+ * @method static Builder|CompetitionType whereCreatedAt( $value )
+ * @method static Builder|CompetitionType whereCreatedBy( $value )
+ * @method static Builder|CompetitionType whereDeletedBy( $value )
+ * @method static Builder|CompetitionType whereFileIsOptional( $value )
+ * @method static Builder|CompetitionType whereHasAudio( $value )
+ * @method static Builder|CompetitionType whereHasComposer( $value )
+ * @method static Builder|CompetitionType whereHasConfigFile( $value )
+ * @method static Builder|CompetitionType whereHasFilesize( $value )
+ * @method static Builder|CompetitionType whereHasPlatform( $value )
+ * @method static Builder|CompetitionType whereHasRecordings( $value )
+ * @method static Builder|CompetitionType whereHasRemoteEntries( $value )
+ * @method static Builder|CompetitionType whereHasRunningTime( $value )
+ * @method static Builder|CompetitionType whereHasScreenshot( $value )
+ * @method static Builder|CompetitionType whereHasVideo( $value )
+ * @method static Builder|CompetitionType whereId( $value )
+ * @method static Builder|CompetitionType whereIsAnonymous( $value )
+ * @method static Builder|CompetitionType whereName( $value )
+ * @method static Builder|CompetitionType whereNumberOfWorkStages( $value )
+ * @method static Builder|CompetitionType whereUpdatedAt( $value )
+ * @method static Builder|CompetitionType whereUpdatedBy( $value )
+ * @mixin Eloquent
  */
 class CompetitionType extends Model
 {
@@ -79,7 +86,7 @@ class CompetitionType extends Model
      *
      * @var array
      */
-    protected $blameable = ['created', 'updated', 'deleted'];
+    protected $blameable = [ 'created', 'updated', 'deleted' ];
 
     /**
      * Searchable columns for the searchable trait
@@ -113,12 +120,37 @@ class CompetitionType extends Model
     ];
 
 
+    /**
+     * @return HasMany
+     */
     public function competitions()
     {
         return $this->hasMany(Competition::class);
     }
 
 
+    /**
+     * @return array
+     */
+    public function getTranslatedPropertiesAttribute()
+    {
+        $properties = $this->getPropertiesAttribute();
+        foreach ($properties as $index => $property) {
+            if ($property == 'number_of_work_stages') {
+                $properties[$index] = trans('partymeister-competitions::backend/competition_types.n_number_of_work_stages',
+                    [ 'number' => $this->number_of_work_stages ]);
+            } else {
+                $properties[$index] = trans('partymeister-competitions::backend/competition_types.' . $property);
+            }
+        }
+
+        return $properties;
+    }
+
+
+    /**
+     * @return array
+     */
     public function getPropertiesAttribute()
     {
         $properties = [];
@@ -160,21 +192,6 @@ class CompetitionType extends Model
         }
         if ($this->has_config_file) {
             $properties[] = 'has_config_file';
-        }
-
-        return $properties;
-    }
-
-
-    public function getTranslatedPropertiesAttribute()
-    {
-        $properties = $this->getPropertiesAttribute();
-        foreach ($properties as $index => $property) {
-            if ($property == 'number_of_work_stages') {
-                $properties[$index] = trans('partymeister-competitions::backend/competition_types.n_number_of_work_stages', ['number' => $this->number_of_work_stages]);
-            } else {
-                $properties[$index] = trans('partymeister-competitions::backend/competition_types.' . $property);
-            }
         }
 
         return $properties;

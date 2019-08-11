@@ -3,34 +3,43 @@
 namespace Partymeister\Competitions\Events;
 
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 use Partymeister\Competitions\Models\Competition;
 
+/**
+ * Class CompetitionSaved
+ * @package Partymeister\Competitions\Events
+ */
 class CompetitionSaved
 {
+
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /**
+     * @var Competition
+     */
     public $competition;
+
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * CompetitionSaved constructor.
+     * @param Competition $competition
      */
     public function __construct(Competition $competition)
     {
         $this->competition = $competition;
     }
 
+
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel|array
      */
     public function broadcastOn()
     {

@@ -38,7 +38,7 @@
 
         $('.access-keys-generate').click(function (e) {
             e.preventDefault();
-            var quantity = prompt("{{trans('partymeister-competitions::backend/access_keys.delete_and_ask_for_quantity')}}", "500");
+            let quantity = prompt("{{trans('partymeister-competitions::backend/access_keys.delete_and_ask_for_quantity')}}", "500");
             if (quantity != null) {
                 axios.post('{{route('ajax.access_keys.generate')}}', {quantity: quantity}).then(function(response) {
                     location.reload();

@@ -2,38 +2,42 @@
 
 namespace Partymeister\Competitions\Http\Controllers\Backend\Component;
 
-use Motor\CMS\Http\Controllers\Component\ComponentController;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Motor\CMS\Http\Controllers\Component\ComponentController;
+use Partymeister\Competitions\Forms\Backend\Component\ComponentEntryUploadForm;
 use Partymeister\Competitions\Models\Component\ComponentEntryUpload;
 use Partymeister\Competitions\Services\Component\ComponentEntryUploadService;
-use Partymeister\Competitions\Forms\Backend\Component\ComponentEntryUploadForm;
 
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-
+/**
+ * Class ComponentEntryUploadsController
+ * @package Partymeister\Competitions\Http\Controllers\Backend\Component
+ */
 class ComponentEntryUploadsController extends ComponentController
 {
+
     use FormBuilderTrait;
+
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
         $this->form = $this->form(ComponentEntryUploadForm::class);
 
-        return response()->json($this->getFormData('component.entry-uploads.store', ['mediapool' => false]));
+        return response()->json($this->getFormData('component.entry-uploads.store', [ 'mediapool' => false ]));
     }
 
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -45,15 +49,15 @@ class ComponentEntryUploadsController extends ComponentController
 
         ComponentEntryUploadService::createWithForm($request, $this->form);
 
-        return response()->json(['message' => trans('partymeister-competitions::component/entry-uploads.created')]);
+        return response()->json([ 'message' => trans('partymeister-competitions::component/entry-uploads.created') ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param ComponentEntryUpload $record
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit(ComponentEntryUpload $record)
     {
@@ -61,17 +65,16 @@ class ComponentEntryUploadsController extends ComponentController
             'model' => $record
         ]);
 
-        return response()->json($this->getFormData('component.entry-uploads.update', ['mediapool' => false]));
+        return response()->json($this->getFormData('component.entry-uploads.update', [ 'mediapool' => false ]));
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request              $request
+     * @param ComponentEntryUpload $record
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, ComponentEntryUpload $record)
     {
@@ -83,6 +86,6 @@ class ComponentEntryUploadsController extends ComponentController
 
         ComponentEntryUploadService::updateWithForm($record, $request, $form);
 
-        return response()->json(['message' => trans('partymeister-competitions::component/entry-uploads.updated')]);
+        return response()->json([ 'message' => trans('partymeister-competitions::component/entry-uploads.updated') ]);
     }
 }

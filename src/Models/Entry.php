@@ -2,114 +2,122 @@
 
 namespace Partymeister\Competitions\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Motor\Core\Traits\Searchable;
+use Motor\Core\Filter\Filter;
 use Motor\Core\Traits\Filterable;
-
+use Motor\Core\Traits\Searchable;
 use Partymeister\Core\Models\Visitor;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
 /**
  * Partymeister\Competitions\Models\Entry
  *
- * @property int $id
- * @property int|null $competition_id
- * @property int|null $final_file_media_id
- * @property int|null $visitor_id
- * @property string $title
- * @property string $author
- * @property string $filesize
- * @property string $platform
- * @property int $sort_position
- * @property string $description
- * @property string $organizer_description
- * @property string $running_time
- * @property string $custom_option
- * @property string $ip_address
- * @property int $allow_release
- * @property int $is_remote
- * @property int $is_recorded
- * @property int $upload_enabled
- * @property int $is_prepared
- * @property int $status
- * @property string $author_name
- * @property string $author_email
- * @property string $author_phone
- * @property string $author_address
- * @property string $author_zip
- * @property string $author_city
- * @property string $author_country_iso_3166_1
- * @property string $composer_name
- * @property string $composer_email
- * @property string $composer_phone
- * @property string $composer_address
- * @property string $composer_zip
- * @property string $composer_city
- * @property string $composer_country_iso_3166_1
- * @property int $composer_not_member_of_copyright_collective
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Partymeister\Competitions\Models\Comment[] $comments
- * @property-read \Partymeister\Competitions\Models\Competition|null $competition
- * @property-read \Spatie\MediaLibrary\Models\Media $final_file
- * @property-read mixed $download
- * @property-read mixed $last_file_upload
- * @property-read mixed $name
- * @property-read mixed $new_comments
- * @property-read mixed $ordered_files
- * @property-read mixed $special_votes
- * @property-read mixed $vote_comments
- * @property-read mixed $votes
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Models\Media[] $media
- * @property-read \Illuminate\Database\Eloquent\Collection|\Partymeister\Competitions\Models\Option[] $options
- * @property-read \Partymeister\Core\Models\Visitor|null $visitor
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry filteredBy(\Motor\Core\Filter\Filter $filter, $column)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry filteredByMultiple(\Motor\Core\Filter\Filter $filter)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry search($q, $full_text = false)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereAllowRelease($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereAuthor($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereAuthorAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereAuthorCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereAuthorCountryIso31661($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereAuthorEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereAuthorName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereAuthorPhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereAuthorZip($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereCompetitionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereComposerAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereComposerCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereComposerCountryIso31661($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereComposerEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereComposerName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereComposerNotMemberOfCopyrightCollective($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereComposerPhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereComposerZip($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereCustomOption($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereFilesize($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereFinalFileMediaId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereIpAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereIsPrepared($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereIsRecorded($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereIsRemote($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereOrganizerDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry wherePlatform($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereRunningTime($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereSortPosition($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereUploadEnabled($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Entry whereVisitorId($value)
- * @mixin \Eloquent
+ * @property int                                                                                       $id
+ * @property int|null                                                                                  $competition_id
+ * @property int|null                                                                                  $final_file_media_id
+ * @property int|null                                                                                  $visitor_id
+ * @property string                                                                                    $title
+ * @property string                                                                                    $author
+ * @property string                                                                                    $filesize
+ * @property string                                                                                    $platform
+ * @property int                                                                                       $sort_position
+ * @property string                                                                                    $description
+ * @property string                                                                                    $organizer_description
+ * @property string                                                                                    $running_time
+ * @property string                                                                                    $custom_option
+ * @property string                                                                                    $ip_address
+ * @property int                                                                                       $allow_release
+ * @property int                                                                                       $is_remote
+ * @property int                                                                                       $is_recorded
+ * @property int                                                                                       $upload_enabled
+ * @property int                                                                                       $is_prepared
+ * @property int                                                                                       $status
+ * @property string                                                                                    $author_name
+ * @property string                                                                                    $author_email
+ * @property string                                                                                    $author_phone
+ * @property string                                                                                    $author_address
+ * @property string                                                                                    $author_zip
+ * @property string                                                                                    $author_city
+ * @property string                                                                                    $author_country_iso_3166_1
+ * @property string                                                                                    $composer_name
+ * @property string                                                                                    $composer_email
+ * @property string                                                                                    $composer_phone
+ * @property string                                                                                    $composer_address
+ * @property string                                                                                    $composer_zip
+ * @property string                                                                                    $composer_city
+ * @property string                                                  $composer_country_iso_3166_1
+ * @property int                                                     $composer_not_member_of_copyright_collective
+ * @property Carbon|null                         $created_at
+ * @property Carbon|null                         $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|Comment[] $comments
+ * @property-read Competition|null                                   $competition
+ * @property-read Media                                              $final_file
+ * @property-read mixed                                              $download
+ * @property-read mixed                                              $last_file_upload
+ * @property-read mixed                                              $name
+ * @property-read mixed                                                                                $new_comments
+ * @property-read mixed                                                                                $ordered_files
+ * @property-read mixed                                                                                $special_votes
+ * @property-read mixed                                                                                $vote_comments
+ * @property-read mixed                                                                                $votes
+ * @property-read \Illuminate\Database\Eloquent\Collection|Media[]                                     $media
+ * @property-read \Illuminate\Database\Eloquent\Collection|Option[]                                    $options
+ * @property-read Visitor|null                                                                         $visitor
+ * @method static Builder|Entry filteredBy( Filter $filter, $column )
+ * @method static Builder|Entry filteredByMultiple( Filter $filter )
+ * @method static Builder|Entry newModelQuery()
+ * @method static Builder|Entry newQuery()
+ * @method static Builder|Entry query()
+ * @method static Builder|Entry search( $q, $full_text = false )
+ * @method static Builder|Entry whereAllowRelease( $value )
+ * @method static Builder|Entry whereAuthor( $value )
+ * @method static Builder|Entry whereAuthorAddress( $value )
+ * @method static Builder|Entry whereAuthorCity( $value )
+ * @method static Builder|Entry whereAuthorCountryIso31661( $value )
+ * @method static Builder|Entry whereAuthorEmail( $value )
+ * @method static Builder|Entry whereAuthorName( $value )
+ * @method static Builder|Entry whereAuthorPhone( $value )
+ * @method static Builder|Entry whereAuthorZip( $value )
+ * @method static Builder|Entry whereCompetitionId( $value )
+ * @method static Builder|Entry whereComposerAddress( $value )
+ * @method static Builder|Entry whereComposerCity( $value )
+ * @method static Builder|Entry whereComposerCountryIso31661( $value )
+ * @method static Builder|Entry whereComposerEmail( $value )
+ * @method static Builder|Entry whereComposerName( $value )
+ * @method static Builder|Entry whereComposerNotMemberOfCopyrightCollective( $value )
+ * @method static Builder|Entry whereComposerPhone( $value )
+ * @method static Builder|Entry whereComposerZip( $value )
+ * @method static Builder|Entry whereCreatedAt( $value )
+ * @method static Builder|Entry whereCustomOption( $value )
+ * @method static Builder|Entry whereDescription( $value )
+ * @method static Builder|Entry whereFilesize( $value )
+ * @method static Builder|Entry whereFinalFileMediaId( $value )
+ * @method static Builder|Entry whereId( $value )
+ * @method static Builder|Entry whereIpAddress( $value )
+ * @method static Builder|Entry whereIsPrepared( $value )
+ * @method static Builder|Entry whereIsRecorded( $value )
+ * @method static Builder|Entry whereIsRemote( $value )
+ * @method static Builder|Entry whereOrganizerDescription( $value )
+ * @method static Builder|Entry wherePlatform( $value )
+ * @method static Builder|Entry whereRunningTime( $value )
+ * @method static Builder|Entry whereSortPosition( $value )
+ * @method static Builder|Entry whereStatus( $value )
+ * @method static Builder|Entry whereTitle( $value )
+ * @method static Builder|Entry whereUpdatedAt( $value )
+ * @method static Builder|Entry whereUploadEnabled( $value )
+ * @method static Builder|Entry whereVisitorId( $value )
+ * @mixin Eloquent
  */
 class Entry extends Model implements HasMedia
 {
@@ -173,6 +181,10 @@ class Entry extends Model implements HasMedia
     ];
 
 
+    /**
+     * @param Media|null $media
+     * @throws InvalidManipulation
+     */
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->width(320)->height(240)->nonQueued();
@@ -181,6 +193,9 @@ class Entry extends Model implements HasMedia
     }
 
 
+    /**
+     * @return string
+     */
     public function getLastFileUploadAttribute()
     {
         $media = $this->getMedia('file')->reverse()->first();
@@ -192,24 +207,36 @@ class Entry extends Model implements HasMedia
     }
 
 
+    /**
+     * @return BelongsTo
+     */
     public function competition()
     {
         return $this->belongsTo(Competition::class);
     }
 
 
+    /**
+     * @return string
+     */
     public function getNameAttribute()
     {
         return $this->title . ' by ' . $this->author;
     }
 
 
+    /**
+     * @return BelongsToMany
+     */
     public function options()
     {
         return $this->belongsToMany(Option::class);
     }
 
 
+    /**
+     * @return int|mixed
+     */
     public function getSpecialVotesAttribute()
     {
         // Get visitor votes
@@ -226,12 +253,24 @@ class Entry extends Model implements HasMedia
     }
 
 
+    /**
+     * @return array
+     */
     public function getVoteCommentsAttribute()
     {
-        return DB::table('votes')->select('comment')->where('entry_id', $this->id)->where('comment', '!=', '')->get()->pluck('comment')->toArray();
+        return DB::table('votes')
+                 ->select('comment')
+                 ->where('entry_id', $this->id)
+                 ->where('comment', '!=', '')
+                 ->get()
+                 ->pluck('comment')
+                 ->toArray();
     }
 
 
+    /**
+     * @return int|mixed
+     */
     public function getVotesAttribute()
     {
         // Get visitor votes
@@ -257,12 +296,27 @@ class Entry extends Model implements HasMedia
     }
 
 
+    /**
+     * @return int
+     */
     public function getNewCommentsAttribute()
     {
         return $this->comments()->where('read_by_visitor', false)->count();
     }
 
 
+    /**
+     * Get all of the post's comments.
+     */
+    public function comments()
+    {
+        return $this->morphMany('Partymeister\Competitions\Models\Comment', 'model');
+    }
+
+
+    /**
+     * @return Collection
+     */
     public function getOrderedFilesAttribute()
     {
         $media = $this->getMedia('file');
@@ -280,6 +334,9 @@ class Entry extends Model implements HasMedia
     }
 
 
+    /**
+     * @return |null
+     */
     public function getDownloadAttribute()
     {
         $media = null;
@@ -291,6 +348,9 @@ class Entry extends Model implements HasMedia
     }
 
 
+    /**
+     * @return HasOne
+     */
     public function final_file()
     {
         return $this->hasOne(Media::class, 'model_id');
@@ -298,13 +358,8 @@ class Entry extends Model implements HasMedia
 
 
     /**
-     * Get all of the post's comments.
+     * @return BelongsTo
      */
-    public function comments()
-    {
-        return $this->morphMany('Partymeister\Competitions\Models\Comment', 'model');
-    }
-
     public function visitor()
     {
         return $this->belongsTo(Visitor::class);

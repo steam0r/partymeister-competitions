@@ -3,10 +3,13 @@
 namespace Partymeister\Competitions\Console\Commands;
 
 use Illuminate\Console\Command;
-use Partymeister\Competitions\Events\CompetitionSaved;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Services\CompetitionService;
 
+/**
+ * Class PartymeisterCompetitionsPublishReleaseFilesCommand
+ * @package Partymeister\Competitions\Console\Commands
+ */
 class PartymeisterCompetitionsPublishReleaseFilesCommand extends Command
 {
 
@@ -25,14 +28,6 @@ class PartymeisterCompetitionsPublishReleaseFilesCommand extends Command
     protected $description = 'Make symlinks to all uploaded files';
 
 
-    protected function mkdir($directory)
-    {
-        if ( ! is_dir($directory)) {
-            mkdir($directory);
-        }
-    }
-
-
     /**
      * Execute the console command.
      *
@@ -42,6 +37,17 @@ class PartymeisterCompetitionsPublishReleaseFilesCommand extends Command
     {
         foreach (Competition::all() as $competition) {
             CompetitionService::hardLinkReleases($competition);
+        }
+    }
+
+
+    /**
+     * @param $directory
+     */
+    protected function mkdir($directory)
+    {
+        if ( ! is_dir($directory)) {
+            mkdir($directory);
         }
     }
 }

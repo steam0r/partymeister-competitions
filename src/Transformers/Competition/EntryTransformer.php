@@ -3,11 +3,12 @@
 namespace Partymeister\Competitions\Transformers\Competition;
 
 use League\Fractal;
-use Motor\Backend\Helpers\Filesize;
-use Motor\Backend\Transformers\MediaTransformer;
 use Partymeister\Competitions\Models\Entry;
-use Symfony\Component\Intl\Intl;
 
+/**
+ * Class EntryTransformer
+ * @package Partymeister\Competitions\Transformers\Competition
+ */
 class EntryTransformer extends Fractal\TransformerAbstract
 {
 

@@ -2,26 +2,32 @@
 
 namespace Partymeister\Competitions\Models\Component;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Motor\CMS\Models\ComponentBaseModel;
 use Motor\CMS\Models\Navigation;
+use Motor\CMS\Models\PageVersionComponent;
 
 /**
  * Partymeister\Competitions\Models\Component\ComponentEntryUpload
  *
- * @property int $id
- * @property int|null $entries_page_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Motor\CMS\Models\PageVersionComponent[] $component
- * @property-read \Motor\CMS\Models\Navigation|null $entries_page
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryUpload newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryUpload newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryUpload query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryUpload whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryUpload whereEntriesPageId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryUpload whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryUpload whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property int                                                                  $id
+ * @property int|null                                                             $entries_page_id
+ * @property Carbon|null                                      $created_at
+ * @property Carbon|null                                      $updated_at
+ * @property-read Collection|PageVersionComponent[] $component
+ * @property-read Navigation|null                                                 $entries_page
+ * @method static Builder|ComponentEntryUpload newModelQuery()
+ * @method static Builder|ComponentEntryUpload newQuery()
+ * @method static Builder|ComponentEntryUpload query()
+ * @method static Builder|ComponentEntryUpload whereCreatedAt( $value )
+ * @method static Builder|ComponentEntryUpload whereEntriesPageId( $value )
+ * @method static Builder|ComponentEntryUpload whereId( $value )
+ * @method static Builder|ComponentEntryUpload whereUpdatedAt( $value )
+ * @mixin Eloquent
  */
 class ComponentEntryUpload extends ComponentBaseModel
 {
@@ -51,7 +57,7 @@ class ComponentEntryUpload extends ComponentBaseModel
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function entries_page()
     {

@@ -2,16 +2,20 @@
 
 namespace Partymeister\Competitions\Http\Controllers\Backend;
 
-use Motor\Backend\Http\Controllers\Controller;
-
-use Partymeister\Competitions\Models\OptionGroup;
-use Partymeister\Competitions\Http\Requests\Backend\OptionGroupRequest;
-use Partymeister\Competitions\Services\OptionGroupService;
-use Partymeister\Competitions\Grids\OptionGroupGrid;
-use Partymeister\Competitions\Forms\Backend\OptionGroupForm;
-
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Motor\Backend\Http\Controllers\Controller;
+use Partymeister\Competitions\Forms\Backend\OptionGroupForm;
+use Partymeister\Competitions\Grids\OptionGroupGrid;
+use Partymeister\Competitions\Http\Requests\Backend\OptionGroupRequest;
+use Partymeister\Competitions\Models\OptionGroup;
+use Partymeister\Competitions\Services\OptionGroupService;
 
+/**
+ * Class OptionGroupsController
+ * @package Partymeister\Competitions\Http\Controllers\Backend
+ */
 class OptionGroupsController extends Controller
 {
 
@@ -21,7 +25,8 @@ class OptionGroupsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \ReflectionException
      */
     public function index()
     {
@@ -38,7 +43,7 @@ class OptionGroupsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -55,9 +60,8 @@ class OptionGroupsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
+     * @param OptionGroupRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(OptionGroupRequest $request)
     {
@@ -79,9 +83,7 @@ class OptionGroupsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param $id
      */
     public function show($id)
     {
@@ -92,9 +94,8 @@ class OptionGroupsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param OptionGroup $record
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(OptionGroup $record)
     {
@@ -112,10 +113,9 @@ class OptionGroupsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param OptionGroupRequest $request
+     * @param OptionGroup        $record
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(OptionGroupRequest $request, OptionGroup $record)
     {
@@ -137,9 +137,8 @@ class OptionGroupsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param OptionGroup $record
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(OptionGroup $record)
     {

@@ -5,19 +5,37 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Partymeister\Competitions\Models\CompetitionPrize;
 
+/**
+ * Class PartymeisterCompetitionsBackendCompetitionPrizeTest
+ */
 class PartymeisterCompetitionsBackendCompetitionPrizeTest extends TestCase
 {
 
     use DatabaseTransactions;
 
+    /**
+     * @var
+     */
     protected $user;
 
+    /**
+     * @var
+     */
     protected $readPermission;
 
+    /**
+     * @var
+     */
     protected $writePermission;
 
+    /**
+     * @var
+     */
     protected $deletePermission;
 
+    /**
+     * @var array
+     */
     protected $tables = [
         'competition_prizes',
         'users',

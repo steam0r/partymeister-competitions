@@ -2,41 +2,75 @@
 
 namespace Partymeister\Competitions\Components;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Motor\CMS\Models\PageVersionComponent;
 use Partymeister\Competitions\Forms\Component\EntryUploadForm;
+use Partymeister\Competitions\Models\Component\ComponentEntryUpload;
 use Partymeister\Competitions\Models\Entry;
 use Partymeister\Competitions\Services\EntryService;
 use Partymeister\Core\Services\StuhlService;
 
+/**
+ * Class ComponentEntryUploads
+ * @package Partymeister\Competitions\Components
+ */
 class ComponentEntryUploads
 {
 
     use FormBuilderTrait;
 
+    /**
+     * @var ComponentEntryUpload
+     */
     protected $component;
 
+    /**
+     * @var PageVersionComponent
+     */
     protected $pageVersionComponent;
 
+    /**
+     * @var
+     */
     protected $entryUploadForm;
 
+    /**
+     * @var
+     */
     protected $record;
 
+    /**
+     * @var
+     */
     protected $request;
 
 
+    /**
+     * ComponentEntryUploads constructor.
+     * @param PageVersionComponent                                             $pageVersionComponent
+     * @param ComponentEntryUpload $component
+     */
     public function __construct(
         PageVersionComponent $pageVersionComponent,
-        \Partymeister\Competitions\Models\Component\ComponentEntryUpload $component
+        ComponentEntryUpload $component
     ) {
         $this->component            = $component;
         $this->pageVersionComponent = $pageVersionComponent;
     }
 
 
+    /**
+     * @param Request $request
+     * @return Factory|RedirectResponse|Redirector|View
+     * @throws GuzzleException
+     */
     public function index(Request $request)
     {
         $visitor = Auth::guard('visitor')->user();
@@ -85,6 +119,9 @@ class ComponentEntryUploads
     }
 
 
+    /**
+     * @return RedirectResponse|Redirector
+     */
     protected function post()
     {
         // It will automatically use current request, get the rules, and do the validation
@@ -101,6 +138,10 @@ class ComponentEntryUploads
     }
 
 
+    /**
+     * @return RedirectResponse|Redirector
+     * @throws GuzzleException
+     */
     protected function patch()
     {
         if ( ! $this->record->competition->upload_enabled && ! $this->record->upload_enabled) {
@@ -127,6 +168,9 @@ class ComponentEntryUploads
     }
 
 
+    /**
+     * @return Factory|View
+     */
     public function render()
     {
         return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),

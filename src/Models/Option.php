@@ -2,51 +2,58 @@
 
 namespace Partymeister\Competitions\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Motor\Core\Traits\Searchable;
-use Motor\Core\Traits\Filterable;
 use Culpa\Traits\Blameable;
 use Culpa\Traits\CreatedBy;
 use Culpa\Traits\DeletedBy;
 use Culpa\Traits\UpdatedBy;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
+use Motor\Backend\Models\User;
+use Motor\Core\Filter\Filter;
+use Motor\Core\Traits\Filterable;
+use Motor\Core\Traits\Searchable;
 
 /**
  * Partymeister\Competitions\Models\Option
  *
- * @property int $id
- * @property int $option_group_id
- * @property int $sort_position
- * @property string $name
- * @property int $created_by
- * @property int $updated_by
- * @property int|null $deleted_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Motor\Backend\Models\User $creator
- * @property-read \Motor\Backend\Models\User|null $eraser
- * @property-read \Partymeister\Competitions\Models\OptionGroup $group
- * @property-read \Motor\Backend\Models\User $updater
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option filteredBy(\Motor\Core\Filter\Filter $filter, $column)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option filteredByMultiple(\Motor\Core\Filter\Filter $filter)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option search($q, $full_text = false)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option whereOptionGroupId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option whereSortPosition($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Option whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @property int                                                $id
+ * @property int                                                $option_group_id
+ * @property int                                                $sort_position
+ * @property string                          $name
+ * @property int                             $created_by
+ * @property int                             $updated_by
+ * @property int|null                        $deleted_by
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read User                       $creator
+ * @property-read User|null                  $eraser
+ * @property-read OptionGroup                $group
+ * @property-read User                       $updater
+ * @method static Builder|Option filteredBy( Filter $filter, $column )
+ * @method static Builder|Option filteredByMultiple( Filter $filter )
+ * @method static Builder|Option newModelQuery()
+ * @method static Builder|Option newQuery()
+ * @method static Builder|Option query()
+ * @method static Builder|Option search( $q, $full_text = false )
+ * @method static Builder|Option whereCreatedAt( $value )
+ * @method static Builder|Option whereCreatedBy( $value )
+ * @method static Builder|Option whereDeletedBy( $value )
+ * @method static Builder|Option whereId( $value )
+ * @method static Builder|Option whereName( $value )
+ * @method static Builder|Option whereOptionGroupId( $value )
+ * @method static Builder|Option whereSortPosition( $value )
+ * @method static Builder|Option whereUpdatedAt( $value )
+ * @method static Builder|Option whereUpdatedBy( $value )
+ * @mixin Eloquent
  */
 class Option extends Model
 {
+
     use Searchable;
-	use Filterable;
+    use Filterable;
     use Blameable, CreatedBy, UpdatedBy, DeletedBy;
 
     /**
@@ -54,15 +61,14 @@ class Option extends Model
      *
      * @var array
      */
-    protected $blameable = array('created', 'updated', 'deleted');
+    protected $blameable = [ 'created', 'updated', 'deleted' ];
 
     /**
      * Searchable columns for the searchable trait
      *
      * @var array
      */
-    protected $searchableColumns = [
-    ];
+    protected $searchableColumns = [];
 
     /**
      * The attributes that are mass assignable.
@@ -75,6 +81,10 @@ class Option extends Model
         'sort_position',
     ];
 
+
+    /**
+     * @return BelongsTo
+     */
     public function group()
     {
         return $this->belongsTo(OptionGroup::class);

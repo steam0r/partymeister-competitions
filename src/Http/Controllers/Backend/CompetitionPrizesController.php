@@ -2,17 +2,21 @@
 
 namespace Partymeister\Competitions\Http\Controllers\Backend;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Motor\Backend\Http\Controllers\Controller;
-
+use Partymeister\Competitions\Forms\Backend\CompetitionPrizeForm;
+use Partymeister\Competitions\Grids\CompetitionPrizeGrid;
+use Partymeister\Competitions\Http\Requests\Backend\CompetitionPrizeRequest;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\CompetitionPrize;
-use Partymeister\Competitions\Http\Requests\Backend\CompetitionPrizeRequest;
 use Partymeister\Competitions\Services\CompetitionPrizeService;
-use Partymeister\Competitions\Grids\CompetitionPrizeGrid;
-use Partymeister\Competitions\Forms\Backend\CompetitionPrizeForm;
 
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-
+/**
+ * Class CompetitionPrizesController
+ * @package Partymeister\Competitions\Http\Controllers\Backend
+ */
 class CompetitionPrizesController extends Controller
 {
 
@@ -22,7 +26,8 @@ class CompetitionPrizesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \ReflectionException
      */
     public function index()
     {
@@ -39,7 +44,7 @@ class CompetitionPrizesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -58,9 +63,8 @@ class CompetitionPrizesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
+     * @param CompetitionPrizeRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(CompetitionPrizeRequest $request)
     {
@@ -82,9 +86,7 @@ class CompetitionPrizesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param $id
      */
     public function show($id)
     {
@@ -95,9 +97,8 @@ class CompetitionPrizesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param CompetitionPrize $record
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(CompetitionPrize $record)
     {
@@ -115,10 +116,9 @@ class CompetitionPrizesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param CompetitionPrizeRequest $request
+     * @param CompetitionPrize        $record
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(CompetitionPrizeRequest $request, CompetitionPrize $record)
     {
@@ -140,9 +140,8 @@ class CompetitionPrizesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param CompetitionPrize $record
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(CompetitionPrize $record)
     {

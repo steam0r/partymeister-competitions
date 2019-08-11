@@ -2,20 +2,25 @@
 
 namespace Partymeister\Competitions\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Motor\Backend\Http\Controllers\Controller;
-
-use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Http\Requests\Backend\CompetitionRequest;
+use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Services\CompetitionService;
 use Partymeister\Competitions\Transformers\CompetitionTransformer;
 
+/**
+ * Class CompetitionsController
+ * @package Partymeister\Competitions\Http\Controllers\Api
+ */
 class CompetitionsController extends Controller
 {
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -29,9 +34,8 @@ class CompetitionsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
+     * @param CompetitionRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CompetitionRequest $request)
     {
@@ -45,9 +49,8 @@ class CompetitionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param Competition $record
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Competition $record)
     {
@@ -61,10 +64,9 @@ class CompetitionsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param CompetitionRequest $request
+     * @param Competition        $record
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(CompetitionRequest $request, Competition $record)
     {
@@ -78,18 +80,17 @@ class CompetitionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param Competition $record
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Competition $record)
     {
         $result = CompetitionService::delete($record)->getResult();
 
         if ($result) {
-            return $this->respondWithJson('Competition deleted', ['success' => true]);
+            return $this->respondWithJson('Competition deleted', [ 'success' => true ]);
         }
 
-        return $this->respondWithJson('Competition NOT deleted', ['success' => false]);
+        return $this->respondWithJson('Competition NOT deleted', [ 'success' => false ]);
     }
 }

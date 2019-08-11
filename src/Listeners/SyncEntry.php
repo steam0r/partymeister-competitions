@@ -4,11 +4,14 @@ namespace Partymeister\Competitions\Listeners;
 
 use Partymeister\Competitions\Events\EntrySaved;
 use Partymeister\Slides\Events\SlideSaved;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * Class SyncEntry
+ * @package Partymeister\Competitions\Listeners
+ */
 class SyncEntry
 {
+
     /**
      * Create the event listener.
      *
@@ -19,12 +22,11 @@ class SyncEntry
         //
     }
 
+
     /**
      * Handle the event.
      *
-     * @param  SlideSaved $event
-     *
-     * @return void
+     * @param EntrySaved $event
      */
     public function handle(EntrySaved $event)
     {

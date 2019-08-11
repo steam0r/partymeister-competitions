@@ -6,6 +6,10 @@ use Motor\Backend\Grid\Grid;
 use Motor\Backend\Grid\Renderers\CollectionRenderer;
 use Motor\Backend\Grid\Renderers\TranslateRenderer;
 
+/**
+ * Class OptionGroupGrid
+ * @package Partymeister\Competitions\Grids
+ */
 class OptionGroupGrid extends Grid
 {
 
@@ -13,13 +17,12 @@ class OptionGroupGrid extends Grid
     {
         $this->addColumn('name', trans('motor-backend::backend/global.name'), true);
         $this->setDefaultSorting('name', 'ASC');
-        $this->addColumn('type', trans('partymeister-competitions::backend/option_groups.type'), true)->renderer(TranslateRenderer::class, ['file' => 'partymeister-competitions::backend/option_groups.types']);
+        $this->addColumn('type', trans('partymeister-competitions::backend/option_groups.type'), true)
+             ->renderer(TranslateRenderer::class,
+                 [ 'file' => 'partymeister-competitions::backend/option_groups.types' ]);
 
-
-
-        $this->addColumn('options', trans('partymeister-competitions::backend/option_groups.options'))->renderer(CollectionRenderer::class, ['column' => 'name']);
-
-
+        $this->addColumn('options', trans('partymeister-competitions::backend/option_groups.options'))
+             ->renderer(CollectionRenderer::class, [ 'column' => 'name' ]);
 
         $this->addEditAction(trans('motor-backend::backend/global.edit'), 'backend.option_groups.edit');
         $this->addDeleteAction(trans('motor-backend::backend/global.delete'), 'backend.option_groups.destroy');

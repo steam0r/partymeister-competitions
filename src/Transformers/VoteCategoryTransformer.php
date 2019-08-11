@@ -5,6 +5,10 @@ namespace Partymeister\Competitions\Transformers;
 use League\Fractal;
 use Partymeister\Competitions\Models\VoteCategory;
 
+/**
+ * Class VoteCategoryTransformer
+ * @package Partymeister\Competitions\Transformers
+ */
 class VoteCategoryTransformer extends Fractal\TransformerAbstract
 {
 

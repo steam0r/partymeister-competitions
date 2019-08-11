@@ -2,11 +2,18 @@
 
 namespace Partymeister\Competitions\Services;
 
-use Partymeister\Competitions\Models\VoteCategory;
 use Motor\Backend\Services\BaseService;
+use Partymeister\Competitions\Models\VoteCategory;
 
+/**
+ * Class VoteCategoryService
+ * @package Partymeister\Competitions\Services
+ */
 class VoteCategoryService extends BaseService
 {
 
+    /**
+     * @var string
+     */
     protected $model = VoteCategory::class;
 }

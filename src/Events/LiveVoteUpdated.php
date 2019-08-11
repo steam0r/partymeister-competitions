@@ -3,35 +3,43 @@
 namespace Partymeister\Competitions\Events;
 
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Partymeister\Competitions\Models\Competition;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 use Partymeister\Competitions\Models\LiveVote;
 
+/**
+ * Class LiveVoteUpdated
+ * @package Partymeister\Competitions\Events
+ */
 class LiveVoteUpdated
 {
+
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /**
+     * @var LiveVote
+     */
     public $liveVote;
+
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * LiveVoteUpdated constructor.
+     * @param LiveVote $liveVote
      */
     public function __construct(LiveVote $liveVote)
     {
         $this->liveVote = $liveVote;
     }
 
+
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel|array
      */
     public function broadcastOn()
     {

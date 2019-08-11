@@ -4,6 +4,10 @@ namespace Partymeister\Competitions\Http\Requests\Backend;
 
 use Motor\Backend\Http\Requests\Request;
 
+/**
+ * Class VoteCategoryRequest
+ * @package Partymeister\Competitions\Http\Requests\Backend
+ */
 class VoteCategoryRequest extends Request
 {
 

@@ -2,47 +2,52 @@
 
 namespace Partymeister\Competitions\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Motor\Core\Traits\Searchable;
-use Motor\Core\Traits\Filterable;
 use Culpa\Traits\Blameable;
 use Culpa\Traits\CreatedBy;
 use Culpa\Traits\DeletedBy;
 use Culpa\Traits\UpdatedBy;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
+use Motor\Backend\Models\User;
+use Motor\Core\Filter\Filter;
+use Motor\Core\Traits\Filterable;
+use Motor\Core\Traits\Searchable;
 
 /**
  * Partymeister\Competitions\Models\AccessKey
  *
- * @property int $id
- * @property int|null $visitor_id
- * @property string $access_key
- * @property string $ip_address
- * @property string|null $registered_at
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $created_by
- * @property int $updated_by
- * @property int|null $deleted_by
- * @property-read \Motor\Backend\Models\User $creator
- * @property-read \Motor\Backend\Models\User|null $eraser
- * @property-read \Motor\Backend\Models\User $updater
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey filteredBy(\Motor\Core\Filter\Filter $filter, $column)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey filteredByMultiple(\Motor\Core\Filter\Filter $filter)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey search($q, $full_text = false)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey whereAccessKey($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey whereIpAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey whereRegisteredAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey whereUpdatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\AccessKey whereVisitorId($value)
- * @mixin \Eloquent
+ * @property int                                  $id
+ * @property int|null                             $visitor_id
+ * @property string                               $access_key
+ * @property string                               $ip_address
+ * @property string|null                          $registered_at
+ * @property Carbon|null      $created_at
+ * @property Carbon|null      $updated_at
+ * @property int                                  $created_by
+ * @property int                                  $updated_by
+ * @property int|null                             $deleted_by
+ * @property-read User      $creator
+ * @property-read User|null $eraser
+ * @property-read User      $updater
+ * @method static Builder|AccessKey filteredBy( Filter $filter, $column )
+ * @method static Builder|AccessKey filteredByMultiple( Filter $filter )
+ * @method static Builder|AccessKey newModelQuery()
+ * @method static Builder|AccessKey newQuery()
+ * @method static Builder|AccessKey query()
+ * @method static Builder|AccessKey search( $q, $full_text = false )
+ * @method static Builder|AccessKey whereAccessKey( $value )
+ * @method static Builder|AccessKey whereCreatedAt( $value )
+ * @method static Builder|AccessKey whereCreatedBy( $value )
+ * @method static Builder|AccessKey whereDeletedBy( $value )
+ * @method static Builder|AccessKey whereId( $value )
+ * @method static Builder|AccessKey whereIpAddress( $value )
+ * @method static Builder|AccessKey whereRegisteredAt( $value )
+ * @method static Builder|AccessKey whereUpdatedAt( $value )
+ * @method static Builder|AccessKey whereUpdatedBy( $value )
+ * @method static Builder|AccessKey whereVisitorId( $value )
+ * @mixin Eloquent
  */
 class AccessKey extends Model
 {

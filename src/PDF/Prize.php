@@ -5,6 +5,10 @@ namespace Partymeister\Competitions\PDF;
 use NumberToWords\NumberToWords;
 use Partymeister\Competitions\Models\Entry;
 
+/**
+ * Class Prize
+ * @package Partymeister\Competitions\PDF
+ */
 class Prize extends PDF
 {
 
@@ -27,6 +31,9 @@ class Prize extends PDF
     }
 
 
+    /**
+     * @param $name
+     */
     function renderCompetitionName($name)
     {
         $this->SetStyle('Prizesheet Headline');
@@ -34,6 +41,10 @@ class Prize extends PDF
     }
 
 
+    /**
+     * @param $entry
+     * @param $prize
+     */
     function renderCompetitionRankings($entry, $prize)
     {
         $this->SetStyle('Prizesheet Name');
@@ -54,6 +65,10 @@ class Prize extends PDF
     }
 
 
+    /**
+     * @param bool $entry
+     * @param bool $prize
+     */
     function renderReceipt($entry = false, $prize = false)
     {
         // Descriptions

@@ -2,43 +2,48 @@
 
 namespace Partymeister\Competitions\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Motor\Core\Traits\Searchable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
+use Motor\Core\Filter\Filter;
 use Motor\Core\Traits\Filterable;
+use Motor\Core\Traits\Searchable;
 
 /**
  * Partymeister\Competitions\Models\Vote
  *
- * @property int $id
- * @property int $competition_id
- * @property int $vote_category_id
- * @property int $entry_id
- * @property int $special_vote
- * @property int $visitor_id
- * @property string $points
- * @property string $comment
- * @property string $ip_address
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Partymeister\Competitions\Models\VoteCategory $vote_category
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote filteredBy(\Motor\Core\Filter\Filter $filter, $column)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote filteredByMultiple(\Motor\Core\Filter\Filter $filter)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote search($q, $full_text = false)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote whereComment($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote whereCompetitionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote whereEntryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote whereIpAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote wherePoints($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote whereSpecialVote($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote whereVisitorId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Vote whereVoteCategoryId($value)
- * @mixin \Eloquent
+ * @property int                                                 $id
+ * @property int                                                 $competition_id
+ * @property int                                                 $vote_category_id
+ * @property int                                                 $entry_id
+ * @property int                             $special_vote
+ * @property int                             $visitor_id
+ * @property string                          $points
+ * @property string                          $comment
+ * @property string                          $ip_address
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read VoteCategory               $vote_category
+ * @method static Builder|Vote filteredBy( Filter $filter, $column )
+ * @method static Builder|Vote filteredByMultiple( Filter $filter )
+ * @method static Builder|Vote newModelQuery()
+ * @method static Builder|Vote newQuery()
+ * @method static Builder|Vote query()
+ * @method static Builder|Vote search( $q, $full_text = false )
+ * @method static Builder|Vote whereComment( $value )
+ * @method static Builder|Vote whereCompetitionId( $value )
+ * @method static Builder|Vote whereCreatedAt( $value )
+ * @method static Builder|Vote whereEntryId( $value )
+ * @method static Builder|Vote whereId( $value )
+ * @method static Builder|Vote whereIpAddress( $value )
+ * @method static Builder|Vote wherePoints( $value )
+ * @method static Builder|Vote whereSpecialVote( $value )
+ * @method static Builder|Vote whereUpdatedAt( $value )
+ * @method static Builder|Vote whereVisitorId( $value )
+ * @method static Builder|Vote whereVoteCategoryId( $value )
+ * @mixin Eloquent
  */
 class Vote extends Model
 {
@@ -69,8 +74,12 @@ class Vote extends Model
         'ip_address',
     ];
 
+
+    /**
+     * @return BelongsTo
+     */
     public function vote_category()
-	{
-		return $this->belongsTo(VoteCategory::class);
-	}
+    {
+        return $this->belongsTo(VoteCategory::class);
+    }
 }

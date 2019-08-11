@@ -2,34 +2,38 @@
 
 namespace Partymeister\Competitions\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Motor\Core\Traits\Searchable;
+use Illuminate\Support\Carbon;
+use Motor\Core\Filter\Filter;
 use Motor\Core\Traits\Filterable;
+use Motor\Core\Traits\Searchable;
 
 /**
  * Partymeister\Competitions\Models\ManualVote
  *
- * @property int $id
- * @property int $competition_id
- * @property int $entry_id
- * @property string $points
- * @property string $ip_address
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote filteredBy(\Motor\Core\Filter\Filter $filter, $column)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote filteredByMultiple(\Motor\Core\Filter\Filter $filter)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote search($q, $full_text = false)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote whereCompetitionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote whereEntryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote whereIpAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote wherePoints($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\ManualVote whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property int                             $id
+ * @property int                             $competition_id
+ * @property int                             $entry_id
+ * @property string                          $points
+ * @property string                          $ip_address
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|ManualVote filteredBy( Filter $filter, $column )
+ * @method static Builder|ManualVote filteredByMultiple( Filter $filter )
+ * @method static Builder|ManualVote newModelQuery()
+ * @method static Builder|ManualVote newQuery()
+ * @method static Builder|ManualVote query()
+ * @method static Builder|ManualVote search( $q, $full_text = false )
+ * @method static Builder|ManualVote whereCompetitionId( $value )
+ * @method static Builder|ManualVote whereCreatedAt( $value )
+ * @method static Builder|ManualVote whereEntryId( $value )
+ * @method static Builder|ManualVote whereId( $value )
+ * @method static Builder|ManualVote whereIpAddress( $value )
+ * @method static Builder|ManualVote wherePoints( $value )
+ * @method static Builder|ManualVote whereUpdatedAt( $value )
+ * @mixin Eloquent
  */
 class ManualVote extends Model
 {

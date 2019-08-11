@@ -3,8 +3,13 @@
 namespace Partymeister\Competitions\Transformers;
 
 use League\Fractal;
+use League\Fractal\Resource\Collection;
 use Partymeister\Competitions\Models\OptionGroup;
 
+/**
+ * Class OptionGroupTransformer
+ * @package Partymeister\Competitions\Transformers
+ */
 class OptionGroupTransformer extends Fractal\TransformerAbstract
 {
 
@@ -43,7 +48,8 @@ class OptionGroupTransformer extends Fractal\TransformerAbstract
     /**
      * Include options
      *
-     * @return \League\Fractal\Resource\Collection
+     * @param OptionGroup $record
+     * @return Collection
      */
     public function includeOptions(OptionGroup $record)
     {

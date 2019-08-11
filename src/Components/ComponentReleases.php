@@ -2,43 +2,70 @@
 
 namespace Partymeister\Competitions\Components;
 
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Motor\CMS\Models\PageVersionComponent;
 use Partymeister\Competitions\Models\Competition;
 
-class ComponentReleases {
+/**
+ * Class ComponentReleases
+ * @package Partymeister\Competitions\Components
+ */
+class ComponentReleases
+{
 
+    /**
+     * @var PageVersionComponent
+     */
     protected $pageVersionComponent;
+
+    /**
+     * @var
+     */
     protected $competition;
 
+
+    /**
+     * ComponentReleases constructor.
+     * @param PageVersionComponent $pageVersionComponent
+     */
     public function __construct(PageVersionComponent $pageVersionComponent)
     {
         $this->pageVersionComponent = $pageVersionComponent;
     }
 
+
+    /**
+     * @param Request $request
+     * @return Factory|View
+     */
     public function index(Request $request)
     {
         if ($request->get('competition_id') > 0) {
-            $this->competition = Competition::where('voting_enabled', TRUE)
-                ->where('id', $request->get('competition_id'))
-                ->orderBy('updated_at', 'ASC')
-                ->first();
+            $this->competition = Competition::where('voting_enabled', true)
+                                            ->where('id', $request->get('competition_id'))
+                                            ->orderBy('updated_at', 'ASC')
+                                            ->first();
         } else {
-            $this->competition = Competition::where('voting_enabled', TRUE)->orderBy('updated_at', 'ASC')->first();
+            $this->competition = Competition::where('voting_enabled', true)->orderBy('updated_at', 'ASC')->first();
         }
 
-        if (!is_null($this->competition)) {
+        if ( ! is_null($this->competition)) {
             \View::share('activeCompetitionId', $this->competition->id);
         }
-
-
 
         return $this->render();
     }
 
+
+    /**
+     * @return Factory|View
+     */
     public function render()
     {
-        return view(config('motor-cms-page-components.components.'.$this->pageVersionComponent->component_name.'.view'), ['competition' => $this->competition]);
+        return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
+            [ 'competition' => $this->competition ]);
     }
 
 }

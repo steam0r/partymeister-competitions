@@ -309,8 +309,8 @@
                 }
             },
             setAudioSource() {
-                var that = this;
-                var audioPlayer = new MediaElementPlayer('audio-player');
+                let that = this;
+                let audioPlayer = new MediaElementPlayer('audio-player');
                 console.log(audioPlayer);
                 audioPlayer.setSrc(that.entry.audio.data.url);
 

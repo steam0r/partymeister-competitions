@@ -5,19 +5,37 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Partymeister\Competitions\Models\AccessKey;
 
+/**
+ * Class PartymeisterCompetitionsBackendAccessKeyTest
+ */
 class PartymeisterCompetitionsBackendAccessKeyTest extends TestCase
 {
 
     use DatabaseTransactions;
 
+    /**
+     * @var
+     */
     protected $user;
 
+    /**
+     * @var
+     */
     protected $readPermission;
 
+    /**
+     * @var
+     */
     protected $writePermission;
 
+    /**
+     * @var
+     */
     protected $deletePermission;
 
+    /**
+     * @var array
+     */
     protected $tables = [
         'access_keys',
         'users',

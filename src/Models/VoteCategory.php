@@ -2,55 +2,63 @@
 
 namespace Partymeister\Competitions\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Motor\Core\Traits\Searchable;
-use Motor\Core\Traits\Filterable;
 use Culpa\Traits\Blameable;
 use Culpa\Traits\CreatedBy;
 use Culpa\Traits\DeletedBy;
 use Culpa\Traits\UpdatedBy;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
+use Motor\Backend\Models\User;
+use Motor\Core\Filter\Filter;
+use Motor\Core\Traits\Filterable;
+use Motor\Core\Traits\Searchable;
 
 /**
  * Partymeister\Competitions\Models\VoteCategory
  *
- * @property int $id
- * @property string $name
- * @property int $points
- * @property int $has_negative
- * @property int $has_comment
- * @property int $has_special_vote
- * @property int $created_by
- * @property int $updated_by
- * @property int|null $deleted_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Partymeister\Competitions\Models\Competition[] $competitions
- * @property-read \Motor\Backend\Models\User $creator
- * @property-read \Motor\Backend\Models\User|null $eraser
- * @property-read \Motor\Backend\Models\User $updater
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory filteredBy(\Motor\Core\Filter\Filter $filter, $column)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory filteredByMultiple(\Motor\Core\Filter\Filter $filter)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory search($q, $full_text = false)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory whereHasComment($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory whereHasNegative($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory whereHasSpecialVote($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory wherePoints($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\VoteCategory whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @property int                                                                                           $id
+ * @property string                                                                                        $name
+ * @property int                                                                                           $points
+ * @property int                                                                                           $has_negative
+ * @property int                                                                                           $has_comment
+ * @property int                                                                                           $has_special_vote
+ * @property int                                                                                           $created_by
+ * @property int                                                         $updated_by
+ * @property int|null                                                    $deleted_by
+ * @property Carbon|null                             $created_at
+ * @property Carbon|null                             $updated_at
+ * @property-read Collection|Competition[] $competitions
+ * @property-read User                                                   $creator
+ * @property-read User|null                                              $eraser
+ * @property-read User                                                   $updater
+ * @method static Builder|VoteCategory filteredBy( Filter $filter, $column )
+ * @method static Builder|VoteCategory filteredByMultiple( Filter $filter )
+ * @method static Builder|VoteCategory newModelQuery()
+ * @method static Builder|VoteCategory newQuery()
+ * @method static Builder|VoteCategory query()
+ * @method static Builder|VoteCategory search( $q, $full_text = false )
+ * @method static Builder|VoteCategory whereCreatedAt( $value )
+ * @method static Builder|VoteCategory whereCreatedBy( $value )
+ * @method static Builder|VoteCategory whereDeletedBy( $value )
+ * @method static Builder|VoteCategory whereHasComment( $value )
+ * @method static Builder|VoteCategory whereHasNegative( $value )
+ * @method static Builder|VoteCategory whereHasSpecialVote( $value )
+ * @method static Builder|VoteCategory whereId( $value )
+ * @method static Builder|VoteCategory whereName( $value )
+ * @method static Builder|VoteCategory wherePoints( $value )
+ * @method static Builder|VoteCategory whereUpdatedAt( $value )
+ * @method static Builder|VoteCategory whereUpdatedBy( $value )
+ * @mixin Eloquent
  */
 class VoteCategory extends Model
 {
+
     use Searchable;
-	use Filterable;
+    use Filterable;
     use Blameable, CreatedBy, UpdatedBy, DeletedBy;
 
     /**
@@ -58,7 +66,7 @@ class VoteCategory extends Model
      *
      * @var array
      */
-    protected $blameable = array('created', 'updated', 'deleted');
+    protected $blameable = [ 'created', 'updated', 'deleted' ];
 
     /**
      * Searchable columns for the searchable trait
@@ -82,6 +90,10 @@ class VoteCategory extends Model
         'has_special_vote',
     ];
 
+
+    /**
+     * @return BelongsToMany
+     */
     public function competitions()
     {
         return $this->belongsToMany(Competition::class);

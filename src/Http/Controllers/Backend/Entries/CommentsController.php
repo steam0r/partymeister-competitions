@@ -3,19 +3,17 @@
 namespace Partymeister\Competitions\Http\Controllers\Backend\Entries;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Motor\Backend\Http\Controllers\Controller;
-
 use Partymeister\Competitions\Forms\Backend\CommentForm;
-use Partymeister\Competitions\Models\AccessKey;
-use Partymeister\Competitions\Http\Requests\Backend\AccessKeyRequest;
 use Partymeister\Competitions\Models\Comment;
 use Partymeister\Competitions\Models\Entry;
-use Partymeister\Competitions\Services\AccessKeyService;
-use Partymeister\Competitions\Grids\AccessKeyGrid;
-use Partymeister\Competitions\Forms\Backend\AccessKeyForm;
 
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-
+/**
+ * Class CommentsController
+ * @package Partymeister\Competitions\Http\Controllers\Backend\Entries
+ */
 class CommentsController extends Controller
 {
 
@@ -25,7 +23,8 @@ class CommentsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Entry $record
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Entry $record)
     {
@@ -45,9 +44,9 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Entry   $record
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request, Entry $record)
     {

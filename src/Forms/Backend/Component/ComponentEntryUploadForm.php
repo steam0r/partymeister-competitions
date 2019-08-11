@@ -5,9 +5,16 @@ namespace Partymeister\Competitions\Forms\Backend\Component;
 use Kris\LaravelFormBuilder\Form;
 use Motor\CMS\Models\Navigation;
 
+/**
+ * Class ComponentEntryUploadForm
+ * @package Partymeister\Competitions\Forms\Backend\Component
+ */
 class ComponentEntryUploadForm extends Form
 {
 
+    /**
+     * @return mixed|void
+     */
     public function buildForm()
     {
         $nodes = Navigation::where('scope', 'main')->where('parent_id', '!=', null)->defaultOrder()->get();

@@ -2,26 +2,32 @@
 
 namespace Partymeister\Competitions\Models\Component;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Motor\CMS\Models\ComponentBaseModel;
 use Motor\CMS\Models\Navigation;
+use Motor\CMS\Models\PageVersionComponent;
 
 /**
  * Partymeister\Competitions\Models\Component\ComponentEntryScreenshot
  *
- * @property int $id
- * @property int|null $entries_page_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Motor\CMS\Models\PageVersionComponent[] $component
- * @property-read \Motor\CMS\Models\Navigation|null $entries_page
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryScreenshot newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryScreenshot newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryScreenshot query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryScreenshot whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryScreenshot whereEntriesPageId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryScreenshot whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Partymeister\Competitions\Models\Component\ComponentEntryScreenshot whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property int                                                                  $id
+ * @property int|null                                                             $entries_page_id
+ * @property Carbon|null                                      $created_at
+ * @property Carbon|null                                      $updated_at
+ * @property-read Collection|PageVersionComponent[] $component
+ * @property-read Navigation|null                                                 $entries_page
+ * @method static Builder|ComponentEntryScreenshot newModelQuery()
+ * @method static Builder|ComponentEntryScreenshot newQuery()
+ * @method static Builder|ComponentEntryScreenshot query()
+ * @method static Builder|ComponentEntryScreenshot whereCreatedAt( $value )
+ * @method static Builder|ComponentEntryScreenshot whereEntriesPageId( $value )
+ * @method static Builder|ComponentEntryScreenshot whereId( $value )
+ * @method static Builder|ComponentEntryScreenshot whereUpdatedAt( $value )
+ * @mixin Eloquent
  */
 class ComponentEntryScreenshot extends ComponentBaseModel
 {
@@ -51,7 +57,7 @@ class ComponentEntryScreenshot extends ComponentBaseModel
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function entries_page()
     {

@@ -2,17 +2,28 @@
 
 namespace Partymeister\Competitions\Services;
 
+use Motor\Backend\Services\BaseService;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\ManualVote;
 use Partymeister\Competitions\Models\Vote;
-use Motor\Backend\Services\BaseService;
+use Request;
 
+/**
+ * Class VoteService
+ * @package Partymeister\Competitions\Services
+ */
 class VoteService extends BaseService
 {
 
+    /**
+     * @var string
+     */
     protected $model = Vote::class;
 
 
+    /**
+     * @param $request
+     */
     public static function addVotes($request)
     {
         foreach ($request->get('entry') as $competitionId => $entries) {
@@ -22,7 +33,7 @@ class VoteService extends BaseService
                     $mv->competition_id = $competitionId;
                     $mv->entry_id       = $entryId;
                     $mv->points         = $points;
-                    $mv->ip_address     = \Request::ip();
+                    $mv->ip_address     = Request::ip();
                     $mv->save();
                 }
             }
@@ -30,6 +41,10 @@ class VoteService extends BaseService
     }
 
 
+    /**
+     * @param string $direction
+     * @return array
+     */
     public static function getAllVotesByRank($direction = 'DESC')
     {
         $results   = [];
@@ -40,7 +55,7 @@ class VoteService extends BaseService
             $results[$competition->id]   = [
                 'id'          => $competition->id,
                 'name'        => $competition->name,
-                'has_comment' => isset($competition->vote_categories[0]) ? (bool)$competition->vote_categories[0]->has_comment : false,
+                'has_comment' => isset($competition->vote_categories[0]) ? (bool) $competition->vote_categories[0]->has_comment : false,
                 'entries'     => []
             ];
             $maxPoints[$competition->id] = 0;
@@ -69,6 +84,9 @@ class VoteService extends BaseService
     }
 
 
+    /**
+     * @return array
+     */
     public static function getAllSpecialVotesByRank()
     {
         $results   = [];

@@ -8,19 +8,34 @@ use League\Fractal\ParamBag;
 use Partymeister\Competitions\Models\Entry;
 use Partymeister\Competitions\Models\Vote;
 
+/**
+ * Class SimpleTransformer
+ * @package Partymeister\Competitions\Transformers\Entry
+ */
 class SimpleTransformer extends Fractal\TransformerAbstract
 {
 
+    /**
+     * @var array
+     */
+    protected $availableIncludes = [
+        'vote'
+    ];
+
+    /**
+     * @var array
+     */
     private $validParams = [
         'visitor_id',
         'vote_category_id'
     ];
 
-    protected $availableIncludes = [
-        'vote'
-    ];
 
-
+    /**
+     * @param Entry    $entry
+     * @param ParamBag $params
+     * @return Fractal\Resource\Collection
+     */
     public function includeVote(Entry $entry, ParamBag $params)
     {
         $voteCategory = null;
@@ -32,15 +47,19 @@ class SimpleTransformer extends Fractal\TransformerAbstract
             $votes = new Collection();
         } else {
             $votes = Vote::where('entry_id', $entry->id)
-                ->where('vote_category_id', $voteCategory->id)
-                ->where('visitor_id', $params->get('visitor_id'))
-                ->get();
+                         ->where('vote_category_id', $voteCategory->id)
+                         ->where('visitor_id', $params->get('visitor_id'))
+                         ->get();
         }
 
         return $this->collection($votes, new \Partymeister\Competitions\Transformers\Vote\SimpleTransformer());
     }
 
 
+    /**
+     * @param Entry $entry
+     * @return array
+     */
     public function transform(Entry $entry)
     {
         $deadline = false;

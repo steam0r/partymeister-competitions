@@ -6,6 +6,10 @@ use Illuminate\Console\Command;
 use Partymeister\Competitions\Events\EntrySaved;
 use Partymeister\Competitions\Models\Competition;
 
+/**
+ * Class PartymeisterCompetitionsSyncEntriesCommand
+ * @package Partymeister\Competitions\Console\Commands
+ */
 class PartymeisterCompetitionsSyncEntriesCommand extends Command
 {
 

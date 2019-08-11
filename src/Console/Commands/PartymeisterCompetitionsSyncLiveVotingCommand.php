@@ -3,11 +3,13 @@
 namespace Partymeister\Competitions\Console\Commands;
 
 use Illuminate\Console\Command;
-use Partymeister\Competitions\Events\EntrySaved;
 use Partymeister\Competitions\Events\LiveVoteUpdated;
-use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\LiveVote;
 
+/**
+ * Class PartymeisterCompetitionsSyncLiveVotingCommand
+ * @package Partymeister\Competitions\Console\Commands
+ */
 class PartymeisterCompetitionsSyncLiveVotingCommand extends Command
 {
 

@@ -2,19 +2,25 @@
 
 namespace Partymeister\Competitions\Http\Controllers\Api\Competitions;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Motor\Backend\Http\Controllers\Controller;
-
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Transformers\EntryTransformer;
 
+/**
+ * Class PlaylistsController
+ * @package Partymeister\Competitions\Http\Controllers\Api\Competitions
+ */
 class PlaylistsController extends Controller
 {
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Competition $competition
+     * @return bool|JsonResponse
      */
     public function index(Competition $competition)
     {
@@ -44,6 +50,10 @@ class PlaylistsController extends Controller
     }
 
 
+    /**
+     * @param $competition
+     * @return bool|JsonResponse
+     */
     protected function checkIfCompetitionIsValid($competition)
     {
         // Check for entries with status 0 or 2 (unchecked and needs feedback)

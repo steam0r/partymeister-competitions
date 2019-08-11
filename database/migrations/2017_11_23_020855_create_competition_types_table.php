@@ -3,6 +3,9 @@
 use Culpa\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Class CreateCompetitionTypesTable
+ */
 class CreateCompetitionTypesTable extends Migration
 {
     /**

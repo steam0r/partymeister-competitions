@@ -2,38 +2,42 @@
 
 namespace Partymeister\Competitions\Http\Controllers\Backend\Component;
 
-use Motor\CMS\Http\Controllers\Component\ComponentController;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Motor\CMS\Http\Controllers\Component\ComponentController;
+use Partymeister\Competitions\Forms\Backend\Component\ComponentEntryForm;
 use Partymeister\Competitions\Models\Component\ComponentEntry;
 use Partymeister\Competitions\Services\Component\ComponentEntryService;
-use Partymeister\Competitions\Forms\Backend\Component\ComponentEntryForm;
 
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-
+/**
+ * Class ComponentEntriesController
+ * @package Partymeister\Competitions\Http\Controllers\Backend\Component
+ */
 class ComponentEntriesController extends ComponentController
 {
+
     use FormBuilderTrait;
+
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
         $this->form = $this->form(ComponentEntryForm::class);
 
-        return response()->json($this->getFormData('component.entries.store', ['mediapool' => false]));
+        return response()->json($this->getFormData('component.entries.store', [ 'mediapool' => false ]));
     }
 
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -45,15 +49,15 @@ class ComponentEntriesController extends ComponentController
 
         ComponentEntryService::createWithForm($request, $this->form);
 
-        return response()->json(['message' => trans('partymeister-competitions::component/entries.created')]);
+        return response()->json([ 'message' => trans('partymeister-competitions::component/entries.created') ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param ComponentEntry $record
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit(ComponentEntry $record)
     {
@@ -61,17 +65,16 @@ class ComponentEntriesController extends ComponentController
             'model' => $record
         ]);
 
-        return response()->json($this->getFormData('component.entries.update', ['mediapool' => false]));
+        return response()->json($this->getFormData('component.entries.update', [ 'mediapool' => false ]));
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request        $request
+     * @param ComponentEntry $record
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, ComponentEntry $record)
     {
@@ -83,6 +86,6 @@ class ComponentEntriesController extends ComponentController
 
         ComponentEntryService::updateWithForm($record, $request, $form);
 
-        return response()->json(['message' => trans('partymeister-competitions::component/entries.updated')]);
+        return response()->json([ 'message' => trans('partymeister-competitions::component/entries.updated') ]);
     }
 }

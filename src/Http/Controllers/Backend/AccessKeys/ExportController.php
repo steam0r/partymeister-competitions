@@ -2,19 +2,22 @@
 
 namespace Partymeister\Competitions\Http\Controllers\Backend\AccessKeys;
 
+use Illuminate\Http\Response;
 use Motor\Backend\Http\Controllers\Controller;
-
-use Partymeister\Competitions\Http\Requests\Backend\AccessKeyRequest;
 use Partymeister\Competitions\Models\AccessKey;
-use Partymeister\Competitions\Services\AccessKeyService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
+/**
+ * Class ExportController
+ * @package Partymeister\Competitions\Http\Controllers\Backend\AccessKeys
+ */
 class ExportController extends Controller
 {
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function csv()
     {
@@ -31,6 +34,9 @@ class ExportController extends Controller
     }
 
 
+    /**
+     * @return StreamedResponse
+     */
     public function pdf()
     {
         $pdf = new \Partymeister\Competitions\PDF\AccessKey();

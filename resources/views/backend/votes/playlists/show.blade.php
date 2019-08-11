@@ -156,7 +156,7 @@
     <script>
         $(document).ready(function () {
 
-            var sm = [];
+            let sm = [];
 
             sm['comingup'] = $('#slidemeister-prizegiving-comingup').slidemeister('#slidemeister-properties', slidemeisterProperties);
             sm['comingup'].data.load({!! $comingupTemplate->definitions !!}, {
@@ -234,7 +234,7 @@
                 $('.loader').addClass('is-active');
 
 
-                var tasks = [];
+                let tasks = [];
 
                 sm['comingup'].data.export('preview', 'comingup').then(result => {
                     Object.keys(sm).forEach(function (key) {

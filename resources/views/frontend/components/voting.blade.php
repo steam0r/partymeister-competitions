@@ -106,7 +106,7 @@
             $('.special-vote-on').on('click', function (e) {
                 e.preventDefault();
 
-                var ratingElement = $(this).parent().parent().find('.points');
+                let ratingElement = $(this).parent().parent().find('.points');
                 vote($(ratingElement).data('value'), ratingElement, true);
 
                 $('.special-vote-off').each(function (index, element) {
@@ -126,7 +126,7 @@
             $('.special-vote-off').on('click', function (e) {
                 e.preventDefault();
 
-                var ratingElement = $(this).parent().parent().find('.points');
+                let ratingElement = $(this).parent().parent().find('.points');
                 vote($(ratingElement).data('value'), ratingElement, false);
 
                 $('.entries div .card').removeClass('special-vote-highlight');
@@ -134,8 +134,8 @@
                 $(this).parent().find('.special-vote-on').removeClass('hide');
             });
 
-            var vote = function (rating, element, specialVote) {
-                var data = {
+            let vote = function (rating, element, specialVote) {
+                let data = {
                     entry_id: $(element).data('entry-id'),
                     competition_id: {{$competition->id}},
                     vote_category_id: $(element).data('vote-category-id'),
@@ -159,7 +159,7 @@
 
             $('.save-comment').on('click', function(e) {
                 e.preventDefault();
-                var ratingElement = $(this).parents().find('.points');
+                let ratingElement = $(this).parents().find('.points');
                 vote($(ratingElement).data('value'), ratingElement);
             });
 

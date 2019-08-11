@@ -2,9 +2,13 @@
 
 namespace Partymeister\Competitions\Components;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Motor\CMS\Models\PageVersionComponent;
 use Partymeister\Competitions\Forms\Component\EntryCommentForm;
@@ -12,30 +16,61 @@ use Partymeister\Competitions\Models\Comment;
 use Partymeister\Competitions\Models\Entry;
 use Partymeister\Core\Services\StuhlService;
 
+/**
+ * Class ComponentEntryComments
+ * @package Partymeister\Competitions\Components
+ */
 class ComponentEntryComments
 {
 
     use FormBuilderTrait;
 
+    /**
+     * @var PageVersionComponent
+     */
     protected $pageVersionComponent;
 
+    /**
+     * @var
+     */
     protected $entryCommentForm;
 
+    /**
+     * @var
+     */
     protected $request;
 
+    /**
+     * @var
+     */
     protected $comments;
 
+    /**
+     * @var
+     */
     protected $record;
 
+    /**
+     * @var
+     */
     protected $visitor;
 
 
+    /**
+     * ComponentEntryComments constructor.
+     * @param PageVersionComponent $pageVersionComponent
+     */
     public function __construct(PageVersionComponent $pageVersionComponent)
     {
         $this->pageVersionComponent = $pageVersionComponent;
     }
 
 
+    /**
+     * @param Request $request
+     * @return Factory|RedirectResponse|Redirector|View
+     * @throws GuzzleException
+     */
     public function index(Request $request)
     {
         $this->visitor = Auth::guard('visitor')->user();
@@ -79,6 +114,10 @@ class ComponentEntryComments
     }
 
 
+    /**
+     * @return RedirectResponse|Redirector
+     * @throws GuzzleException
+     */
     protected function post()
     {
         if ($this->request->input($this->entryCommentForm->getName() . '.mark_as_read') == 1) {
@@ -89,7 +128,7 @@ class ComponentEntryComments
 
             return redirect($this->request->url() . '?entry_id=' . $this->record->id);
         } else {
-            $this->entryCommentForm->getField('message')->setOption('rules', ['required']);
+            $this->entryCommentForm->getField('message')->setOption('rules', [ 'required' ]);
         }
 
         if ( ! $this->entryCommentForm->isValid()) {
@@ -115,10 +154,17 @@ class ComponentEntryComments
     }
 
 
+    /**
+     * @return Factory|View
+     */
     public function render()
     {
         return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
-            ['comments' => $this->comments, 'entryCommentForm' => $this->entryCommentForm, 'record' => $this->record]);
+            [
+                'comments'         => $this->comments,
+                'entryCommentForm' => $this->entryCommentForm,
+                'record'           => $this->record
+            ]);
     }
 
 }

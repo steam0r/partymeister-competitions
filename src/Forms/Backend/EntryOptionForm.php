@@ -2,15 +2,19 @@
 
 namespace Partymeister\Competitions\Forms\Backend;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
 use Kris\LaravelFormBuilder\Form;
-use Partymeister\Competitions\Models\Competition;
 
+/**
+ * Class EntryOptionForm
+ * @package Partymeister\Competitions\Forms\Backend
+ */
 class EntryOptionForm extends Form
 {
 
+    /**
+     * @return mixed|void
+     */
     public function buildForm()
     {
         $selected = [];

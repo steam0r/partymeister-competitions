@@ -3,13 +3,15 @@
 namespace Partymeister\Competitions\Transformers\Entry;
 
 use League\Fractal;
-use League\Fractal\ParamBag;
 use Motor\Backend\Helpers\Filesize;
 use Motor\Backend\Helpers\MediaHelper;
-use Motor\Backend\Transformers\MediaTransformer;
 use Partymeister\Competitions\Models\Entry;
 use Symfony\Component\Intl\Intl;
 
+/**
+ * Class SyncTransformer
+ * @package Partymeister\Competitions\Transformers\Entry
+ */
 class SyncTransformer extends Fractal\TransformerAbstract
 {
 

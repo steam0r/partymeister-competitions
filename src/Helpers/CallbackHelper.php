@@ -2,13 +2,23 @@
 
 namespace Partymeister\Competitions\Helpers;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
 use Partymeister\Core\Models\Callback;
 
+/**
+ * Class CallbackHelper
+ * @package Partymeister\Competitions\Helpers
+ */
 class CallbackHelper
 {
 
+    /**
+     * @param Competition $competition
+     * @return Builder|Model|object|Callback|null
+     */
     public static function competitionStarts(Competition $competition)
     {
         $hash = hash_hmac('sha256', $competition->id . 'competition_starts', 20);
@@ -30,6 +40,10 @@ class CallbackHelper
         return $callback;
     }
 
+
+    /**
+     * @return Builder|Model|object|Callback|null
+     */
     public static function prizegivingStarts()
     {
         $hash = hash_hmac('sha256', 'Prizegiving starts', 20);
@@ -51,6 +65,11 @@ class CallbackHelper
         return $callback;
     }
 
+
+    /**
+     * @param Competition $competition
+     * @return Builder|Model|object|Callback|null
+     */
     public static function competitionEnds(Competition $competition)
     {
         $hash = hash_hmac('sha256', $competition->id . 'competition_ends', 20);
@@ -74,6 +93,10 @@ class CallbackHelper
     }
 
 
+    /**
+     * @param Entry $entry
+     * @return Builder|Model|object|Callback|null
+     */
     public static function livevoting(Entry $entry)
     {
         $hash = hash_hmac('sha256', $entry->id . 'livevoting_advance', 20);

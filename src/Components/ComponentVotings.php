@@ -2,34 +2,75 @@
 
 namespace Partymeister\Competitions\Components;
 
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Motor\CMS\Models\PageVersionComponent;
 use Partymeister\Competitions\Models\Competition;
+use Partymeister\Competitions\Models\Component\ComponentVoting;
 use Partymeister\Competitions\Models\LiveVote;
 use Partymeister\Competitions\Models\Vote;
 
-class ComponentVotings {
+/**
+ * Class ComponentVotings
+ * @package Partymeister\Competitions\Components
+ */
+class ComponentVotings
+{
 
+    /**
+     * @var ComponentVoting
+     */
     protected $component;
+
+    /**
+     * @var PageVersionComponent
+     */
     protected $pageVersionComponent;
+
+    /**
+     * @var
+     */
     protected $request;
+
+    /**
+     * @var
+     */
     protected $visitor;
+
+    /**
+     * @var array
+     */
     protected $viewData = [];
 
-    public function __construct(PageVersionComponent $pageVersionComponent, \Partymeister\Competitions\Models\Component\ComponentVoting $component)
-    {
-        $this->component = $component;
+
+    /**
+     * ComponentVotings constructor.
+     * @param PageVersionComponent                                        $pageVersionComponent
+     * @param ComponentVoting $component
+     */
+    public function __construct(
+        PageVersionComponent $pageVersionComponent,
+        ComponentVoting $component
+    ) {
+        $this->component            = $component;
         $this->pageVersionComponent = $pageVersionComponent;
     }
 
+
+    /**
+     * @param Request $request
+     * @return Factory|RedirectResponse|Redirector|View
+     */
     public function index(Request $request)
     {
         $this->visitor = Auth::guard('visitor')->user();
         if (is_null($this->visitor)) {
-            return redirect(route('frontend.pages.index', ['slug' => 'start']));
+            return redirect(route('frontend.pages.index', [ 'slug' => 'start' ]));
         }
 
         $this->request = $request;
@@ -50,9 +91,9 @@ class ComponentVotings {
 
         if ($request->get('competition_id') > 0) {
             $competition = Competition::where('voting_enabled', true)
-                ->where('id', $request->get('competition_id'))
-                ->orderBy('updated_at', 'ASC')
-                ->first();
+                                      ->where('id', $request->get('competition_id'))
+                                      ->orderBy('updated_at', 'ASC')
+                                      ->first();
         } else {
             $competition = Competition::where('voting_enabled', true)->orderBy('updated_at', 'ASC')->first();
         }
@@ -64,10 +105,7 @@ class ComponentVotings {
                     $votes[$voteCategory->id] = [];
                 }
             }
-            foreach ($this->visitor
-                         ->votes()
-                         ->where('competition_id', $competition->id)
-                         ->get() as $vote) {
+            foreach ($this->visitor->votes()->where('competition_id', $competition->id)->get() as $vote) {
                 $votes[$vote->vote_category_id][$vote->entry_id] = [
                     'points'       => $vote->points,
                     'comment'      => $vote->comment,
@@ -87,7 +125,7 @@ class ComponentVotings {
             }
         }
 
-        if (!is_null($competition)) {
+        if ( ! is_null($competition)) {
             \View::share('activeCompetitionId', $competition->id);
         }
 
@@ -102,6 +140,10 @@ class ComponentVotings {
         return $this->render();
     }
 
+
+    /**
+     * @return RedirectResponse
+     */
     protected function post()
     {
         // Fixme: this is apparently never called
@@ -110,10 +152,10 @@ class ComponentVotings {
                 foreach ($entries as $entryId => $points) {
 
                     $vote = $this->visitor->votes()
-                        ->where('competition_id', $competitionId)
-                        ->where('entry_id', $entryId)
-                        ->where('vote_category_id', $voteCategoryId)
-                        ->first();
+                                          ->where('competition_id', $competitionId)
+                                          ->where('entry_id', $entryId)
+                                          ->where('vote_category_id', $voteCategoryId)
+                                          ->first();
 
                     if (is_null($vote)) {
                         $vote = new Vote();
@@ -147,10 +189,15 @@ class ComponentVotings {
     }
 
 
+    /**
+     * @return Factory|View
+     */
     public function render()
     {
         $this->viewData['component'] = $this->component;
-        return view(config('motor-cms-page-components.components.'.$this->pageVersionComponent->component_name.'.view'), $this->viewData);
+
+        return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
+            $this->viewData);
     }
 
 }

@@ -38,10 +38,10 @@
 
             function findHighestElement(selector) {
                 // Get previous index
-                var pattern = /\[([0-9]+)\]/;
-                var highestElement = 0;
+                let pattern = /\[([0-9]+)\]/;
+                let highestElement = 0;
                 $(selector).each(function(index, element) {
-                    var i = $(element).prop('name').match(pattern);
+                    let i = $(element).prop('name').match(pattern);
 
                     if (i[1] != undefined && parseInt(i[1]) > highestElement) {
                         highestElement = parseInt(i[1]);
@@ -52,11 +52,11 @@
 
             $('.add-to-options').on('click', function (e) {
                 e.preventDefault();
-                var container = $('.options-container');
+                let container = $('.options-container');
 
-                var highestElement = findHighestElement('.options-name');
+                let highestElement = findHighestElement('.options-name');
 
-                var proto = container.data('prototype').replace(/__NAME__/g, highestElement+1);
+                let proto = container.data('prototype').replace(/__NAME__/g, highestElement+1);
 
                 container.append(proto);
             });

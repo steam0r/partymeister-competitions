@@ -3,13 +3,12 @@
 namespace Partymeister\Competitions\Console\Commands;
 
 use Illuminate\Console\Command;
-use Partymeister\Competitions\Events\EntrySaved;
-use Partymeister\Competitions\Events\LiveVoteUpdated;
-use Partymeister\Competitions\Models\Competition;
-use Partymeister\Competitions\Models\LiveVote;
 use Partymeister\Competitions\Services\VoteService;
 
-
+/**
+ * Class PartymeisterCompetitionsExportVotesToCSVCommand
+ * @package Partymeister\Competitions\Console\Commands
+ */
 class PartymeisterCompetitionsExportVotesToCSVCommand extends Command
 {
 
@@ -39,10 +38,10 @@ class PartymeisterCompetitionsExportVotesToCSVCommand extends Command
 
         $csv = '';
 
-        foreach ($results as $competition){
+        foreach ($results as $competition) {
             foreach ($competition['entries'] as $entry) {
 
-                $csv .= "\"".$competition['name'].'";"'.$entry['rank'].'";"'.$entry['title'].' - '.$entry['author'].'";"'.$entry['points']."\"\n";
+                $csv .= "\"" . $competition['name'] . '";"' . $entry['rank'] . '";"' . $entry['title'] . ' - ' . $entry['author'] . '";"' . $entry['points'] . "\"\n";
             }
         }
         file_put_contents('votes.csv', $csv);

@@ -5,6 +5,10 @@ namespace Partymeister\Competitions\Transformers;
 use League\Fractal;
 use Partymeister\Competitions\Models\Option;
 
+/**
+ * Class OptionTransformer
+ * @package Partymeister\Competitions\Transformers
+ */
 class OptionTransformer extends Fractal\TransformerAbstract
 {
 
@@ -13,7 +17,7 @@ class OptionTransformer extends Fractal\TransformerAbstract
      *
      * @var array
      */
-    protected $availableIncludes = [ ];
+    protected $availableIncludes = [];
 
 
     /**

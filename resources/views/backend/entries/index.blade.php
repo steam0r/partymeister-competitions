@@ -30,9 +30,9 @@
             $('[data-toggle="tooltip"]').tooltip()
         });
 
-        var apiToken = '{{Auth::user()->api_token}}';
+        let apiToken = '{{Auth::user()->api_token}}';
 
-        var switchCssClass = function (that, value, cssClass1, cssClass2) {
+        let switchCssClass = function (that, value, cssClass1, cssClass2) {
             if (value == true) {
                 $(that).removeClass(cssClass2);
                 $(that).addClass(cssClass1);
@@ -42,7 +42,7 @@
             }
         };
 
-        var updateEntry = function (that, recordId, data, callback) {
+        let updateEntry = function (that, recordId, data, callback) {
             $.ajax({
                 type: 'PATCH',
                 url: '{{action('\Partymeister\Competitions\Http\Controllers\Api\EntriesController@index')}}/' + recordId + '?api_token=' + apiToken,
@@ -62,7 +62,7 @@
         $('.change-sort-position').blur(function (e) {
             e.preventDefault();
 
-            var data = {};
+            let data = {};
             data[$(this).data('field')] = $(this).val();
 
             updateEntry(this, $(this).data('record'), data, function (that, results) {
