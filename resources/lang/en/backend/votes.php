@@ -10,6 +10,7 @@ return [
     'updated' => 'Votes updated',
     'deleted' => 'Votes deleted',
 
-    'name'                 => 'Name',
-    'generate_prizegiving' => 'Generate Prizegiving slides',
+    'name'                            => 'Name',
+    'generate_prizegiving'            => 'Generate Prizegiving slides',
+    'no_entries_for_this_competition' => 'There are currently no checked entries for this competition'
 ];

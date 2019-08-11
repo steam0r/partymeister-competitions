@@ -147,7 +147,7 @@
         </form>
     @endif
     <div class="loader loader-default"
-         data-text="&hearts; Generating slide previews and hiding the ugliness &hearts;"></div>
+         data-text="&hearts; {{ trans('partymeister-slides::backend/slides.generating')}} &hearts;"></div>
 @endsection
 
 @if (!isset($message))

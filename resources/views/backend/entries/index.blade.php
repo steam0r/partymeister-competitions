@@ -66,7 +66,8 @@
             data[$(this).data('field')] = $(this).val();
 
             updateEntry(this, $(this).data('record'), data, function (that, results) {
-//                console.log(results);
+                toastr.options = {progressBar: true};
+                toastr.success('{{trans('partymeister-competitions::backend/entries.sort_position_updated')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
             });
         });
 
@@ -75,6 +76,14 @@
 
             updateEntry(this, $(this).data('entry'), {upload_enabled: $(this).data('upload-enabled')}, function (that, results) {
                 switchCssClass(that, results.data.upload_enabled, $(that).data('class'), $(that).data('class-alternate'));
+
+                toastr.options = {progressBar: true};
+                if (results.data.upload_enabled === false) {
+                    toastr.success('{{trans('partymeister-competitions::backend/competitions.upload_disabled')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                } else {
+                    toastr.success('{{trans('partymeister-competitions::backend/competitions.upload_enabled')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                }
+
                 $(that).data('upload-enabled', results.data.upload_enabled ? 0 : 1);
             });
         });
@@ -85,6 +94,14 @@
 
             updateEntry(this, $(this).data('entry'), {is_prepared: $(this).data('is-prepared')}, function (that, results) {
                 switchCssClass(that, results.data.is_prepared, $(that).data('class'), $(that).data('class-alternate'));
+
+                toastr.options = {progressBar: true};
+                if (results.data.is_prepared === true) {
+                    toastr.success('{{trans('partymeister-competitions::backend/entries.entry_prepared')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                } else {
+                    toastr.success('{{trans('partymeister-competitions::backend/entries.entry_not_prepared')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                }
+
                 $(that).data('is-prepared', results.data.is_prepared ? 0 : 1);
             });
         });
@@ -94,6 +111,14 @@
 
             updateEntry(this, $(this).data('entry'), {is_recorded: $(this).data('is-recorded')}, function (that, results) {
                 switchCssClass(that, results.data.is_recorded, $(that).data('class'), $(that).data('class-alternate'));
+
+                toastr.options = {progressBar: true};
+                if (results.data.is_recorded === true) {
+                    toastr.success('{{trans('partymeister-competitions::backend/entries.entry_recorded')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                } else {
+                    toastr.success('{{trans('partymeister-competitions::backend/entries.entry_not_recorded')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                }
+
                 $(that).data('is-recorded', results.data.is_recorded ? 0 : 1);
             });
         });
@@ -103,6 +128,14 @@
 
             updateEntry(this, $(this).data('entry'), {composer_not_member_of_copyright_collective: $(this).data('composer-gema')}, function (that, results) {
                 switchCssClass(that, results.data.composer_not_member_of_copyright_collective, $(that).data('class'), $(that).data('class-alternate'));
+
+                toastr.options = {progressBar: true};
+                if (results.data.composer_not_member_of_copyright_collective === true) {
+                    toastr.success('{{trans('partymeister-competitions::backend/entries.gema_checked')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                } else {
+                    toastr.success('{{trans('partymeister-competitions::backend/entries.gema_not_checked')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                }
+
                 $(that).data('composer-gema', results.data.composer_not_member_of_copyright_collective ? 0 : 1);
             });
         });
@@ -117,6 +150,25 @@
                 });
                 $(that).removeClass('btn-outline-secondary');
                 $(that).addClass($(that).data('class'));
+
+                toastr.options = {progressBar: true};
+                switch (results.data.status_value) {
+                    case 0:
+                        toastr.success('{{trans('partymeister-competitions::backend/entries.status_unchecked')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                        break;
+                    case 1:
+                        toastr.success('{{trans('partymeister-competitions::backend/entries.status_checked')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                        break;
+                    case 2:
+                        toastr.success('{{trans('partymeister-competitions::backend/entries.status_needs_feedback')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                        break;
+                    case 3:
+                        toastr.success('{{trans('partymeister-competitions::backend/entries.status_disqualified')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                        break;
+                    case 4:
+                        toastr.success('{{trans('partymeister-competitions::backend/entries.status_not_preselected')}}', '{{ trans('motor-backend::backend/global.flash.success') }}');
+                        break;
+                }
             });
         });
 

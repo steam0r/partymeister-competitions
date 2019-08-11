@@ -27,7 +27,7 @@
 
 @section('main-content')
     <div class="@boxWrapper">
-        @if (isset($special))
+        @if (isset($special) && count($special) > 0)
         <div class="@boxHeader">
             <h3 class="box-title">Crowd favourite</h3>
         </div>
@@ -55,19 +55,23 @@
                 <h3 class="box-title">{{$competition['name']}}</h3>
             </div>
             <div class="@boxBody">
-                @foreach ($competition['entries'] as $entry)
-                    <div class="row">
-                        <div class="col-md-1">
-                            {{number_format($entry['points'], 0,',','')}}
+                @if (count($competition['entries']) === 0)
+                    {{trans('partymeister-competitions::backend/votes.no_entries_for_this_competition')}}
+                @else
+                    @foreach ($competition['entries'] as $entry)
+                        <div class="row">
+                            <div class="col-md-1">
+                                {{number_format($entry['points'], 0,',','')}}
+                            </div>
+                            <div class="col-md-5">
+                                {{$entry['title']}}
+                            </div>
+                            <div class="col-md-6">
+                                {{$entry['author']}}
+                            </div>
                         </div>
-                        <div class="col-md-5">
-                            {{$entry['title']}}
-                        </div>
-                        <div class="col-md-6">
-                            {{$entry['author']}}
-                        </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
         @endforeach
     </div>

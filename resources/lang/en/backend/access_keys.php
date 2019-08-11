@@ -16,4 +16,5 @@ return [
     'export_pdf'                  => 'Export access keys (PDF)',
     'export_csv'                  => 'Export access keys (CSV)',
     'delete_and_ask_for_quantity' => 'WARNING: All access keys will be deleted and newly generated. How many do you want to generate?',
+    'generating'                  => 'Generating access keys and redirecting you when done',
 ];

@@ -88,6 +88,7 @@ class EntryTransformer extends Fractal\TransformerAbstract
             'sort_position_prefixed'                      => ( strlen($record->sort_position) == 1 ? '0' . $record->sort_position : $record->sort_position ),
             'competition_name'                            => $record->competition->name,
             'status'                                      => trans('partymeister-competitions::backend/entries.stati.' . $record->status),
+            'status_value'                                => $record->status,
             'last_file_uploaded_at'                       => str_replace(' ', 'T', $record->last_file_uploaded_at),
             'author_name'                                 => $record->author_name,
             'author_email'                                => $record->author_email,

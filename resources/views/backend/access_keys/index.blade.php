@@ -12,6 +12,7 @@
                 class="btn btn-sm btn-danger float-right access-keys-generate">{{trans('partymeister-competitions::backend/access_keys.generate')}}</button>
         {!! link_to_route('backend.access_keys.export.pdf', trans('partymeister-competitions::backend/access_keys.export_pdf'), [], ['class' => 'float-right btn btn-sm btn-danger']) !!}
         {!! link_to_route('backend.access_keys.export.csv', trans('partymeister-competitions::backend/access_keys.export_csv'), [], ['class' => 'float-right btn btn-sm btn-danger']) !!}
+        <div class="loader loader-default" data-text="&hearts; {{trans('partymeister-competitions::backend/access_keys.generating')}} &hearts;"></div>
     @endif
 @endsection
 
@@ -40,6 +41,7 @@
             e.preventDefault();
             let quantity = prompt("{{trans('partymeister-competitions::backend/access_keys.delete_and_ask_for_quantity')}}", "500");
             if (quantity != null) {
+                $('.loader').addClass('is-active');
                 axios.post('{{route('ajax.access_keys.generate')}}', {quantity: quantity}).then(function(response) {
                     location.reload();
                 });

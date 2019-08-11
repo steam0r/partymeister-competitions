@@ -14,6 +14,7 @@ use Motor\Backend\Models\User;
 use Motor\Core\Filter\Filter;
 use Motor\Core\Traits\Filterable;
 use Motor\Core\Traits\Searchable;
+use Partymeister\Core\Models\Visitor;
 
 /**
  * Partymeister\Competitions\Models\AccessKey
@@ -85,8 +86,12 @@ class AccessKey extends Model
         'registered_at'
     ];
 
-    //public function visitor()
-    //{
-    //    return $this->belongsTo(Visitor::class);
-    //}
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function visitor()
+    {
+        return $this->belongsTo(Visitor::class);
+    }
 }
