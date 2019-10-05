@@ -71,7 +71,9 @@ class PlaylistsController extends Controller
                 ];
 
                 if ($request->get('download')) {
-                    return response()->attachment(json_encode($data), $filename . '.json', 'application/json');
+                    return response()->streamDownload(function () use ($data ){
+                        echo json_encode($data);
+                    }, $filename . '.json', ['Content-Type' => 'application/json']);
                 }
 
                 return response()->json($data);
@@ -79,7 +81,9 @@ class PlaylistsController extends Controller
                 $m3u = $this->generateM3u($competition->sorted_entries);
 
                 if ($request->get('download')) {
-                    return response()->attachment($m3u, $filename . '.m3u', 'audio/x-mpegurl');
+                    return response()->streamDownload(function () use ($m3u ){
+                        echo $m3u;
+                    }, $filename . '.m3u', ['Content-Type' => 'audio/x-mpegurl']);
                 }
 
                 return $m3u;
