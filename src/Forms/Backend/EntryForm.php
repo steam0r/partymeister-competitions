@@ -2,11 +2,10 @@
 
 namespace Partymeister\Competitions\Forms\Backend;
 
-use Illuminate\Support\Facades\Input;
 use Kris\LaravelFormBuilder\Form;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Countries;
 
 /**
  * Class EntryForm
@@ -21,8 +20,8 @@ class EntryForm extends Form
     public function buildForm()
     {
         $data = [];
-        if (Input::old('competition_id')) {
-            $data['competition'] = Competition::find(Input::old('competition_id'));
+        if (old('competition_id')) {
+            $data['competition'] = Competition::find(old('competition_id'));
         } elseif (is_object($this->getModel()) && $this->getModel()->competition_id > 0) {
             $data['competition'] = Competition::find($this->getModel()->competition_id);
         }
@@ -78,7 +77,7 @@ class EntryForm extends Form
              ->add('author_city', 'text', [ 'label' => trans('partymeister-competitions::backend/entries.city') ])
              ->add('author_country_iso_3166_1', 'select2', [
                  'label'   => trans('partymeister-competitions::backend/entries.country'),
-                 'choices' => Intl::getRegionBundle()->getCountryNames()
+                 'choices' => Countries::getNames()
              ])
              ->add('options', 'form', [
                  'wrapper' => [],
@@ -158,7 +157,7 @@ class EntryForm extends Form
                          [ 'label' => trans('partymeister-competitions::backend/entries.city') ])
                      ->add('composer_country_iso_3166_1', 'select2', [
                          'label'   => trans('partymeister-competitions::backend/entries.country'),
-                         'choices' => Intl::getRegionBundle()->getCountryNames()
+                         'choices' => Countries::getNames()
                      ])
                      ->add('composer_not_member_of_copyright_collective', 'checkbox',
                          [ 'label' => trans('partymeister-competitions::backend/entries.composer_not_member_of_copyright_collective') ]);

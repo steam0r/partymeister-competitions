@@ -121,7 +121,7 @@ class Prize extends PDF
         }
 
         // Receiver
-        if ($entry) {
+        if ($entry && $entry_info) {
             $this->setXY(15, 68);
             $text = $entry_info->author_name . ', ' . $entry_info->author_address . ', ' . $entry_info->author_zip . ' ' . $entry_info->author_city . ', ' . $entry_info->author_country_iso_3166_1;
             $this->MultiCell(0, 5, $text, 0, 'L');
@@ -133,7 +133,7 @@ class Prize extends PDF
         $this->MultiCell(0, 5, $text, 0, 'L');
 
         // For
-        if ($entry) {
+        if ($entry && $entry_info) {
             $this->setXY(15, 111);
             $text = $prize->rank . '. ' . config('partymeister-competitions-receipt.localization.rank') . ' ' . $entry_info->competition->name . ' Competition';
             $this->MultiCell(0, 5, $text, 0, 'L');

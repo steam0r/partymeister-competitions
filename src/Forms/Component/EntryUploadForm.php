@@ -2,11 +2,10 @@
 
 namespace Partymeister\Competitions\Forms\Component;
 
-use Illuminate\Support\Facades\Input;
 use Kris\LaravelFormBuilder\Form;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Countries;
 
 /**
  * Class EntryUploadForm
@@ -27,8 +26,8 @@ class EntryUploadForm extends Form
 
         $data = [];
         // FIXME: something is not great here with setting the competition-id
-        if (Input::old($this->getName() . '.competition_id')) {
-            $data['competition'] = Competition::find(Input::old($this->getName() . '.competition_id'));
+        if (old($this->getName() . '.competition_id')) {
+            $data['competition'] = Competition::find(old($this->getName() . '.competition_id'));
             $this->add('competition_id', 'select', [
                 'attr'        => [ 'class' => 'form-control reload-on-change' ],
                 'label'       => trans('partymeister-competitions::backend/competitions.competition'),
@@ -78,7 +77,7 @@ class EntryUploadForm extends Form
              ->add('author_country_iso_3166_1', 'select', [
                  'label'         => trans('partymeister-competitions::backend/entries.country'),
                  'default_value' => 'DE',
-                 'choices'       => Intl::getRegionBundle()->getCountryNames()
+                 'choices'       => Countries::getNames()
              ])
              ->add('options', 'form', [
                  'wrapper' => [],
@@ -158,7 +157,7 @@ class EntryUploadForm extends Form
                      ->add('composer_country_iso_3166_1', 'select', [
                          'label'         => trans('partymeister-competitions::backend/entries.country'),
                          'default_value' => 'DE',
-                         'choices'       => Intl::getRegionBundle()->getCountryNames()
+                         'choices'       => Countries::getNames()
                      ]);
             }
         }

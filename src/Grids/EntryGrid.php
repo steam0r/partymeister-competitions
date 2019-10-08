@@ -6,7 +6,6 @@ use Motor\Backend\Grid\Grid;
 use Motor\Backend\Grid\Renderers\BladeRenderer;
 use Motor\Backend\Grid\Renderers\DateRenderer;
 use Motor\Backend\Grid\Renderers\DecorationRenderer;
-use Partymeister\Competitions\Grid\Renderers\InputCallbackRenderer;
 
 /**
  * Class EntryGrid

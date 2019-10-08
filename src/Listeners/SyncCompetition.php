@@ -3,7 +3,6 @@
 namespace Partymeister\Competitions\Listeners;
 
 use Partymeister\Competitions\Events\CompetitionSaved;
-use Partymeister\Core\Events\EventSaved;
 
 /**
  * Class SyncCompetition

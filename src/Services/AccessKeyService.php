@@ -20,6 +20,7 @@ class AccessKeyService extends BaseService
 
     /**
      * @param $request
+     * @throws \Exception
      */
     public static function generate($request)
     {

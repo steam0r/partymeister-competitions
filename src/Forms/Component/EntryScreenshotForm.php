@@ -2,7 +2,6 @@
 
 namespace Partymeister\Competitions\Forms\Component;
 
-use Illuminate\Support\Facades\Input;
 use Kris\LaravelFormBuilder\Form;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
@@ -21,8 +20,8 @@ class EntryScreenshotForm extends Form
     {
         $data = [];
 
-        if (Input::old('competition_id')) {
-            $data['competition'] = Competition::find(Input::old('competition_id'));
+        if (old('competition_id')) {
+            $data['competition'] = Competition::find(old('competition_id'));
         } elseif (is_object($this->getModel()) && $this->getModel()->competition_id > 0) {
             $data['competition'] = Competition::find($this->getModel()->competition_id);
         } elseif (is_array($this->getModel()[$this->getName()])) {

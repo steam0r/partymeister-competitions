@@ -8,6 +8,7 @@ use League\Fractal\Resource\Item;
 use Motor\Backend\Helpers\Filesize;
 use Motor\Backend\Transformers\MediaTransformer;
 use Partymeister\Competitions\Models\Entry;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl\Intl;
 
 /**
@@ -97,8 +98,7 @@ class EntryTransformer extends Fractal\TransformerAbstract
             'author_zip'                                  => $record->author_zip,
             'author_city'                                 => $record->author_city,
             'author_country_iso_3166_1'                   => $record->author_country_iso_3166_1,
-            'author_country'                              => Intl::getRegionBundle()
-                                                                 ->getCountryName($record->author_country_iso_3166_1),
+            'author_country'                              => Countries::getName($record->author_country_iso_3166_1),
             'composer_name'                               => $record->composer_name,
             'composer_email'                              => $record->composer_email,
             'composer_phone'                              => $record->composer_phone,
@@ -106,8 +106,7 @@ class EntryTransformer extends Fractal\TransformerAbstract
             'composer_zip'                                => $record->composer_zip,
             'composer_city'                               => $record->composer_city,
             'composer_country_iso_3166_1'                 => $record->composer_country_iso_3166_1,
-            'composer_country'                            => Intl::getRegionBundle()
-                                                                 ->getCountryName($record->composer_country_iso_3166_1),
+            'composer_country'                            => Countries::getName($record->composer_country_iso_3166_1),
             'composer_not_member_of_copyright_collective' => (bool) $record->composer_not_member_of_copyright_collective,
 //            'screenshot' => MediaHelper::getFileInformation($record, 'screenshot', true),
 //            'audio' => MediaHelper::getFileInformation($record, 'audio', true),

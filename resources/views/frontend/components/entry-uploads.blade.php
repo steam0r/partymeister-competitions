@@ -16,14 +16,14 @@
             @else
                 {!! form_row($entryUploadForm->competition_id) !!}
             @endif
-            @if (Illuminate\Support\Facades\Input::old($entryUploadForm->getName().'.competition_id') || (isset($entryUploadForm->getModel()[$entryUploadForm->getName()]) && $entryUploadForm->getModel()[$entryUploadForm->getName()]['competition_id'] > 0))
+            @if (old($entryUploadForm->getName().'.competition_id') || (isset($entryUploadForm->getModel()[$entryUploadForm->getName()]) && $entryUploadForm->getModel()[$entryUploadForm->getName()]['competition_id'] > 0))
                 {!! form_row($entryUploadForm->author) !!}
                 {!! form_row($entryUploadForm->title) !!}
             @endif
         </div>
         <!-- /.box-body -->
     </div>
-    @if (Illuminate\Support\Facades\Input::old($entryUploadForm->getName().'.competition_id') || (isset($entryUploadForm->getModel()[$entryUploadForm->getName()]) && $entryUploadForm->getModel()[$entryUploadForm->getName()]['competition_id'] > 0))
+    @if (old($entryUploadForm->getName().'.competition_id') || (isset($entryUploadForm->getModel()[$entryUploadForm->getName()]) && $entryUploadForm->getModel()[$entryUploadForm->getName()]['competition_id'] > 0))
         <div class="@boxWrapper box-primary">
             <div class="@boxHeader with-border">
                 <h3 class="box-title">{{ trans('partymeister-competitions::backend/entries.entry_info') }}</h3>

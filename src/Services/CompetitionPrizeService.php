@@ -22,6 +22,7 @@ class CompetitionPrizeService extends BaseService
 
     /**
      * @param $request
+     * @throws \Exception
      */
     public static function createOrUpdatePrizes($request)
     {
