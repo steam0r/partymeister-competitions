@@ -10,7 +10,6 @@ use Partymeister\Competitions\Models\VoteCategory;
  */
 class PartymeisterCompetitionsBackendVoteCategoryTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /**
@@ -94,7 +93,7 @@ class PartymeisterCompetitionsBackendVoteCategoryTest extends TestCase
     {
         $record = create_test_vote_category();
         $this->visit('/backend/vote_categories')
-            ->within('table', function(){
+            ->within('table', function () {
                 $this->click(trans('motor-backend::backend/global.edit'));
             })
             ->seePageIs('/backend/vote_categories/'.$record->id.'/edit')
@@ -110,7 +109,7 @@ class PartymeisterCompetitionsBackendVoteCategoryTest extends TestCase
         $this->visit('/backend/vote_categories/'.$record->id.'/edit')
             ->see($record->name)
             ->type('Updated Vote category', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/vote_categories.save'));
             })
             ->see(trans('partymeister-competitions::backend/vote_categories.updated'))
@@ -135,7 +134,7 @@ class PartymeisterCompetitionsBackendVoteCategoryTest extends TestCase
         $this->visit('/backend/vote_categories/create')
             ->see(trans('partymeister-competitions::backend/vote_categories.new'))
             ->type('Create Vote category Name', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/vote_categories.save'));
             })
             ->see(trans('partymeister-competitions::backend/vote_categories.created'))
@@ -148,7 +147,7 @@ class PartymeisterCompetitionsBackendVoteCategoryTest extends TestCase
     {
         $this->visit('/backend/vote_categories/create')
             ->see(trans('partymeister-competitions::backend/vote_categories.new'))
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/vote_categories.save'));
             })
             ->see('Data missing!')
@@ -162,7 +161,7 @@ class PartymeisterCompetitionsBackendVoteCategoryTest extends TestCase
         $this->visit('/backend/vote_categories/'.$record->id.'/edit')
             ->see(trans('partymeister-competitions::backend/vote_categories.edit'))
             ->type('Modified Vote category Name', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/vote_categories.save'));
             })
             ->see(trans('partymeister-competitions::backend/vote_categories.updated'))
@@ -178,7 +177,7 @@ class PartymeisterCompetitionsBackendVoteCategoryTest extends TestCase
         $this->assertCount(1, VoteCategory::all());
 
         $this->visit('/backend/vote_categories')
-            ->within('table', function(){
+            ->within('table', function () {
                 $this->press(trans('motor-backend::backend/global.delete'));
             })
             ->seePageIs('/backend/vote_categories')
@@ -192,7 +191,7 @@ class PartymeisterCompetitionsBackendVoteCategoryTest extends TestCase
     {
         $records = create_test_vote_category(100);
         $this->visit('/backend/vote_categories')
-            ->within('.pagination', function(){
+            ->within('.pagination', function () {
                 $this->click('3');
             })
             ->seePageIs('/backend/vote_categories?page=3');

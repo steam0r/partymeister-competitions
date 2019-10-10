@@ -73,7 +73,7 @@ class CompetitionTransformer extends Fractal\TransformerAbstract
     public function includeVoteCategories(Competition $record)
     {
         $collection = $record->vote_categories;
-        if ( ! is_null($collection)) {
+        if (! is_null($collection)) {
             return $this->collection($collection, new VoteCategoryTransformer());
         }
     }
@@ -88,9 +88,8 @@ class CompetitionTransformer extends Fractal\TransformerAbstract
     public function includeOptionGroups(Competition $record)
     {
         $collection = $record->option_groups;
-        if ( ! is_null($collection)) {
+        if (! is_null($collection)) {
             return $this->collection($collection, new OptionGroupTransformer());
         }
     }
-
 }

@@ -18,7 +18,6 @@ use Partymeister\Competitions\Services\AccessKeyService;
  */
 class AccessKeysController extends Controller
 {
-
     use FormBuilderTrait;
 
 
@@ -68,7 +67,7 @@ class AccessKeysController extends Controller
         $form = $this->form(AccessKeyForm::class);
 
         // It will automatically use current request, get the rules, and do the validation
-        if ( ! $form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -122,7 +121,7 @@ class AccessKeysController extends Controller
         $form = $this->form(AccessKeyForm::class);
 
         // It will automatically use current request, get the rules, and do the validation
-        if ( ! $form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 

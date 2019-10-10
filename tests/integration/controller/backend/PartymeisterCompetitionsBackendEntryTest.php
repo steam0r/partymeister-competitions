@@ -10,7 +10,6 @@ use Partymeister\Competitions\Models\Entry;
  */
 class PartymeisterCompetitionsBackendEntryTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /**
@@ -94,7 +93,7 @@ class PartymeisterCompetitionsBackendEntryTest extends TestCase
     {
         $record = create_test_entry();
         $this->visit('/backend/entries')
-            ->within('table', function(){
+            ->within('table', function () {
                 $this->click(trans('motor-backend::backend/global.edit'));
             })
             ->seePageIs('/backend/entries/'.$record->id.'/edit')
@@ -110,7 +109,7 @@ class PartymeisterCompetitionsBackendEntryTest extends TestCase
         $this->visit('/backend/entries/'.$record->id.'/edit')
             ->see($record->name)
             ->type('Updated Entry', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/entries.save'));
             })
             ->see(trans('partymeister-competitions::backend/entries.updated'))
@@ -135,7 +134,7 @@ class PartymeisterCompetitionsBackendEntryTest extends TestCase
         $this->visit('/backend/entries/create')
             ->see(trans('partymeister-competitions::backend/entries.new'))
             ->type('Create Entry Name', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/entries.save'));
             })
             ->see(trans('partymeister-competitions::backend/entries.created'))
@@ -148,7 +147,7 @@ class PartymeisterCompetitionsBackendEntryTest extends TestCase
     {
         $this->visit('/backend/entries/create')
             ->see(trans('partymeister-competitions::backend/entries.new'))
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/entries.save'));
             })
             ->see('Data missing!')
@@ -162,7 +161,7 @@ class PartymeisterCompetitionsBackendEntryTest extends TestCase
         $this->visit('/backend/entries/'.$record->id.'/edit')
             ->see(trans('partymeister-competitions::backend/entries.edit'))
             ->type('Modified Entry Name', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/entries.save'));
             })
             ->see(trans('partymeister-competitions::backend/entries.updated'))
@@ -178,7 +177,7 @@ class PartymeisterCompetitionsBackendEntryTest extends TestCase
         $this->assertCount(1, Entry::all());
 
         $this->visit('/backend/entries')
-            ->within('table', function(){
+            ->within('table', function () {
                 $this->press(trans('motor-backend::backend/global.delete'));
             })
             ->seePageIs('/backend/entries')
@@ -192,7 +191,7 @@ class PartymeisterCompetitionsBackendEntryTest extends TestCase
     {
         $records = create_test_entry(100);
         $this->visit('/backend/entries')
-            ->within('.pagination', function(){
+            ->within('.pagination', function () {
                 $this->click('3');
             })
             ->seePageIs('/backend/entries?page=3');

@@ -76,7 +76,6 @@ use Motor\Core\Traits\Searchable;
  */
 class CompetitionType extends Model
 {
-
     use Searchable;
     use Filterable;
     use Blameable, CreatedBy, UpdatedBy, DeletedBy;
@@ -137,8 +136,10 @@ class CompetitionType extends Model
         $properties = $this->getPropertiesAttribute();
         foreach ($properties as $index => $property) {
             if ($property == 'number_of_work_stages') {
-                $properties[$index] = trans('partymeister-competitions::backend/competition_types.n_number_of_work_stages',
-                    [ 'number' => $this->number_of_work_stages ]);
+                $properties[$index] = trans(
+                    'partymeister-competitions::backend/competition_types.n_number_of_work_stages',
+                    [ 'number' => $this->number_of_work_stages ]
+                );
             } else {
                 $properties[$index] = trans('partymeister-competitions::backend/competition_types.' . $property);
             }

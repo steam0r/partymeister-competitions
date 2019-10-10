@@ -121,7 +121,6 @@ use Spatie\MediaLibrary\Models\Media;
  */
 class Entry extends Model implements HasMedia
 {
-
     use HasMediaTrait;
     use Searchable;
     use Filterable;
@@ -199,7 +198,7 @@ class Entry extends Model implements HasMedia
     public function getLastFileUploadAttribute()
     {
         $media = $this->getMedia('file')->reverse()->first();
-        if ( ! is_null($media)) {
+        if (! is_null($media)) {
             return $media->created_at;
         }
 
@@ -292,7 +291,7 @@ class Entry extends Model implements HasMedia
                           ->pluck('points')
                           ->first();
 
-        return ( is_null($points) ? 0 : $points ) + ( is_null($manualPoints) ? 0 : $manualPoints );
+        return (is_null($points) ? 0 : $points) + (is_null($manualPoints) ? 0 : $manualPoints);
     }
 
 

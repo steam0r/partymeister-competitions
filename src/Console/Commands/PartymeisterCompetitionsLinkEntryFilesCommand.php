@@ -37,7 +37,7 @@ class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
     {
         foreach (Competition::all() as $competition) {
             $directory = base_path('entries/' . Str::slug($competition->name));
-            if ( ! is_dir($directory)) {
+            if (! is_dir($directory)) {
                 mkdir($directory);
             }
             foreach ($competition->entries()->get() as $entry) {
@@ -73,10 +73,12 @@ class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
                     $this->mkdir($directory . '/' . $entryDir . '/work_stages');
                     for ($i = 1; $i <= $entry->competition->competition_type->number_of_work_stages; $i++) {
                         $media = $entry->getFirstMedia('work_stage_' . $i);
-                        if ( ! is_null($media)) {
+                        if (! is_null($media)) {
                             if (file_exists($media->getPath()) && ! file_exists($directory . '/' . $entryDir . '/work_stages/' . $i . '_' . $media->file_name)) {
-                                link($media->getPath(),
-                                    $directory . '/' . $entryDir . '/work_stages/' . $i . '_' . $media->file_name);
+                                link(
+                                    $media->getPath(),
+                                    $directory . '/' . $entryDir . '/work_stages/' . $i . '_' . $media->file_name
+                                );
                             }
                         }
                     }
@@ -116,7 +118,6 @@ class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
         //    $callback->has_fired = true;
         //    $callback->save();
         //}
-
     }
 
 
@@ -125,7 +126,7 @@ class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
      */
     protected function mkdir($directory)
     {
-        if ( ! is_dir($directory)) {
+        if (! is_dir($directory)) {
             mkdir($directory);
         }
     }

@@ -25,7 +25,7 @@ class SyncController extends Controller
     {
         $data = $request->get('data');
 
-        if ( ! Arr::get($data, 'id')) {
+        if (! Arr::get($data, 'id')) {
             return response()->json('Error', 403);
         }
 
@@ -57,7 +57,7 @@ class SyncController extends Controller
     {
         $data = $request->get('data');
 
-        if ( ! Arr::get($data, 'entry_id')) {
+        if (! Arr::get($data, 'entry_id')) {
             return response()->json('Error', 403);
         }
 
@@ -84,7 +84,7 @@ class SyncController extends Controller
     {
         $data = $request->get('data');
 
-        if ( ! Arr::get($data, 'id')) {
+        if (! Arr::get($data, 'id')) {
             return response()->json('Error', 403);
         }
 
@@ -102,15 +102,17 @@ class SyncController extends Controller
         $entry->save();
 
         $screenshot = Arr::get($data, 'screenshot.file_base64', null);
-        if ( ! is_null($screenshot)) {
-            file_put_contents(storage_path() . '/' . Arr::get($data, 'screenshot.file_name'),
-                base64_decode($screenshot));
+        if (! is_null($screenshot)) {
+            file_put_contents(
+                storage_path() . '/' . Arr::get($data, 'screenshot.file_name'),
+                base64_decode($screenshot)
+            );
             $entry->addMedia(storage_path() . '/' . Arr::get($data, 'screenshot.file_name'))
                   ->toMediaCollection('screenshot', 'media');
         }
 
         $audio = Arr::get($data, 'audio.file_base64', null);
-        if ( ! is_null($audio)) {
+        if (! is_null($audio)) {
             file_put_contents(storage_path() . '/' . Arr::get($data, 'audio.file_name'), base64_decode($audio));
             $entry->addMedia(storage_path() . '/' . Arr::get($data, 'audio.file_name'))
                   ->toMediaCollection('audio', 'media');
@@ -121,5 +123,4 @@ class SyncController extends Controller
             $entry->save();
         }
     }
-
 }

@@ -17,7 +17,6 @@ use Partymeister\Competitions\Services\VoteService;
  */
 class VotesController extends Controller
 {
-
     use FormBuilderTrait;
 
 
@@ -65,7 +64,7 @@ class VotesController extends Controller
         $form = $this->form(VoteForm::class);
 
         // It will automatically use current request, get the rules, and do the validation
-        if ( ! $form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -119,7 +118,7 @@ class VotesController extends Controller
         $form = $this->form(VoteForm::class);
 
         // It will automatically use current request, get the rules, and do the validation
-        if ( ! $form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 

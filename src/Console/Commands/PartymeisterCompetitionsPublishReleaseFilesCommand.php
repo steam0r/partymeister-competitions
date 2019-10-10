@@ -46,7 +46,7 @@ class PartymeisterCompetitionsPublishReleaseFilesCommand extends Command
      */
     protected function mkdir($directory)
     {
-        if ( ! is_dir($directory)) {
+        if (! is_dir($directory)) {
             mkdir($directory);
         }
     }

@@ -39,7 +39,7 @@ class CompetitionTypeRenderer
      */
     public function render()
     {
-        if ( ! is_array($this->value)) {
+        if (! is_array($this->value)) {
             return '';
         }
 

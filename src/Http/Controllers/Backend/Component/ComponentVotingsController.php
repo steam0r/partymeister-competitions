@@ -16,7 +16,6 @@ use Partymeister\Competitions\Services\Component\ComponentVotingService;
  */
 class ComponentVotingsController extends ComponentController
 {
-
     use FormBuilderTrait;
 
 
@@ -43,7 +42,7 @@ class ComponentVotingsController extends ComponentController
     {
         $this->form = $this->form(ComponentVotingForm::class);
 
-        if ( ! $this->isValid()) {
+        if (! $this->isValid()) {
             return $this->respondWithValidationError();
         }
 
@@ -80,7 +79,7 @@ class ComponentVotingsController extends ComponentController
     {
         $form = $this->form(ComponentVotingForm::class);
 
-        if ( ! $this->isValid()) {
+        if (! $this->isValid()) {
             return $this->respondWithValidationError();
         }
 

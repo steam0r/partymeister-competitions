@@ -58,8 +58,9 @@ class ComponentLiveVotings
      */
     public function render()
     {
-        return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
-            []);
+        return view(
+            config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
+            []
+        );
     }
-
 }

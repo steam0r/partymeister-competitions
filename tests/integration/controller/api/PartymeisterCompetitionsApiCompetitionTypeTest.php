@@ -9,7 +9,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  */
 class PartymeisterCompetitionsApiCompetitionTypeTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /**
@@ -123,8 +122,10 @@ class PartymeisterCompetitionsApiCompetitionTypeTest extends TestCase
     {
         $this->user->givePermissionTo($this->readPermission);
         $record = create_test_competition_type();
-        $this->json('GET',
-            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token)->seeStatusCode(200)->seeJson([
+        $this->json(
+            'GET',
+            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token
+        )->seeStatusCode(200)->seeJson([
             'name' => $record->name
         ]);
     }
@@ -133,8 +134,10 @@ class PartymeisterCompetitionsApiCompetitionTypeTest extends TestCase
     public function fails_to_show_a_single_competition_type_without_permission()
     {
         $record = create_test_competition_type();
-        $this->json('GET',
-            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token)->seeStatusCode(403)->seeJson([
+        $this->json(
+            'GET',
+            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token
+        )->seeStatusCode(403)->seeJson([
             'error' => 'Access denied.'
         ]);
     }
@@ -165,8 +168,10 @@ class PartymeisterCompetitionsApiCompetitionTypeTest extends TestCase
     {
         $this->user->givePermissionTo($this->readPermission);
         $records = create_test_competition_type(10);
-        $this->json('GET',
-            '/api/competition_types?api_token=' . $this->user->api_token . '&search=' . $records[2]->name)->seeStatusCode(200)->seeJson([
+        $this->json(
+            'GET',
+            '/api/competition_types?api_token=' . $this->user->api_token . '&search=' . $records[2]->name
+        )->seeStatusCode(200)->seeJson([
             'name' => $records[2]->name
         ]);
     }
@@ -177,8 +182,10 @@ class PartymeisterCompetitionsApiCompetitionTypeTest extends TestCase
     {
         $this->user->givePermissionTo($this->readPermission);
         create_test_competition_type(50);
-        $this->json('GET',
-            '/api/competition_types?api_token=' . $this->user->api_token . '&page=2')->seeStatusCode(200)->seeJson([
+        $this->json(
+            'GET',
+            '/api/competition_types?api_token=' . $this->user->api_token . '&page=2'
+        )->seeStatusCode(200)->seeJson([
             'current_page' => 2
         ]);
     }
@@ -199,8 +206,10 @@ class PartymeisterCompetitionsApiCompetitionTypeTest extends TestCase
     {
         $this->user->givePermissionTo($this->writePermission);
         $record = create_test_competition_type();
-        $this->json('PATCH',
-            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token)->seeStatusCode(422)->seeJson([
+        $this->json(
+            'PATCH',
+            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token
+        )->seeStatusCode(422)->seeJson([
             'name' => [ 'The name field is required.' ]
         ]);
     }
@@ -210,8 +219,10 @@ class PartymeisterCompetitionsApiCompetitionTypeTest extends TestCase
     public function fails_if_trying_to_modify_a_competition_type_without_permission()
     {
         $record = create_test_competition_type();
-        $this->json('PATCH',
-            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token)->seeStatusCode(403)->seeJson([
+        $this->json(
+            'PATCH',
+            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token
+        )->seeStatusCode(403)->seeJson([
             'error' => 'Access denied.'
         ]);
     }
@@ -243,8 +254,10 @@ class PartymeisterCompetitionsApiCompetitionTypeTest extends TestCase
     public function fails_to_delete_a_competition_type_without_permission()
     {
         $record = create_test_competition_type();
-        $this->json('DELETE',
-            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token)->seeStatusCode(403)->seeJson([
+        $this->json(
+            'DELETE',
+            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token
+        )->seeStatusCode(403)->seeJson([
             'error' => 'Access denied.'
         ]);
     }
@@ -254,8 +267,10 @@ class PartymeisterCompetitionsApiCompetitionTypeTest extends TestCase
     {
         $this->user->givePermissionTo($this->deletePermission);
         $record = create_test_competition_type();
-        $this->json('DELETE',
-            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token)->seeStatusCode(200)->seeJson([
+        $this->json(
+            'DELETE',
+            '/api/competition_types/' . $record->id . '?api_token=' . $this->user->api_token
+        )->seeStatusCode(200)->seeJson([
             'success' => true
         ]);
     }

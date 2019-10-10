@@ -20,7 +20,6 @@ use Partymeister\Competitions\Transformers\CompetitionTransformer;
  */
 class SyncCompetition implements ShouldQueue
 {
-
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
@@ -54,9 +53,12 @@ class SyncCompetition implements ShouldQueue
             'verify' => false
         ]);
 
-        $request = new Request('POST',
+        $request = new Request(
+            'POST',
             config('partymeister-competitions-sync.server') . config('partymeister-competitions-sync.api.competition'),
-            [ 'content-type' => 'application/json' ], $data);
+            [ 'content-type' => 'application/json' ],
+            $data
+        );
 
         try {
             $client->send($request);

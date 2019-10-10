@@ -91,11 +91,11 @@ class SimpleTransformer extends Fractal\TransformerAbstract
             'competition'                    => $entry->competition->name,
             'competition_id'                 => (int) $entry->competition->id,
             'deadline_reached'               => $deadline,
-            'vote_category_has_comment'      => (bool) ( ! is_null($voteCategory) ? $voteCategory->has_comment : false ),
-            'vote_category_has_special_vote' => (bool) ( ! is_null($voteCategory) ? $voteCategory->has_special_vote : false ),
-            'vote_category_has_negative'     => (bool) ( ! is_null($voteCategory) ? $voteCategory->has_negative : false ),
-            'vote_category_points'           => (int) ( ! is_null($voteCategory) ? $voteCategory->points : 0 ),
-            'vote_category_id'               => (int) ( ! is_null($voteCategory) ? $voteCategory->id : 1 ),
+            'vote_category_has_comment'      => (bool) (! is_null($voteCategory) ? $voteCategory->has_comment : false),
+            'vote_category_has_special_vote' => (bool) (! is_null($voteCategory) ? $voteCategory->has_special_vote : false),
+            'vote_category_has_negative'     => (bool) (! is_null($voteCategory) ? $voteCategory->has_negative : false),
+            'vote_category_points'           => (int) (! is_null($voteCategory) ? $voteCategory->points : 0),
+            'vote_category_id'               => (int) (! is_null($voteCategory) ? $voteCategory->id : 1),
         ];
 
         if ($entry->getFirstMedia('screenshot')) {

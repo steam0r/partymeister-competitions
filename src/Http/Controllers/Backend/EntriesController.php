@@ -18,7 +18,6 @@ use Partymeister\Competitions\Services\EntryService;
  */
 class EntriesController extends Controller
 {
-
     use FormBuilderTrait;
 
 
@@ -72,7 +71,7 @@ class EntriesController extends Controller
         if ((int) $request->get('reload_on_change') == 1) {
             return redirect()->back()->withInput();
         }
-        if ( ! $form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -131,7 +130,7 @@ class EntriesController extends Controller
         }
 
         // It will automatically use current request, get the rules, and do the validation
-        if ( ! $form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 

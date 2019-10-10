@@ -76,7 +76,7 @@ class VoteService extends BaseService
             });
             foreach ($results[$competition->id]['entries'] as $key => $entry) {
                 $results[$competition->id]['entries'][$key]['max_points'] = $maxPoints[$competition->id];
-                $results[$competition->id]['entries'][$key]['rank']       = ( $key + 1 );
+                $results[$competition->id]['entries'][$key]['rank']       = ($key + 1);
             }
         }
 
@@ -94,7 +94,6 @@ class VoteService extends BaseService
         foreach (Competition::where('has_prizegiving', true)
                             ->orderBy('prizegiving_sort_position', 'DESC')
                             ->get() as $competition) {
-
             if (isset($competition->vote_categories[0]) && $competition->vote_categories[0]->has_special_vote) {
                 foreach ($competition->entries()->where('status', 1)->get() as $entry) {
                     $specialVotes = (int) $entry->special_votes;
@@ -118,7 +117,7 @@ class VoteService extends BaseService
 
                 foreach ($results as $key => $entry) {
                     $results[$key]['max_points'] = $maxPoints;
-                    $results[$key]['rank']       = ( $key + 1 );
+                    $results[$key]['rank']       = ($key + 1);
                 }
             }
         }

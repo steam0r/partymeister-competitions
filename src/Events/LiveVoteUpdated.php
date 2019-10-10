@@ -15,7 +15,6 @@ use Partymeister\Competitions\Models\LiveVote;
  */
 class LiveVoteUpdated
 {
-
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**

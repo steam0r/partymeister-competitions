@@ -76,5 +76,4 @@ class LiveVote extends Model
     {
         return $this->belongsTo(Entry::class);
     }
-
 }

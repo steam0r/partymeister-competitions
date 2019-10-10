@@ -19,15 +19,15 @@ class CreateLiveVotesTable extends Migration
         Schema::create('live_votes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('competition_id')->unsigned()->index();
-			$table->integer('entry_id')->unsigned()->index();
-			$table->integer('sort_position')->unsigned();
-			$table->string('title');
-			$table->string('author');
-			$table->boolean('is_current');
+            $table->integer('entry_id')->unsigned()->index();
+            $table->integer('sort_position')->unsigned();
+            $table->string('title');
+            $table->string('author');
+            $table->boolean('is_current');
             $table->timestamps();
 
-			$table->foreign('competition_id')->references('id')->on('competitions')->onDelete('cascade');
-			$table->foreign('entry_id')->references('id')->on('entries')->onDelete('cascade');
+            $table->foreign('competition_id')->references('id')->on('competitions')->onDelete('cascade');
+            $table->foreign('entry_id')->references('id')->on('entries')->onDelete('cascade');
         });
     }
 

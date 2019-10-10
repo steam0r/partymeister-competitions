@@ -52,7 +52,6 @@ use Motor\Core\Traits\Searchable;
  */
 class OptionGroup extends Model
 {
-
     use Searchable;
     use Filterable;
     use Blameable, CreatedBy, UpdatedBy, DeletedBy;
@@ -100,5 +99,4 @@ class OptionGroup extends Model
     {
         return $this->belongsToMany(Competition::class);
     }
-
 }

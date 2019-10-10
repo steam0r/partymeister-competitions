@@ -10,7 +10,6 @@ use Partymeister\Competitions\Models\AccessKey;
  */
 class PartymeisterCompetitionsBackendAccessKeyTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /**
@@ -94,7 +93,7 @@ class PartymeisterCompetitionsBackendAccessKeyTest extends TestCase
     {
         $record = create_test_access_key();
         $this->visit('/backend/access_keys')
-            ->within('table', function(){
+            ->within('table', function () {
                 $this->click(trans('motor-backend::backend/global.edit'));
             })
             ->seePageIs('/backend/access_keys/'.$record->id.'/edit')
@@ -110,7 +109,7 @@ class PartymeisterCompetitionsBackendAccessKeyTest extends TestCase
         $this->visit('/backend/access_keys/'.$record->id.'/edit')
             ->see($record->name)
             ->type('Updated Access key', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/access_keys.save'));
             })
             ->see(trans('partymeister-competitions::backend/access_keys.updated'))
@@ -135,7 +134,7 @@ class PartymeisterCompetitionsBackendAccessKeyTest extends TestCase
         $this->visit('/backend/access_keys/create')
             ->see(trans('partymeister-competitions::backend/access_keys.new'))
             ->type('Create Access key Name', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/access_keys.save'));
             })
             ->see(trans('partymeister-competitions::backend/access_keys.created'))
@@ -148,7 +147,7 @@ class PartymeisterCompetitionsBackendAccessKeyTest extends TestCase
     {
         $this->visit('/backend/access_keys/create')
             ->see(trans('partymeister-competitions::backend/access_keys.new'))
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/access_keys.save'));
             })
             ->see('Data missing!')
@@ -162,7 +161,7 @@ class PartymeisterCompetitionsBackendAccessKeyTest extends TestCase
         $this->visit('/backend/access_keys/'.$record->id.'/edit')
             ->see(trans('partymeister-competitions::backend/access_keys.edit'))
             ->type('Modified Access key Name', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/access_keys.save'));
             })
             ->see(trans('partymeister-competitions::backend/access_keys.updated'))
@@ -178,7 +177,7 @@ class PartymeisterCompetitionsBackendAccessKeyTest extends TestCase
         $this->assertCount(1, AccessKey::all());
 
         $this->visit('/backend/access_keys')
-            ->within('table', function(){
+            ->within('table', function () {
                 $this->press(trans('motor-backend::backend/global.delete'));
             })
             ->seePageIs('/backend/access_keys')
@@ -192,7 +191,7 @@ class PartymeisterCompetitionsBackendAccessKeyTest extends TestCase
     {
         $records = create_test_access_key(100);
         $this->visit('/backend/access_keys')
-            ->within('.pagination', function(){
+            ->within('.pagination', function () {
                 $this->click('3');
             })
             ->seePageIs('/backend/access_keys?page=3');

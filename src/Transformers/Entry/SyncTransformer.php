@@ -44,7 +44,7 @@ class SyncTransformer extends Fractal\TransformerAbstract
             'upload_enabled'                              => (bool) $record->upload_enabled,
             'is_prepared'                                 => (bool) $record->is_prepared,
             'sort_position'                               => (int) $record->sort_position,
-            'sort_position_prefixed'                      => ( strlen($record->sort_position) == 1 ? '0' . $record->sort_position : $record->sort_position ),
+            'sort_position_prefixed'                      => (strlen($record->sort_position) == 1 ? '0' . $record->sort_position : $record->sort_position),
             'competition_id'                              => (int) $record->competition_id,
             'competition_name'                            => $record->competition->name,
             'status'                                      => (int) $record->status,
@@ -67,8 +67,11 @@ class SyncTransformer extends Fractal\TransformerAbstract
             'composer_country_iso_3166_1'                 => $record->composer_country_iso_3166_1,
             'composer_country'                            => Countries::getName($record->composer_country_iso_3166_1),
             'composer_not_member_of_copyright_collective' => (bool) $record->composer_not_member_of_copyright_collective,
-            'screenshot'                                  => MediaHelper::getFileInformation($record, 'screenshot',
-                true),
+            'screenshot'                                  => MediaHelper::getFileInformation(
+                $record,
+                'screenshot',
+                true
+            ),
             'audio'                                       => MediaHelper::getFileInformation($record, 'audio', true),
         ];
     }

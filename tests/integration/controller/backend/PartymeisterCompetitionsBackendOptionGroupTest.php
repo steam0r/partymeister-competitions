@@ -10,7 +10,6 @@ use Partymeister\Competitions\Models\OptionGroup;
  */
 class PartymeisterCompetitionsBackendOptionGroupTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /**
@@ -94,7 +93,7 @@ class PartymeisterCompetitionsBackendOptionGroupTest extends TestCase
     {
         $record = create_test_option_group();
         $this->visit('/backend/option_groups')
-            ->within('table', function(){
+            ->within('table', function () {
                 $this->click(trans('motor-backend::backend/global.edit'));
             })
             ->seePageIs('/backend/option_groups/'.$record->id.'/edit')
@@ -110,7 +109,7 @@ class PartymeisterCompetitionsBackendOptionGroupTest extends TestCase
         $this->visit('/backend/option_groups/'.$record->id.'/edit')
             ->see($record->name)
             ->type('Updated Option group', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/option_groups.save'));
             })
             ->see(trans('partymeister-competitions::backend/option_groups.updated'))
@@ -135,7 +134,7 @@ class PartymeisterCompetitionsBackendOptionGroupTest extends TestCase
         $this->visit('/backend/option_groups/create')
             ->see(trans('partymeister-competitions::backend/option_groups.new'))
             ->type('Create Option group Name', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/option_groups.save'));
             })
             ->see(trans('partymeister-competitions::backend/option_groups.created'))
@@ -148,7 +147,7 @@ class PartymeisterCompetitionsBackendOptionGroupTest extends TestCase
     {
         $this->visit('/backend/option_groups/create')
             ->see(trans('partymeister-competitions::backend/option_groups.new'))
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/option_groups.save'));
             })
             ->see('Data missing!')
@@ -162,7 +161,7 @@ class PartymeisterCompetitionsBackendOptionGroupTest extends TestCase
         $this->visit('/backend/option_groups/'.$record->id.'/edit')
             ->see(trans('partymeister-competitions::backend/option_groups.edit'))
             ->type('Modified Option group Name', 'name')
-            ->within('.box-footer', function(){
+            ->within('.box-footer', function () {
                 $this->press(trans('partymeister-competitions::backend/option_groups.save'));
             })
             ->see(trans('partymeister-competitions::backend/option_groups.updated'))
@@ -178,7 +177,7 @@ class PartymeisterCompetitionsBackendOptionGroupTest extends TestCase
         $this->assertCount(1, OptionGroup::all());
 
         $this->visit('/backend/option_groups')
-            ->within('table', function(){
+            ->within('table', function () {
                 $this->press(trans('motor-backend::backend/global.delete'));
             })
             ->seePageIs('/backend/option_groups')
@@ -192,7 +191,7 @@ class PartymeisterCompetitionsBackendOptionGroupTest extends TestCase
     {
         $records = create_test_option_group(100);
         $this->visit('/backend/option_groups')
-            ->within('.pagination', function(){
+            ->within('.pagination', function () {
                 $this->click('3');
             })
             ->seePageIs('/backend/option_groups?page=3');

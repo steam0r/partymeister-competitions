@@ -23,7 +23,6 @@ use Partymeister\Core\Services\StuhlService;
  */
 class ComponentEntryUploads
 {
-
     use FormBuilderTrait;
 
     /**
@@ -88,7 +87,7 @@ class ComponentEntryUploads
             'enctype' => 'multipart/form-data',
         ];
 
-        if ( ! is_null($request->get('entry_id'))) {
+        if (! is_null($request->get('entry_id'))) {
             $this->record = Entry::find($request->get('entry_id'));
             if (is_null($this->record) || $visitor->id != $this->record->visitor_id) {
                 return redirect()->back();
@@ -103,13 +102,13 @@ class ComponentEntryUploads
         switch ($request->method()) {
             case 'POST':
                 $result = $this->post();
-                if ($result instanceOf RedirectResponse) {
+                if ($result instanceof RedirectResponse) {
                     return $result;
                 }
                 break;
             case 'PATCH':
                 $result = $this->patch();
-                if ($result instanceOf RedirectResponse) {
+                if ($result instanceof RedirectResponse) {
                     return $result;
                 }
                 break;
@@ -128,7 +127,7 @@ class ComponentEntryUploads
         if ((int) $this->request->input($this->entryUploadForm->getName() . '.reload_on_change') == 1) {
             return redirect()->back()->withInput();
         }
-        if ( ! $this->entryUploadForm->isValid()) {
+        if (! $this->entryUploadForm->isValid()) {
             return redirect()->back()->withErrors($this->entryUploadForm->getErrors())->withInput();
         }
 
@@ -144,7 +143,7 @@ class ComponentEntryUploads
      */
     protected function patch()
     {
-        if ( ! $this->record->competition->upload_enabled && ! $this->record->upload_enabled) {
+        if (! $this->record->competition->upload_enabled && ! $this->record->upload_enabled) {
             return redirect(route('frontend.pages.index', [ 'slug' => $this->component->entries_page->full_slug ]));
         }
 
@@ -156,7 +155,7 @@ class ComponentEntryUploads
         }
 
         // It will automatically use current request, get the rules, and do the validation
-        if ( ! $this->entryUploadForm->isValid()) {
+        if (! $this->entryUploadForm->isValid()) {
             return redirect()->back()->withErrors($this->entryUploadForm->getErrors())->withInput();
         }
 
@@ -173,12 +172,13 @@ class ComponentEntryUploads
      */
     public function render()
     {
-        return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
+        return view(
+            config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
             [
                 'entryUploadForm' => $this->entryUploadForm,
                 'record'          => $this->record,
                 'component'       => $this->component
-            ]);
+            ]
+        );
     }
-
 }

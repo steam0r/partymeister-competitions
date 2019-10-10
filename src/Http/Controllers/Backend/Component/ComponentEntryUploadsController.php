@@ -16,7 +16,6 @@ use Partymeister\Competitions\Services\Component\ComponentEntryUploadService;
  */
 class ComponentEntryUploadsController extends ComponentController
 {
-
     use FormBuilderTrait;
 
 
@@ -43,7 +42,7 @@ class ComponentEntryUploadsController extends ComponentController
     {
         $this->form = $this->form(ComponentEntryUploadForm::class);
 
-        if ( ! $this->isValid()) {
+        if (! $this->isValid()) {
             return $this->respondWithValidationError();
         }
 
@@ -80,7 +79,7 @@ class ComponentEntryUploadsController extends ComponentController
     {
         $form = $this->form(ComponentEntryUploadForm::class);
 
-        if ( ! $this->isValid()) {
+        if (! $this->isValid()) {
             return $this->respondWithValidationError();
         }
 

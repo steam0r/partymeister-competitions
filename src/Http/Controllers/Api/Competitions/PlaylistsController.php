@@ -24,7 +24,6 @@ class PlaylistsController extends Controller
      */
     public function index(Competition $competition)
     {
-
         $response = $this->checkIfCompetitionIsValid($competition);
         if ($response !== true) {
             return $response;
@@ -77,8 +76,10 @@ class PlaylistsController extends Controller
 
         if ($competition->competition_type->has_composer && $competition->entries()
                                                                         ->where('status', 1)
-                                                                        ->where('composer_not_member_of_copyright_collective',
-                                                                            false)
+                                                                        ->where(
+                                                                            'composer_not_member_of_copyright_collective',
+                                                                            false
+                                                                        )
                                                                         ->count() > 0) {
             if ($entry->sort_position != $sort_position) {
                 return response()->json([
@@ -90,5 +91,4 @@ class PlaylistsController extends Controller
 
         return true;
     }
-
 }

@@ -11,8 +11,7 @@ use Partymeister\Competitions\Models\Entry;
  */
 class Prize extends PDF
 {
-
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 
@@ -34,7 +33,7 @@ class Prize extends PDF
     /**
      * @param $name
      */
-    function renderCompetitionName($name)
+    public function renderCompetitionName($name)
     {
         $this->SetStyle('Prizesheet Headline');
         $this->MultiCell(0, 30, $name, 0, 'C');
@@ -45,7 +44,7 @@ class Prize extends PDF
      * @param $entry
      * @param $prize
      */
-    function renderCompetitionRankings($entry, $prize)
+    public function renderCompetitionRankings($entry, $prize)
     {
         $this->SetStyle('Prizesheet Name');
         $text = '#' . $prize->rank . ' - ' . $entry->title . ' by ' . $entry->author;
@@ -69,7 +68,7 @@ class Prize extends PDF
      * @param bool $entry
      * @param bool $prize
      */
-    function renderReceipt($entry = false, $prize = false)
+    public function renderReceipt($entry = false, $prize = false)
     {
         // Descriptions
         $this->SetStyle('Receipt Headline');

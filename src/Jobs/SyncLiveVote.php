@@ -19,7 +19,6 @@ use Partymeister\Competitions\Models\LiveVote;
  */
 class SyncLiveVote implements ShouldQueue
 {
-
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
@@ -60,9 +59,12 @@ class SyncLiveVote implements ShouldQueue
             'verify' => false
         ]);
 
-        $request = new Request('POST',
+        $request = new Request(
+            'POST',
             config('partymeister-competitions-sync.server') . config('partymeister-competitions-sync.api.livevote'),
-            [ 'content-type' => 'application/json' ], json_encode($data));
+            [ 'content-type' => 'application/json' ],
+            json_encode($data)
+        );
 
         try {
             $client->send($request);

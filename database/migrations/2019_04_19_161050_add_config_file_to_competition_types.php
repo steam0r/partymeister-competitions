@@ -19,7 +19,6 @@ class AddConfigFileToCompetitionTypes extends Migration
         Schema::table('competition_types', function (Blueprint $table) {
             $table->boolean('has_config_file')->after('file_is_optional')->default(false);
         });
-
     }
 
 

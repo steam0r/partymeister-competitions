@@ -37,7 +37,6 @@ use Motor\Core\Traits\Searchable;
  */
 class ManualVote extends Model
 {
-
     use Searchable;
     use Filterable;
 

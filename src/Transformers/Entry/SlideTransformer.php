@@ -81,7 +81,7 @@ class SlideTransformer extends Fractal\TransformerAbstract
             'upload_enabled'                              => (bool) $record->upload_enabled,
             'is_prepared'                                 => (bool) $record->is_prepared,
             'sort_position'                               => (int) $record->sort_position,
-            'sort_position_prefixed'                      => ( strlen($record->sort_position) == 1 ? '0' . $record->sort_position : $record->sort_position ),
+            'sort_position_prefixed'                      => (strlen($record->sort_position) == 1 ? '0' . $record->sort_position : $record->sort_position),
             'competition_name'                            => $record->competition->name,
             'status'                                      => trans('partymeister-competitions::backend/entries.stati.' . $record->status),
             'last_file_uploaded_at'                       => str_replace(' ', 'T', $record->last_file_uploaded_at),
@@ -171,7 +171,7 @@ class SlideTransformer extends Fractal\TransformerAbstract
     public function includeScreenshot(Entry $record)
     {
         $media = $record->getFirstMedia('screenshot');
-        if ( ! is_null($media)) {
+        if (! is_null($media)) {
             return $this->item($media, new MediaTransformer());
         }
     }
@@ -186,7 +186,7 @@ class SlideTransformer extends Fractal\TransformerAbstract
     public function includeConfigFile(Entry $record)
     {
         $media = $record->getFirstMedia('config_file');
-        if ( ! is_null($media)) {
+        if (! is_null($media)) {
             return $this->item($media, new MediaTransformer());
         }
     }
@@ -201,7 +201,7 @@ class SlideTransformer extends Fractal\TransformerAbstract
     public function includeAudio(Entry $record)
     {
         $media = $record->getFirstMedia('audio');
-        if ( ! is_null($media)) {
+        if (! is_null($media)) {
             return $this->item($media, new MediaTransformer());
         }
     }
@@ -216,7 +216,7 @@ class SlideTransformer extends Fractal\TransformerAbstract
     public function includeVideo(Entry $record)
     {
         $media = $record->getFirstMedia('video');
-        if ( ! is_null($media)) {
+        if (! is_null($media)) {
             return $this->item($media, new MediaTransformer());
         }
     }

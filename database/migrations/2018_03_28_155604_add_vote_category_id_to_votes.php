@@ -23,7 +23,6 @@ class AddVoteCategoryIdToVotes extends Migration
             $table->boolean('special_vote')->after('entry_id');
             $table->string('comment')->after('points');
         });
-
     }
 
 

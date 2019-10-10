@@ -71,7 +71,7 @@ class ComponentEntryDetails
         $entry = $data['data'];
 
         foreach (Arr::get($entry, 'options.data', []) as $i => $option) {
-            $entry['option_' . ( $i + 1 )] = $option['name'];
+            $entry['option_' . ($i + 1)] = $option['name'];
         }
 
         $entry['competition_name'] = strtoupper($entry['competition_name']);
@@ -104,8 +104,9 @@ class ComponentEntryDetails
      */
     public function render()
     {
-        return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
-            $this->data);
+        return view(
+            config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
+            $this->data
+        );
     }
-
 }

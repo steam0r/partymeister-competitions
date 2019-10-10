@@ -72,15 +72,18 @@ class EntryService extends BaseService
     {
         // We need this in case we have named forms
         $prefix = '';
-        if ( ! is_null($this->form)) {
+        if (! is_null($this->form)) {
             $prefix = $this->form->getName() != null ? $this->form->getName() . '.' : '';
         }
 
         $numberOfWorkStages = $this->record->competition->competition_type->number_of_work_stages;
         if ($numberOfWorkStages > 0) {
             for ($i = 1; $i <= $numberOfWorkStages; $i++) {
-                $this->uploadFile($this->request->file($prefix . 'work_stage_' . $i), 'work_stage_' . $i,
-                    'work_stage_' . $i);
+                $this->uploadFile(
+                    $this->request->file($prefix . 'work_stage_' . $i),
+                    'work_stage_' . $i,
+                    'work_stage_' . $i
+                );
             }
         }
 
@@ -95,7 +98,7 @@ class EntryService extends BaseService
     public function afterUpdate()
     {
         $prefix = '';
-        if ( ! is_null($this->form)) {
+        if (! is_null($this->form)) {
             $prefix = $this->form->getName() ? $this->form->getName() . '.' : '';
         }
 

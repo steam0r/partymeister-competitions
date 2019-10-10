@@ -20,7 +20,6 @@ class AddFinalFileToEntries extends Migration
             $table->integer('final_file_media_id')->after('competition_id')->unsigned()->nullable()->index();
             $table->foreign('final_file_media_id')->references('id')->on('media')->onDelete('set null');
         });
-
     }
 
 

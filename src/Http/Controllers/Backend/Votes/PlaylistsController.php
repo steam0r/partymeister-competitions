@@ -66,9 +66,10 @@ class PlaylistsController extends Controller
             } else {
                 $comments[$competition['id']] = [];
             }
-            $comments[$competition['id']] = implode('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-                $comments[$competition['id']]);
-
+            $comments[$competition['id']] = implode(
+                '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+                $comments[$competition['id']]
+            );
         }
 
         $prizegivingTemplate = SlideTemplate::where('template_for', 'prizegiving')->first();
@@ -96,12 +97,10 @@ class PlaylistsController extends Controller
         $renderCompetitions = false;
         if ($request->get('competitions')) {
             $renderCompetitions = true;
-
         }
         $renderComments = false;
         if ($request->get('comments')) {
             $renderComments = true;
-
         }
         $renderBars = false;
         if ($request->get('bars')) {
@@ -119,10 +118,23 @@ class PlaylistsController extends Controller
         $renderBars         = true;
         $renderWinners      = true;
 
-        return view('partymeister-competitions::backend.votes.playlists.show',
-            compact('results', 'comments', 'commentsTemplate', 'specialVotes', 'prizegivingTemplate',
-                'comingupTemplate', 'endTemplate', 'renderSupport', 'renderCompetitions', 'renderBars', 'renderWinners',
-                'renderComments', 'renderNow'));
-
+        return view(
+            'partymeister-competitions::backend.votes.playlists.show',
+            compact(
+                'results',
+                'comments',
+                'commentsTemplate',
+                'specialVotes',
+                'prizegivingTemplate',
+                'comingupTemplate',
+                'endTemplate',
+                'renderSupport',
+                'renderCompetitions',
+                'renderBars',
+                'renderWinners',
+                'renderComments',
+                'renderNow'
+            )
+        );
     }
 }

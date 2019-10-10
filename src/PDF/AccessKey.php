@@ -8,8 +8,7 @@ namespace Partymeister\Competitions\PDF;
  */
 class AccessKey extends PDF
 {
-
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 
@@ -20,7 +19,7 @@ class AccessKey extends PDF
     }
 
 
-    function generate()
+    public function generate()
     {
         $this->SetStyle('Accesskey');
         $this->addPage();

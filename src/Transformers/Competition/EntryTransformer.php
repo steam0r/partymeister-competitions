@@ -23,7 +23,7 @@ class EntryTransformer extends Fractal\TransformerAbstract
     {
         return [
             'title'             => $record->title,
-            'author'            => ( $record->competition->competition_type->is_anonymous ? trans('partymeister-competitions::backend/competitions.anonymized') : $record->author ),
+            'author'            => ($record->competition->competition_type->is_anonymous ? trans('partymeister-competitions::backend/competitions.anonymized') : $record->author),
             'playlist_position' => $record->sort_position,
             'is_remote'         => (bool) $record->is_remote
         ];

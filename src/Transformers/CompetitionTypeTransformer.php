@@ -57,7 +57,7 @@ class CompetitionTypeTransformer extends Fractal\TransformerAbstract
     public function includeOptions(CompetitionType $record)
     {
         $competitions = $record->competitions;
-        if ( ! is_null($competitions)) {
+        if (! is_null($competitions)) {
             return $this->collection($competitions, new CompetitionTransformer());
         }
     }

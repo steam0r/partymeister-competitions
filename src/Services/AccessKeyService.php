@@ -53,7 +53,7 @@ class AccessKeyService extends BaseService
             }
 
             // Check if the key is unique
-            if ( ! in_array($key, $keys)) {
+            if (! in_array($key, $keys)) {
 
                 // Save Access key in Database
                 $accessKey             = new AccessKey();

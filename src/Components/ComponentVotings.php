@@ -78,7 +78,7 @@ class ComponentVotings
         switch ($request->method()) {
             case 'POST':
                 $result = $this->post();
-                if ($result instanceOf RedirectResponse) {
+                if ($result instanceof RedirectResponse) {
                     return $result;
                 }
                 break;
@@ -99,9 +99,9 @@ class ComponentVotings
         }
 
         $votes = [];
-        if ( ! is_null($competition)) {
+        if (! is_null($competition)) {
             foreach ($competition->vote_categories as $voteCategory) {
-                if ( ! isset($votes[$voteCategory->id])) {
+                if (! isset($votes[$voteCategory->id])) {
                     $votes[$voteCategory->id] = [];
                 }
             }
@@ -118,14 +118,14 @@ class ComponentVotings
         $liveVoting            = false;
         $liveVotingCompetition = '';
         $live                  = LiveVote::first();
-        if ( ! is_null($live)) {
-            if ( ! $live->competition->voting_enabled) {
+        if (! is_null($live)) {
+            if (! $live->competition->voting_enabled) {
                 $liveVoting            = true;
                 $liveVotingCompetition = $live->competition->name;
             }
         }
 
-        if ( ! is_null($competition)) {
+        if (! is_null($competition)) {
             \View::share('activeCompetitionId', $competition->id);
         }
 
@@ -150,7 +150,6 @@ class ComponentVotings
         foreach ($this->request->get('entry', []) as $competitionId => $voteCategories) {
             foreach ($voteCategories as $voteCategoryId => $entries) {
                 foreach ($entries as $entryId => $points) {
-
                     $vote = $this->visitor->votes()
                                           ->where('competition_id', $competitionId)
                                           ->where('entry_id', $entryId)
@@ -168,8 +167,10 @@ class ComponentVotings
                     $vote->vote_category_id = $voteCategoryId;
                     $vote->competition_id   = $competitionId;
                     $vote->entry_id         = $entryId;
-                    $vote->comment          = Arr::get($this->request->all(),
-                        'entry_comment.' . $competitionId . '.' . $entryId);
+                    $vote->comment          = Arr::get(
+                        $this->request->all(),
+                        'entry_comment.' . $competitionId . '.' . $entryId
+                    );
                     $vote->points           = $points;
                     $vote->visitor_id       = Auth::guard('visitor')->user()->id;
                     $vote->ip_address       = $this->request->ip();
@@ -182,7 +183,7 @@ class ComponentVotings
 
         if ($this->request->get('competition_id', false)) {
             return redirect()->back();
-            //return redirect('votes?competition_id=' . $this->request->get('competition_id'));
+        //return redirect('votes?competition_id=' . $this->request->get('competition_id'));
         } else {
             return redirect()->back();
         }
@@ -196,8 +197,9 @@ class ComponentVotings
     {
         $this->viewData['component'] = $this->component;
 
-        return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
-            $this->viewData);
+        return view(
+            config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
+            $this->viewData
+        );
     }
-
 }

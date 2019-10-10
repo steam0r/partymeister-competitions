@@ -29,7 +29,6 @@ class AddVisitorIdToEntries extends Migration
             $table->dropColumn('updated_by');
             $table->dropColumn('deleted_by');
         });
-
     }
 
 
@@ -43,7 +42,6 @@ class AddVisitorIdToEntries extends Migration
         Schema::table('entries', function (Blueprint $table) {
             $table->dropForeign([ 'visitor_id' ]);
             $table->dropColumn('visitor_id');
-
         });
     }
 }

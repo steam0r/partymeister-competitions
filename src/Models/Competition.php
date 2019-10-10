@@ -76,7 +76,6 @@ use Spatie\MediaLibrary\Models\Media;
  */
 class Competition extends Model implements HasMedia
 {
-
     use HasMediaTrait;
     use Searchable;
     use Filterable;
@@ -184,7 +183,7 @@ class Competition extends Model implements HasMedia
     /**
      * @return MorphMany
      */
-    function file_associations()
+    public function file_associations()
     {
         return $this->morphMany(FileAssociation::class, 'model');
     }
@@ -193,7 +192,7 @@ class Competition extends Model implements HasMedia
     /**
      * @return HasMany
      */
-    function prizes()
+    public function prizes()
     {
         return $this->hasMany(CompetitionPrize::class);
     }

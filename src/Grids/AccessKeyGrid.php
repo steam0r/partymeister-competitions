@@ -11,7 +11,6 @@ use Motor\Backend\Grid\Renderers\DateRenderer;
  */
 class AccessKeyGrid extends Grid
 {
-
     protected function setup()
     {
         $this->addColumn('access_key', trans('partymeister-competitions::backend/access_keys.access_key'), true);

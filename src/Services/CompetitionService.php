@@ -90,17 +90,17 @@ class CompetitionService extends BaseService
      */
     public static function hardLinkReleases($competition)
     {
-        if ( ! $competition->voting_enabled) {
+        if (! $competition->voting_enabled) {
             return;
         }
 
-        if ( ! is_dir(base_path('releases'))) {
+        if (! is_dir(base_path('releases'))) {
             mkdir(base_path('releases'));
         }
 
         $directory = base_path('releases/' . Str::slug($competition->name));
 
-        if ( ! is_dir($directory)) {
+        if (! is_dir($directory)) {
             mkdir($directory);
         }
 

@@ -18,7 +18,6 @@ use Partymeister\Competitions\Services\CompetitionService;
  */
 class CompetitionsController extends Controller
 {
-
     use FormBuilderTrait;
 
 
@@ -70,7 +69,7 @@ class CompetitionsController extends Controller
         $form = $this->form(CompetitionForm::class);
 
         // It will automatically use current request, get the rules, and do the validation
-        if ( ! $form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -126,7 +125,7 @@ class CompetitionsController extends Controller
         $form = $this->form(CompetitionForm::class);
 
         // It will automatically use current request, get the rules, and do the validation
-        if ( ! $form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 

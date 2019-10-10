@@ -65,12 +65,13 @@ class ComponentEntries
      */
     public function render()
     {
-        if ( ! is_null($this->visitor)) {
-            return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
-                [ 'component' => $this->component, 'entries' => $this->visitor->entries ]);
+        if (! is_null($this->visitor)) {
+            return view(
+                config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
+                [ 'component' => $this->component, 'entries' => $this->visitor->entries ]
+            );
         } else {
             return redirect('/f/start');
         }
     }
-
 }

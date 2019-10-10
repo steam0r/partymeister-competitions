@@ -12,14 +12,15 @@ use Motor\Backend\Grid\Renderers\TranslateRenderer;
  */
 class OptionGroupGrid extends Grid
 {
-
     protected function setup()
     {
         $this->addColumn('name', trans('motor-backend::backend/global.name'), true);
         $this->setDefaultSorting('name', 'ASC');
         $this->addColumn('type', trans('partymeister-competitions::backend/option_groups.type'), true)
-             ->renderer(TranslateRenderer::class,
-                 [ 'file' => 'partymeister-competitions::backend/option_groups.types' ]);
+             ->renderer(
+                 TranslateRenderer::class,
+                 [ 'file' => 'partymeister-competitions::backend/option_groups.types' ]
+             );
 
         $this->addColumn('options', trans('partymeister-competitions::backend/option_groups.options'))
              ->renderer(CollectionRenderer::class, [ 'column' => 'name' ]);

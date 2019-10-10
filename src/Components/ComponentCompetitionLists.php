@@ -48,8 +48,9 @@ class ComponentCompetitionLists
     {
         $competitions = Competition::where('voting_enabled', true)->orderBy('updated_at', 'ASC')->get();
 
-        return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
-            [ 'competitions' => $competitions ]);
+        return view(
+            config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
+            [ 'competitions' => $competitions ]
+        );
     }
-
 }

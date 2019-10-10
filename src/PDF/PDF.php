@@ -48,7 +48,7 @@ class PDF extends Fpdi
     {
         if ($fontfile !== '') {
             $file = base_path() . '/vendor/tcpdf/fonts/' . $fontfile . '.php';
-            if ( ! is_file($file)) {
+            if (! is_file($file)) {
                 $file = public_path() . '/pdf/fonts/' . $fontfile . '.php';
             }
             if ($file) {
@@ -180,7 +180,7 @@ class PDF extends Fpdi
             if (isset($this->StartY)) {
                 $this->SetY($this->StartY);
             }
-            if ( ! $page_break_method) {
+            if (! $page_break_method) {
                 $this->$render_method($arguments);
             } else {
                 $this->$page_break_method();
@@ -226,7 +226,19 @@ class PDF extends Fpdi
             $rs .= sprintf('BT %.2F Tc ET ', $this->FontSpacing);
         }
 
-        return $rs . parent::getCellCode($w, $h, $txt, $border, $ln, $align, $fill, $link, $stretch, $ignore_min_height,
-                $calign, $valign);
+        return $rs . parent::getCellCode(
+            $w,
+            $h,
+            $txt,
+            $border,
+            $ln,
+            $align,
+            $fill,
+            $link,
+            $stretch,
+            $ignore_min_height,
+            $calign,
+            $valign
+        );
     }
 }

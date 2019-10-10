@@ -51,7 +51,7 @@ class ComponentReleases
             $this->competition = Competition::where('voting_enabled', true)->orderBy('updated_at', 'ASC')->first();
         }
 
-        if ( ! is_null($this->competition)) {
+        if (! is_null($this->competition)) {
             \View::share('activeCompetitionId', $this->competition->id);
         }
 
@@ -64,8 +64,9 @@ class ComponentReleases
      */
     public function render()
     {
-        return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
-            [ 'competition' => $this->competition ]);
+        return view(
+            config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
+            [ 'competition' => $this->competition ]
+        );
     }
-
 }

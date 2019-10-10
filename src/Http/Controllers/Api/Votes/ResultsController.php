@@ -30,7 +30,9 @@ class ResultsController extends Controller
         $transformedSpecialResults = $this->transformCollection($special, ResultsTransformer::class);
         $specialData               = $this->fractal->createData($transformedSpecialResults)->toArray();
 
-        return $this->respondWithJson('Results read',
-            [ 'results' => $resultsData['data'], 'special' => $specialData['data'] ]);
+        return $this->respondWithJson(
+            'Results read',
+            [ 'results' => $resultsData['data'], 'special' => $specialData['data'] ]
+        );
     }
 }

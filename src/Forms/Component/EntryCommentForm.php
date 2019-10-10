@@ -21,4 +21,3 @@ class EntryCommentForm extends Form
              ->add('submit', 'submit', [ 'attr' => [ 'class' => 'button success expanded' ], 'label' => 'Send' ]);
     }
 }
-

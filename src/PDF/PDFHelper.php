@@ -86,7 +86,7 @@ class PDFHelper
      */
     public static function format_date($date, $format = '%d.%m.%Y')
     {
-        if ( ! is_numeric($date)) {
+        if (! is_numeric($date)) {
             if (count(explode("-", $date)) >= 3) {
                 $date = strtotime($date);
             } elseif (count(explode(".", $date)) >= 3) {

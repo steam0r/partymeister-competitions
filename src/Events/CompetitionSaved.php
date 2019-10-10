@@ -15,7 +15,6 @@ use Partymeister\Competitions\Models\Competition;
  */
 class CompetitionSaved
 {
-
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**

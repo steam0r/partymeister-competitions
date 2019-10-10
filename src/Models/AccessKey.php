@@ -52,7 +52,6 @@ use Partymeister\Core\Models\Visitor;
  */
 class AccessKey extends Model
 {
-
     use Searchable;
     use Filterable;
     use Blameable, CreatedBy, UpdatedBy, DeletedBy;

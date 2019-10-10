@@ -22,7 +22,6 @@ use Partymeister\Core\Services\StuhlService;
  */
 class ComponentEntryComments
 {
-
     use FormBuilderTrait;
 
     /**
@@ -104,7 +103,7 @@ class ComponentEntryComments
         switch ($request->method()) {
             case 'POST':
                 $result = $this->post();
-                if ($result instanceOf RedirectResponse) {
+                if ($result instanceof RedirectResponse) {
                     return $result;
                 }
                 break;
@@ -131,7 +130,7 @@ class ComponentEntryComments
             $this->entryCommentForm->getField('message')->setOption('rules', [ 'required' ]);
         }
 
-        if ( ! $this->entryCommentForm->isValid()) {
+        if (! $this->entryCommentForm->isValid()) {
             return redirect()->back()->withErrors($this->entryCommentForm->getErrors())->withInput();
         }
 
@@ -159,12 +158,13 @@ class ComponentEntryComments
      */
     public function render()
     {
-        return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
+        return view(
+            config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
             [
                 'comments'         => $this->comments,
                 'entryCommentForm' => $this->entryCommentForm,
                 'record'           => $this->record
-            ]);
+            ]
+        );
     }
-
 }

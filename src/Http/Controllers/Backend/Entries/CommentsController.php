@@ -16,7 +16,6 @@ use Partymeister\Competitions\Models\Entry;
  */
 class CommentsController extends Controller
 {
-
     use FormBuilderTrait;
 
 
@@ -63,7 +62,7 @@ class CommentsController extends Controller
             $form->getField('message')->setOption('rules', [ 'required' ]);
         }
 
-        if ( ! $form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 

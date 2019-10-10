@@ -54,9 +54,8 @@ class OptionGroupTransformer extends Fractal\TransformerAbstract
     public function includeOptions(OptionGroup $record)
     {
         $options = $record->options;
-        if ( ! is_null($options)) {
+        if (! is_null($options)) {
             return $this->collection($options, new OptionTransformer());
         }
     }
-
 }

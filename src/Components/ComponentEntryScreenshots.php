@@ -23,7 +23,6 @@ use Partymeister\Core\Services\StuhlService;
  */
 class ComponentEntryScreenshots
 {
-
     use FormBuilderTrait;
 
     /**
@@ -105,7 +104,7 @@ class ComponentEntryScreenshots
         switch ($request->method()) {
             case 'PATCH':
                 $result = $this->patch();
-                if ($result instanceOf RedirectResponse) {
+                if ($result instanceof RedirectResponse) {
                     return $result;
                 }
                 break;
@@ -122,7 +121,7 @@ class ComponentEntryScreenshots
     protected function patch()
     {
         // It will automatically use current request, get the rules, and do the validation
-        if ( ! $this->entryScreenshotForm->isValid()) {
+        if (! $this->entryScreenshotForm->isValid()) {
             return redirect()->back()->withErrors($this->entryScreenshotForm->getErrors())->withInput();
         }
 
@@ -139,12 +138,13 @@ class ComponentEntryScreenshots
      */
     public function render()
     {
-        return view(config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
+        return view(
+            config('motor-cms-page-components.components.' . $this->pageVersionComponent->component_name . '.view'),
             [
                 'entryScreenshotForm' => $this->entryScreenshotForm,
                 'record'              => $this->record,
                 'component'           => $this->component
-            ]);
+            ]
+        );
     }
-
 }

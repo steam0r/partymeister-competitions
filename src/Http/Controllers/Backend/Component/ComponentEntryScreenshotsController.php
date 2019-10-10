@@ -16,7 +16,6 @@ use Partymeister\Competitions\Services\Component\ComponentEntryScreenshotService
  */
 class ComponentEntryScreenshotsController extends ComponentController
 {
-
     use FormBuilderTrait;
 
 
@@ -43,7 +42,7 @@ class ComponentEntryScreenshotsController extends ComponentController
     {
         $this->form = $this->form(ComponentEntryScreenshotForm::class);
 
-        if ( ! $this->isValid()) {
+        if (! $this->isValid()) {
             return $this->respondWithValidationError();
         }
 
@@ -80,7 +79,7 @@ class ComponentEntryScreenshotsController extends ComponentController
     {
         $form = $this->form(ComponentEntryScreenshotForm::class);
 
-        if ( ! $this->isValid()) {
+        if (! $this->isValid()) {
             return $this->respondWithValidationError();
         }
 
