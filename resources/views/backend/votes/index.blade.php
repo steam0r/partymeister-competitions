@@ -33,7 +33,7 @@
         </div>
         <div class="@boxBody">
             @foreach ($special as $entry)
-                <div class="row">
+                <div class="row @if($entry['tie']) partymeister-tie @endif">
                     <div class="col-md-1">
                         {{number_format($entry['special_votes'], 0,',','')}}
                     </div>
@@ -59,14 +59,17 @@
                     {{trans('partymeister-competitions::backend/votes.no_entries_for_this_competition')}}
                 @else
                     @foreach ($competition['entries'] as $entry)
-                        <div class="row">
+                        <div class="row @if($entry['tie']) partymeister-voting-tie @endif">
+                            <div class="col-md-1">
+                                #{{$entry['rank']}}
+                            </div>
                             <div class="col-md-1">
                                 {{number_format($entry['points'], 0,',','')}}
                             </div>
                             <div class="col-md-5">
                                 {{$entry['title']}}
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 {{$entry['author']}}
                             </div>
                         </div>
