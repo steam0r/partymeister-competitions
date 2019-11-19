@@ -34,8 +34,6 @@
                 <div class="@boxBody">
                     <div id="slidemeister-prizegiving-comingup" class="slidemeister-instance"></div>
                     <input type="hidden" name="slide[comingup]">
-                    <input type="hidden" name="preview[comingup]">
-                    <input type="hidden" name="final[comingup]">
                     <input type="hidden" name="cached_html_preview[comingup]">
                     <input type="hidden" name="cached_html_final[comingup]">
                     <input type="hidden" name="type[comingup]" value="comingup">
@@ -44,8 +42,6 @@
                     <div id="slidemeister-prizegiving-now" class="slidemeister-instance"></div>
 
                     <input type="hidden" name="slide[now]">
-                    <input type="hidden" name="preview[now]">
-                    <input type="hidden" name="final[now]">
                     <input type="hidden" name="cached_html_preview[now]">
                     <input type="hidden" name="cached_html_final[now]">
                     <input type="hidden" name="type[now]" value="now">
@@ -55,8 +51,6 @@
                         <div id="slidemeister-prizegiving-{{$key}}-now" class="slidemeister-instance"></div>
 
                         <input type="hidden" name="slide[{{$key}}_now]">
-                        <input type="hidden" name="preview[{{$key}}_now]">
-                        <input type="hidden" name="final[{{$key}}_now]">
                         <input type="hidden" name="cached_html_preview[{{$key}}_now]">
                         <input type="hidden" name="cached_html_final[{{$key}}_now]">
                         <input type="hidden" name="type[{{$key}}_now]" value="now">
@@ -67,8 +61,6 @@
                              class="slidemeister-instance"></div>
 
                         <input type="hidden" name="slide[{{$key}}_comments]">
-                        <input type="hidden" name="preview[{{$key}}_comments]">
-                        <input type="hidden" name="final[{{$key}}_comments]">
                         <input type="hidden" name="cached_html_preview[{{$key}}_comments]">
                         <input type="hidden" name="cached_html_final[{{$key}}_comments]">
                         <input type="hidden" name="type[{{$key}}_comments]" value="comments">
@@ -79,8 +71,6 @@
                         <div id="slidemeister-prizegiving-{{$key}}-slide" class="slidemeister-instance"></div>
 
                         <input type="hidden" name="slide[{{$key}}_slide]">
-                        <input type="hidden" name="preview[{{$key}}_slide]">
-                        <input type="hidden" name="final[{{$key}}_slide]">
                         <input type="hidden" name="cached_html_preview[{{$key}}_slide]">
                         <input type="hidden" name="cached_html_final[{{$key}}_slide]">
                         <input type="hidden" name="type[{{$key}}_slide]" value="siegmeister_bars">
@@ -90,8 +80,6 @@
                         <div id="slidemeister-prizegiving-{{$key}}-winners" class="slidemeister-instance"></div>
 
                         <input type="hidden" name="slide[{{$key}}_winners]">
-                        <input type="hidden" name="preview[{{$key}}_winners]">
-                        <input type="hidden" name="final[{{$key}}_winners]">
                         <input type="hidden" name="cached_html_preview[{{$key}}_winners]">
                         <input type="hidden" name="cached_html_final[{{$key}}_winners]">
                         <input type="hidden" name="type[{{$key}}_winners]" value="siegmeister_winners">
@@ -104,8 +92,6 @@
                     <div id="slidemeister-prizegiving-special-now" class="slidemeister-instance"></div>
 
                     <input type="hidden" name="slide[special_now]">
-                    <input type="hidden" name="preview[special_now]">
-                    <input type="hidden" name="final[special_now]">
                     <input type="hidden" name="cached_html_preview[special_now]">
                     <input type="hidden" name="cached_html_final[special_now]">
                     <input type="hidden" name="type[special_now]" value="now">
@@ -114,8 +100,6 @@
                     <div id="slidemeister-prizegiving-special-slide" class="slidemeister-instance"></div>
 
                     <input type="hidden" name="slide[special_slide]">
-                    <input type="hidden" name="preview[special_slide]">
-                    <input type="hidden" name="final[special_slide]">
                     <input type="hidden" name="cached_html_preview[special_slide]">
                     <input type="hidden" name="cached_html_final[special_slide]">
                     <input type="hidden" name="type[special_slide]" value="siegmeister_bars">
@@ -125,8 +109,6 @@
                     <div id="slidemeister-prizegiving-special-winners" class="slidemeister-instance"></div>
 
                     <input type="hidden" name="slide[special_winners]">
-                    <input type="hidden" name="preview[special_winners]">
-                    <input type="hidden" name="final[special_winners]">
                     <input type="hidden" name="cached_html_preview[special_winners]">
                     <input type="hidden" name="cached_html_final[special_winners]">
                     <input type="hidden" name="type[special_winners]" value="siegmeister_winners">
@@ -136,8 +118,6 @@
                     <div id="slidemeister-prizegiving-end" class="slidemeister-instance"></div>
 
                     <input type="hidden" name="slide[end]">
-                    <input type="hidden" name="preview[end]">
-                    <input type="hidden" name="final[end]">
                     <input type="hidden" name="cached_html_preview[end]">
                     <input type="hidden" name="cached_html_final[end]">
                     <input type="hidden" name="type[end]" value="end">
@@ -226,7 +206,6 @@
 
             $('.prizegiving-playlist-save').prop('disabled', false);
 
-
             $('.prizegiving-playlist-save').on('click', function (e) {
 
                 e.preventDefault();
@@ -234,59 +213,15 @@
                 $('.loader').addClass('is-active');
 
 
-                let tasks = [];
-
-                sm['comingup'].data.export('preview', 'comingup').then(result => {
-                    Object.keys(sm).forEach(function (key) {
-                        console.log('Processing ' + key);
-                        $('input[name="slide[' + key + ']"]').val(JSON.stringify(sm[key].data.save(true)));
-
-                        tasks.push(
-                            sm[key].data.export('preview', key).then(result => {
-                                console.log('Rendering preview of ' + key);
-                                $('input[name="preview[' + key + ']"]').val(result[2]);
-                                $('input[name="cached_html_preview[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());
-
-
-                                return sm[key].data.export('final', key).then(result => {
-                                    console.log('Rendering final of ' + key);
-                                    $('input[name="final[' + key + ']"]').val(result[2]);
-                                    $('input[name="cached_html_final[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());
-                                })
-
-                            })
-                        );
-
-                    });
-
-                    window.setTimeout(function () {
-                        // cache embedded fonts
-                        workMyCollection(tasks)
-                            .then(() => {
-                                $('form#prizegiving-playlist-save').submit();
-                            });
-                    }, 1000);
+                Object.keys(sm).forEach(function (key) {
+                    console.log('Processing ' + key);
+                    $('input[name="slide[' + key + ']"]').val(JSON.stringify(sm[key].data.save(true)));
+                    $('input[name="cached_html_preview[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());
+                    sm[key].data.removePreviewElements();
+                    $('input[name="cached_html_final[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());
+                    $('form#prizegiving-playlist-save').submit();
                 });
             });
-
-            function asyncFunc(e) {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => resolve(e), e * 1000);
-                });
-            }
-
-            let final = [];
-
-            function workMyCollection(arr) {
-                return arr.reduce((promise, item) => {
-                    return promise
-                        .then((result) => {
-                            return asyncFunc(item).then(result => final.push(result));
-                        })
-                        .catch(console.error);
-                }, Promise.resolve());
-            }
-
         });
     </script>
 @append

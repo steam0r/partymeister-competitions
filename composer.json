@@ -18,8 +18,12 @@
     "tecnickcom/tcpdf": "^6.2"
   },
   "autoload": {
+    "classmap": [
+      "database"
+    ],
     "psr-4": {
-      "Partymeister\\Competitions\\": "src"
+      "Partymeister\\Competitions\\": "src",
+      "Tests\\Partymeister\\Competitions\\": "tests"
     }
   },
   "extra": {

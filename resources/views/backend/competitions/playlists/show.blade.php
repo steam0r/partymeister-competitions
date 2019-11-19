@@ -35,8 +35,6 @@
                 <div class="@boxBody">
                     <div id="slidemeister-competition-comingup" class="slidemeister-instance"></div>
                     <input type="hidden" name="slide[comingup]">
-                    <input type="hidden" name="preview[comingup]">
-                    <input type="hidden" name="final[comingup]">
                     <input type="hidden" name="cached_html_preview[comingup]">
                     <input type="hidden" name="cached_html_final[comingup]">
                     <input type="hidden" name="type[comingup]" value="comingup">
@@ -53,8 +51,6 @@
                     <div id="slidemeister-competition-now" class="slidemeister-instance"></div>
 
                     <input type="hidden" name="slide[now]">
-                    <input type="hidden" name="preview[now]">
-                    <input type="hidden" name="final[now]">
                     <input type="hidden" name="cached_html_preview[now]">
                     <input type="hidden" name="cached_html_final[now]">
                     <input type="hidden" name="type[now]" value="now">
@@ -62,8 +58,6 @@
                     @foreach($entries as $index => $entry)
                         <div id="slidemeister-entry-{{$entry['id']}}" class="slidemeister-instance"></div>
                         <input type="hidden" name="slide[entry_{{$entry['id']}}]">
-                        <input type="hidden" name="preview[entry_{{$entry['id']}}]">
-                        <input type="hidden" name="final[entry_{{$entry['id']}}]">
                         <input type="hidden" name="cached_html_preview[entry_{{$entry['id']}}]">
                         <input type="hidden" name="cached_html_final[entry_{{$entry['id']}}]">
                         <input type="hidden" name="type[entry_{{$entry['id']}}]" value="entry">
@@ -73,8 +67,6 @@
                     @if (count($participants) > 0)
                         <div id="slidemeister-competition-participants" class="slidemeister-instance"></div>
                         <input type="hidden" name="slide[participants]">
-                        <input type="hidden" name="preview[participants]">
-                        <input type="hidden" name="final[participants]">
                         <input type="hidden" name="cached_html_preview[participants]">
                         <input type="hidden" name="cached_html_final[participants]">
                         <input type="hidden" name="type[participants]" value="participants">
@@ -82,8 +74,6 @@
                     @endif
                     <div id="slidemeister-competition-end" class="slidemeister-instance"></div>
                     <input type="hidden" name="slide[end]">
-                    <input type="hidden" name="preview[end]">
-                    <input type="hidden" name="final[end]">
                     <input type="hidden" name="cached_html_preview[end]">
                     <input type="hidden" name="cached_html_final[end]">
                     <input type="hidden" name="type[end]" value="end">
@@ -116,24 +106,25 @@
             }, false, true);
 
             @foreach($entries as $entry)
-                @if ($loop->first)
-                    sm['entry_{{$entry['id']}}'] = $('#slidemeister-entry-{{$entry['id']}}').slidemeister('#slidemeister-properties', slidemeisterProperties);
-                    sm['entry_{{$entry['id']}}'].data.load({!! $firstEntryTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);
-                @else
-                    sm['entry_{{$entry['id']}}'] = $('#slidemeister-entry-{{$entry['id']}}').slidemeister('#slidemeister-properties', slidemeisterProperties);
-                    sm['entry_{{$entry['id']}}'].data.load({!! $entryTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);
-                @endif
-            @endforeach
+                    @if ($loop->first)
+                sm['entry_{{$entry['id']}}'] = $('#slidemeister-entry-{{$entry['id']}}').slidemeister('#slidemeister-properties', slidemeisterProperties);
+            sm['entry_{{$entry['id']}}'].data.load({!! $firstEntryTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);
+            @else
+                sm['entry_{{$entry['id']}}'] = $('#slidemeister-entry-{{$entry['id']}}').slidemeister('#slidemeister-properties', slidemeisterProperties);
+            sm['entry_{{$entry['id']}}'].data.load({!! $entryTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);
+            @endif
+                    @endforeach
 
-            @if (count($participants) > 0)
+                    @if (count($participants) > 0)
                 sm['participants'] = $('#slidemeister-competition-participants').slidemeister('#slidemeister-properties', slidemeisterProperties);
-                sm['participants'].data.load({!! $participantsTemplate->definitions !!}, {
+            sm['participants'].data.load({!! $participantsTemplate->definitions !!}, {
                 'competition': 'PARTICIPANTS',
                 'headline': '{{strtoupper($competition->name)}}',
-                'body': '{{implode(', ', $participants)}}'}, false, true);
+                'body': '{{implode(', ', $participants)}}'
+            }, false, true);
             @endif
 
-            sm['end'] = $('#slidemeister-competition-end').slidemeister('#slidemeister-properties', slidemeisterProperties);
+                sm['end'] = $('#slidemeister-competition-end').slidemeister('#slidemeister-properties', slidemeisterProperties);
             sm['end'].data.load({!! $endTemplate->definitions !!}, {
                 'competition': '{{strtoupper($competition->name)}}',
                 'headline': '{{config('partymeister-slides-names.end')}}'
@@ -145,59 +136,15 @@
 
                 $('.loader').addClass('is-active');
 
-                let tasks = [];
-
-                sm['comingup'].data.export('preview', 'comingup').then(result => {
-                    Object.keys(sm).forEach(function (key) {
-                        console.log('Processing ' + key);
-                        $('input[name="slide[' + key + ']"]').val(JSON.stringify(sm[key].data.save(true)));
-
-                        tasks.push(
-                            sm[key].data.export('preview', key).then(result => {
-                                console.log('Rendering preview of ' + key);
-                                $('input[name="preview[' + key + ']"]').val(result[2]);
-                                $('input[name="cached_html_preview[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());
-
-
-                                return sm[key].data.export('final', key).then(result => {
-                                    // console.log('Rendering final of ' + key);
-                                    // $('input[name="final[' + key + ']"]').val(result[2]);
-                                    $('input[name="cached_html_final[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());
-                                })
-
-                            })
-                        );
-
-                    });
-
-                    window.setTimeout(function () {
-                        // cache embedded fonts
-                        workMyCollection(tasks)
-                            .then(() => {
-                                $('form#competition-playlist-save').submit();
-                            });
-                    }, 1000);
+                Object.keys(sm).forEach(function (key) {
+                    console.log('Processing ' + key);
+                    $('input[name="slide[' + key + ']"]').val(JSON.stringify(sm[key].data.save(true)));
+                    $('input[name="cached_html_preview[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());
+                    sm[key].data.removePreviewElements();
+                    $('input[name="cached_html_final[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());
+                    $('form#competition-playlist-save').submit();
                 });
             });
-
-            function asyncFunc(e) {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => resolve(e), e * 1000);
-                });
-            }
-
-            let final = [];
-
-            function workMyCollection(arr) {
-                return arr.reduce((promise, item) => {
-                    return promise
-                        .then((result) => {
-                            return asyncFunc(item).then(result => final.push(result));
-                        })
-                        .catch(console.error);
-                }, Promise.resolve());
-            }
-
         });
     </script>
 @append

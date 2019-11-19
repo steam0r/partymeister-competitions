@@ -5,6 +5,8 @@ namespace Partymeister\Competitions\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Partymeister\Competitions\Console\Commands\PartymeisterCompetitionsExportVotesToCSVCommand;
+use Partymeister\Competitions\Console\Commands\PartymeisterCompetitionsGenerateCompetitionCommand;
+use Partymeister\Competitions\Console\Commands\PartymeisterCompetitionsGenerateEntryCommand;
 use Partymeister\Competitions\Console\Commands\PartymeisterCompetitionsLinkEntryFilesCommand;
 use Partymeister\Competitions\Console\Commands\PartymeisterCompetitionsPublishReleaseFilesCommand;
 use Partymeister\Competitions\Console\Commands\PartymeisterCompetitionsSyncEntriesCommand;
@@ -163,6 +165,8 @@ class PartymeisterServiceProvider extends ServiceProvider
                 PartymeisterCompetitionsSyncLiveVotingCommand::class,
                 PartymeisterCompetitionsPublishReleaseFilesCommand::class,
                 PartymeisterCompetitionsExportVotesToCSVCommand::class,
+                PartymeisterCompetitionsGenerateCompetitionCommand::class,
+                PartymeisterCompetitionsGenerateEntryCommand::class,
             ]);
         }
     }
