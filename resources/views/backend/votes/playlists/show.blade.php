@@ -230,9 +230,9 @@
             });
             @endif
 
-            $('.competition-playlist-save').prop('disabled', false);
+            $('.prizegiving-playlist-save').prop('disabled', false);
 
-            $('.competition-playlist-save').on('click', function (e) {
+            $('.prizegiving-playlist-save').on('click', function (e) {
 
                 $('.loader').addClass('is-active');
 
@@ -240,145 +240,103 @@
 
                 Vue.prototype.$eventHub.$on('partymeister-slides:timetable-finished', () => {
                     if (saveCounter === $('.slidemeister-instance').length) {
-                        $('#competition-playlist-save').submit();
+                        $('#prizegiving-playlist-save').submit();
                     }
                 });
 
-                {{--Vue.prototype.$eventHub.$on('partymeister-slides:receive-definitions', (data) => {--}}
-                {{--    if (data.name === 'slidemeister-competition-comingup') {--}}
-                {{--        $('input[name="slide[comingup]"]').val(data.definitions);--}}
-                {{--        $('input[name="cached_html_preview[comingup]"]').val($('#slidemeister-competition-comingup').html());--}}
-                {{--        $('input[name="cached_html_final[comingup]"]').val($('#slidemeister-competition-comingup').html());--}}
-                {{--        saveCounter++;--}}
-                {{--    }--}}
-                {{--    if (data.name === 'slidemeister-competition-now') {--}}
-                {{--        $('input[name="slide[now]"]').val(data.definitions);--}}
-                {{--        $('input[name="cached_html_preview[now]"]').val($('#slidemeister-competition-now').html());--}}
-                {{--        $('input[name="cached_html_final[now]"]').val($('#slidemeister-competition-now').html());--}}
-                {{--        saveCounter++;--}}
-                {{--    }--}}
-                {{--    if (data.name === 'slidemeister-competition-end') {--}}
-                {{--        $('input[name="slide[end]"]').val(data.definitions);--}}
-                {{--        $('input[name="cached_html_preview[end]"]').val($('#slidemeister-competition-end').html());--}}
-                {{--        $('input[name="cached_html_final[end]"]').val($('#slidemeister-competition-end').html());--}}
-                {{--        saveCounter++;--}}
-                {{--    }--}}
-                {{--    if (data.name === 'slidemeister-competition-participants') {--}}
-                {{--        $('input[name="slide[participants]"]').val(data.definitions);--}}
-                {{--        $('input[name="cached_html_preview[participants]"]').val($('#slidemeister-competition-participants').html());--}}
-                {{--        $('input[name="cached_html_final[participants]"]').val($('#slidemeister-competition-participants').html());--}}
-                {{--        saveCounter++;--}}
-                {{--    }--}}
-                {{--    @foreach($entries as $index => $entry)--}}
-                {{--    if (data.name === 'slidemeister-competition-entry-{{$entry['id']}}') {--}}
-                {{--        $('input[name="slide[entry_{{$entry['id']}}]"]').val(data.definitions);--}}
-                {{--        $('input[name="cached_html_preview[entry_{{$entry['id']}}]"]').val($('#slidemeister-competition-entry-{{$entry['id']}}').html());--}}
-                {{--        $('input[name="cached_html_final[entry_{{$entry['id']}}]"]').val($('#slidemeister-competition-entry-{{$entry['id']}}').html());--}}
-                {{--        saveCounter++;--}}
-                {{--    }--}}
-                {{--    @endforeach--}}
+                Vue.prototype.$eventHub.$on('partymeister-slides:receive-definitions', (data) => {
+                    if (data.name === 'slidemeister-prizegiving-comingup') {
+                        $('input[name="slide[comingup]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[comingup]"]').val($('#slidemeister-prizegiving-comingup').html());
+                        $('input[name="cached_html_final[comingup]"]').val($('#slidemeister-prizegiving-comingup').html());
+                        saveCounter++;
+                    }
+                    if (data.name === 'slidemeister-prizegiving-now') {
+                        $('input[name="slide[now]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[now]"]').val($('#slidemeister-prizegiving-now').html());
+                        $('input[name="cached_html_final[now]"]').val($('#slidemeister-prizegiving-now').html());
+                        saveCounter++;
+                    }
+                    if (data.name === 'slidemeister-prizegiving-end') {
+                        $('input[name="slide[end]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[end]"]').val($('#slidemeister-prizegiving-end').html());
+                        $('input[name="cached_html_final[end]"]').val($('#slidemeister-prizegiving-end').html());
+                        saveCounter++;
+                    }
+                    @foreach ($results as $key => $competition)
+                    @if ($competition['has_comment'])
+                    if (data.name === 'slidemeister-prizegiving-{{$key}}-comments') {
+                        $('input[name="slide[{{$key}}_comments]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[{{$key}}_comments]"]').val($('#slidemeister-prizegiving-{{$key}}-comments').html());
+                        $('input[name="cached_html_final[{{$key}}_comments]"]').val($('#slidemeister-prizegiving-{{$key}}-comments').html());
+                        saveCounter++;
+                    }
+                    @endif
+                    if (data.name === 'slidemeister-prizegiving-{{$key}}-now') {
+                        $('input[name="slide[{{$key}}_now]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[{{$key}}_now]"]').val($('#slidemeister-prizegiving-{{$key}}-now').html());
+                        $('input[name="cached_html_final[{{$key}}_now]"]').val($('#slidemeister-prizegiving-{{$key}}-now').html());
+                        saveCounter++;
+                    }
+                    if (data.name === 'slidemeister-prizegiving-{{$key}}-slide') {
+                        $('input[name="slide[{{$key}}_slide]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[{{$key}}_slide]"]').val($('#slidemeister-prizegiving-{{$key}}-slide').html());
+                        $('input[name="cached_html_final[{{$key}}_slide]"]').val($('#slidemeister-prizegiving-{{$key}}-slide').html());
+                        $('input[name="meta[{{$key}}_slide]"]').val(data.meta);
+                        saveCounter++;
+                    }
+                    if (data.name === 'slidemeister-prizegiving-{{$key}}-winners') {
+                        $('input[name="slide[{{$key}}_winners]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[{{$key}}_winners]"]').val($('#slidemeister-prizegiving-{{$key}}-winners').html());
+                        $('input[name="cached_html_final[{{$key}}_winners]"]').val($('#slidemeister-prizegiving-{{$key}}-winners').html());
+                        {{--$('input[name="meta[{{$key}}_slide]"]').val(data.definitions.properties.prizegivingbarCoordinates);--}}
+                        saveCounter++;
+                    }
+                    @endforeach
+                    @if (count($specialVotes) > 0)
+                    if (data.name === 'slidemeister-prizegiving-special-now') {
+                        $('input[name="slide[special_now]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[special_now]"]').val($('#slidemeister-prizegiving-special-now').html());
+                        $('input[name="cached_html_final[special_now]"]').val($('#slidemeister-prizegiving-special-now').html());
+                        saveCounter++;
+                    }
+                    if (data.name === 'slidemeister-prizegiving-special-slide') {
+                        $('input[name="slide[special_slide]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[special_slide]"]').val($('#slidemeister-prizegiving-special-slide').html());
+                        $('input[name="cached_html_final[special_slide]"]').val($('#slidemeister-prizegiving-special-slide').html());
+                        $('input[name="meta[special_slide]"]').val(data.meta);
+                        saveCounter++;
+                    }
+                    if (data.name === 'slidemeister-prizegiving-special-winners') {
+                        $('input[name="slide[special_winners]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[special_winners]"]').val($('#slidemeister-prizegiving-special-winners').html());
+                        $('input[name="cached_html_final[special_winners]"]').val($('#slidemeister-prizegiving-special-winners').html());
+                        // $('input[name="meta[special_slide]"]').val(data.definitions.properties.prizegivingbarCoordinates);
+                        saveCounter++;
+                    }
+                    @endif
+                    Vue.prototype.$eventHub.$emit('partymeister-slides:timetable-finished');
+                });
 
-                {{--    Vue.prototype.$eventHub.$emit('partymeister-slides:timetable-finished');--}}
-                {{--});--}}
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-prizegiving-comingup');
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-prizegiving-now');
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-prizegiving-end');
+                @foreach ($results as $key => $competition)
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-prizegiving-{{$key}}-now');
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-prizegiving-{{$key}}-slide');
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-prizegiving-{{$key}}-winners');
+                @if ($competition['has_comment'])
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-prizegiving-{{$key}}-comments');
+                @endif
+                @endforeach
+                @if (count($specialVotes) > 0)
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-prizegiving-special-now');
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-prizegiving-special-slide');
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-prizegiving-special-winners');
+                @endif
 
-                {{--Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-competition-comingup');--}}
-                {{--Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-competition-now');--}}
-                {{--Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-competition-end');--}}
-                {{--@if (count($participants) > 0)--}}
-                {{--Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-competition-participants');--}}
-                {{--@endif--}}
-                {{--@foreach($entries as $index => $entry)--}}
-                {{--Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-competition-entry-{{$entry['id']}}');--}}
-                {{--@endforeach--}}
+                e.preventDefault();
             });
-
-
-            {{--let sm = [];--}}
-
-            {{--sm['comingup'] = $('#slidemeister-prizegiving-comingup').slidemeister('#slidemeister-properties', slidemeisterProperties);--}}
-            {{--sm['comingup'].data.load({!! $comingupTemplate->definitions !!}, {--}}
-            {{--    'competition': 'PRIZEGIVING',--}}
-            {{--    'headline': 'COMING UP'--}}
-            {{--}, false, true);--}}
-
-            {{--sm['now'] = $('#slidemeister-prizegiving-now').slidemeister('#slidemeister-properties', slidemeisterProperties);--}}
-            {{--sm['now'].data.load({!! $comingupTemplate->definitions !!}, {--}}
-            {{--    'competition': 'PRIZEGIVING',--}}
-            {{--    'headline': 'NOW'--}}
-            {{--}, false, true);--}}
-
-            {{--@foreach ($results as $key => $competition)--}}
-            {{--    sm['{{$key}}_now'] = $('#slidemeister-prizegiving-{{$key}}-now').slidemeister('#slidemeister-properties', slidemeisterProperties);--}}
-            {{--sm['{{$key}}_now'].data.load({!! $comingupTemplate->definitions !!}, {--}}
-            {{--    'competition': '{!! strtoupper($competition['name']) !!}',--}}
-            {{--    'headline': 'NOW'--}}
-            {{--}, false, true);--}}
-
-            {{--sm['{{$key}}_slide'] = $('#slidemeister-prizegiving-{{$key}}-slide').slidemeister('#slidemeister-properties', slidemeisterProperties);--}}
-            {{--sm['{{$key}}_slide'].data.load({!! $prizegivingTemplate->definitions !!}, {--}}
-            {{--    'competition': '{{strtoupper($competition['name'])}}'--}}
-            {{--}, false, true);--}}
-            {{--sm['{{$key}}_slide'].data.populatePrizegiving({!! json_encode($competition['entries']) !!}, 'meta[{{$key}}_slide]');--}}
-
-            {{--sm['{{$key}}_winners'] = $('#slidemeister-prizegiving-{{$key}}-winners').slidemeister('#slidemeister-properties', slidemeisterProperties);--}}
-            {{--sm['{{$key}}_winners'].data.load({!! $prizegivingTemplate->definitions !!}, {--}}
-            {{--    'competition': '{{strtoupper($competition['name'])}}'--}}
-            {{--}, false, true);--}}
-            {{--sm['{{$key}}_winners'].data.populatePrizegiving({!! json_encode($competition['entries']) !!}, '', true);--}}
-
-            {{--@if ($competition['has_comment'])--}}
-            {{--    sm['{{$key}}_comments'] = $('#slidemeister-prizegiving-{{$key}}-comments').slidemeister('#slidemeister-properties', slidemeisterProperties);--}}
-            {{--sm['{{$key}}_comments'].data.load({!! $commentsTemplate->definitions !!}, {--}}
-            {{--    'body': '{!! addslashes($comments[$key]) !!}'--}}
-            {{--}, false, true);--}}
-            {{--@endif--}}
-
-            {{--@endforeach--}}
-
-            {{--@if (count($specialVotes) > 0)--}}
-            {{--sm['special_now'] = $('#slidemeister-prizegiving-special-now').slidemeister('#slidemeister-properties', slidemeisterProperties);--}}
-            {{--sm['special_now'].data.load({!! $comingupTemplate->definitions !!}, {--}}
-            {{--    'competition': 'CROWD FAVOURITE',--}}
-            {{--    'headline': 'NOW'--}}
-            {{--}, false, true);--}}
-
-            {{--sm['special_slide'] = $('#slidemeister-prizegiving-special-slide').slidemeister('#slidemeister-properties', slidemeisterProperties);--}}
-            {{--sm['special_slide'].data.load({!! $prizegivingTemplate->definitions !!}, {--}}
-            {{--    'competition': 'CROWD FAVOURITE'--}}
-            {{--}, false, true);--}}
-            {{--sm['special_slide'].data.populatePrizegiving({!! json_encode($specialVotes) !!}, 'meta[special_slide]');--}}
-
-            {{--sm['special_winners'] = $('#slidemeister-prizegiving-special-winners').slidemeister('#slidemeister-properties', slidemeisterProperties);--}}
-            {{--sm['special_winners'].data.load({!! $prizegivingTemplate->definitions !!}, {--}}
-            {{--    'competition': 'CROWD FAVOURITE'--}}
-            {{--}, false, true);--}}
-            {{--sm['special_winners'].data.populatePrizegiving({!! json_encode($specialVotes) !!}, '', true);--}}
-            {{--@endif--}}
-
-            {{--    sm['end'] = $('#slidemeister-prizegiving-end').slidemeister('#slidemeister-properties', slidemeisterProperties);--}}
-            {{--sm['end'].data.load({!! $endTemplate->definitions !!}, {--}}
-            {{--    'competition': 'PRIZEGIVING',--}}
-            {{--    'headline': 'END'--}}
-            {{--}, false, true);--}}
-
-            {{--$('.prizegiving-playlist-save').prop('disabled', false);--}}
-
-            {{--$('.prizegiving-playlist-save').on('click', function (e) {--}}
-
-            {{--    e.preventDefault();--}}
-
-            {{--    $('.loader').addClass('is-active');--}}
-
-
-            {{--    Object.keys(sm).forEach(function (key) {--}}
-            {{--        console.log('Processing ' + key);--}}
-            {{--        $('input[name="slide[' + key + ']"]').val(JSON.stringify(sm[key].data.save(true)));--}}
-            {{--        $('input[name="cached_html_preview[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());--}}
-            {{--        sm[key].data.removePreviewElements();--}}
-            {{--        $('input[name="cached_html_final[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());--}}
-            {{--        $('form#prizegiving-playlist-save').submit();--}}
-            {{--    });--}}
-            {{--});--}}
         });
     </script>
 @append

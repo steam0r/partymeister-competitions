@@ -117,6 +117,7 @@ class VoteService extends BaseService
                             'competition'   => $competition->name,
                             'special_votes' => (int) $specialVotes,
                             'points'        => (int) $specialVotes,
+                            'tie'      => false,
                         ];
                     }
                 }
