@@ -4,7 +4,7 @@ return [
     'votes'   => 'Votes',
     'vote'    => 'Vote',
     'new'     => 'Create votes',
-    'edit'    => 'Edit votes',
+    'edit'    => 'Add votes',
     'save'    => 'Save votes',
     'created' => 'Votes created',
     'updated' => 'Votes updated',

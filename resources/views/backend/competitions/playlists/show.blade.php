@@ -3,7 +3,7 @@
     @include('partymeister-slides::layouts.partials.slide_fonts')
     <style type="text/css">
         .slidemeister-instance {
-            zoom: 0.75;
+            zoom: 1;
             float: left;
             margin-right: 15px;
             margin-bottom: 15px;
@@ -33,12 +33,16 @@
             @csrf
             <div class="@boxWrapper box-primary" style="margin-bottom: 0;">
                 <div class="@boxBody">
-                    <div id="slidemeister-competition-comingup" class="slidemeister-instance"></div>
+                    <partymeister-slides-elements :readonly="true" :name="'slidemeister-competition-comingup'"
+                                                  id="slidemeister-competition-comingup"
+                                                  class="slidemeister-instance"></partymeister-slides-elements>
                     <input type="hidden" name="slide[comingup]">
+                    <input type="hidden" name="name[comingup]"
+                           value="Coming up">
                     <input type="hidden" name="cached_html_preview[comingup]">
                     <input type="hidden" name="cached_html_final[comingup]">
                     <input type="hidden" name="type[comingup]" value="comingup">
-                    <input type="hidden" name="name[comingup]" value="Coming up">
+
                     @foreach ($videos as $index => $video)
                         <div class="slidemeister-instance">
                             <img src="{{$video['data']['preview']}}" style="width: 100%;">
@@ -48,36 +52,53 @@
                             <input type="hidden" name="name[video_{{$index+1}}]" value="Video {{$index+1}}">
                         </div>
                     @endforeach
-                    <div id="slidemeister-competition-now" class="slidemeister-instance"></div>
 
+                    <partymeister-slides-elements :readonly="true" :name="'slidemeister-competition-now'"
+                                                  id="slidemeister-competition-now"
+                                                  class="slidemeister-instance"></partymeister-slides-elements>
                     <input type="hidden" name="slide[now]">
+                    <input type="hidden" name="name[now]"
+                           value="Now">
                     <input type="hidden" name="cached_html_preview[now]">
                     <input type="hidden" name="cached_html_final[now]">
                     <input type="hidden" name="type[now]" value="now">
-                    <input type="hidden" name="name[now]" value="Now">
+
                     @foreach($entries as $index => $entry)
-                        <div id="slidemeister-entry-{{$entry['id']}}" class="slidemeister-instance"></div>
+                        <partymeister-slides-elements :readonly="true"
+                                                      :name="'slidemeister-competition-entry-{{$entry['id']}}'"
+                                                      id="slidemeister-competition-entry-{{$entry['id']}}"
+                                                      class="slidemeister-instance"></partymeister-slides-elements>
                         <input type="hidden" name="slide[entry_{{$entry['id']}}]">
+                        <input type="hidden" name="name[entry_{{$entry['id']}}]"
+                               value="Now">
                         <input type="hidden" name="cached_html_preview[entry_{{$entry['id']}}]">
                         <input type="hidden" name="cached_html_final[entry_{{$entry['id']}}]">
+                        <input type="hidden" name="name[entry_{{$entry['id']}}]" value="Now">
                         <input type="hidden" name="type[entry_{{$entry['id']}}]" value="entry">
                         <input type="hidden" name="name[entry_{{$entry['id']}}]" value="Entry #{{$index+1}}">
                         <input type="hidden" name="id[entry_{{$entry['id']}}]" value="{{$entry['id']}}">
                     @endforeach
                     @if (count($participants) > 0)
-                        <div id="slidemeister-competition-participants" class="slidemeister-instance"></div>
+                        <partymeister-slides-elements :readonly="true" :name="'slidemeister-competition-participants'"
+                                                      id="slidemeister-competition-participants"
+                                                      class="slidemeister-instance"></partymeister-slides-elements>
                         <input type="hidden" name="slide[participants]">
+                        <input type="hidden" name="name[participants]"
+                               value="Participants">
                         <input type="hidden" name="cached_html_preview[participants]">
                         <input type="hidden" name="cached_html_final[participants]">
                         <input type="hidden" name="type[participants]" value="participants">
-                        <input type="hidden" name="name[participants]" value="Participants">
                     @endif
-                    <div id="slidemeister-competition-end" class="slidemeister-instance"></div>
+
+                    <partymeister-slides-elements :readonly="true" :name="'slidemeister-competition-end'"
+                                                  id="slidemeister-competition-end"
+                                                  class="slidemeister-instance"></partymeister-slides-elements>
                     <input type="hidden" name="slide[end]">
+                    <input type="hidden" name="name[end]"
+                           value="End">
                     <input type="hidden" name="cached_html_preview[end]">
                     <input type="hidden" name="cached_html_final[end]">
                     <input type="hidden" name="type[end]" value="end">
-                    <input type="hidden" name="name[end]" value="End">
                 </div>
             </div>
         </form>
@@ -91,44 +112,55 @@
     @include('partymeister-slides::layouts.partials.slide_scripts')
     <script>
         $(document).ready(function () {
+            Vue.prototype.$eventHub.$emit('partymeister-slides:load-definitions', {
+                name: 'slidemeister-competition-comingup',
+                elements: JSON.parse('{!! addslashes($comingupTemplate->definitions) !!}'),
+                type: 'competition-support',
 
-            let sm = [];
-            sm['comingup'] = $('#slidemeister-competition-comingup').slidemeister('#slidemeister-properties', slidemeisterProperties);
-            sm['comingup'].data.load({!! $comingupTemplate->definitions !!}, {
-                'competition': '{{strtoupper($competition->name)}}',
-                'headline': '{{config('partymeister-slides-names.coming_up')}}'
-            }, false, true);
+                replacements: {headline: 'Coming up', entry: {!! json_encode($entry) !!} },
+            });
 
-            sm['now'] = $('#slidemeister-competition-now').slidemeister('#slidemeister-properties', slidemeisterProperties);
-            sm['now'].data.load({!! $comingupTemplate->definitions !!}, {
-                'competition': '{{strtoupper($competition->name)}}',
-                'headline': '{{config('partymeister-slides-names.now')}}'
-            }, false, true);
+            Vue.prototype.$eventHub.$emit('partymeister-slides:load-definitions', {
+                name: 'slidemeister-competition-now',
+                elements: JSON.parse('{!! addslashes($comingupTemplate->definitions) !!}'),
+                type: 'competition-support',
+                replacements: {headline: 'Now', entry: {!! json_encode($entry) !!} },
+            });
 
-            @foreach($entries as $entry)
-                    @if ($loop->first)
-                sm['entry_{{$entry['id']}}'] = $('#slidemeister-entry-{{$entry['id']}}').slidemeister('#slidemeister-properties', slidemeisterProperties);
-            sm['entry_{{$entry['id']}}'].data.load({!! $firstEntryTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);
+            Vue.prototype.$eventHub.$emit('partymeister-slides:load-definitions', {
+                name: 'slidemeister-competition-end',
+                elements: JSON.parse('{!! addslashes($endTemplate->definitions) !!}'),
+                type: 'competition-support',
+                replacements: {headline: 'End', entry: {!! json_encode($entry) !!} },
+            });
+
+            @if (count($participants) > 0)
+            Vue.prototype.$eventHub.$emit('partymeister-slides:load-definitions', {
+                name: 'slidemeister-competition-participants',
+                elements: JSON.parse('{!! addslashes($participantsTemplate->definitions) !!}'),
+                type: 'competition-participants',
+                replacements: '{{implode(', ', $participants)}}',
+            });
+            @endif
+
+            @foreach($entries as $index => $entry)
+            @if ($index === 0)
+            Vue.prototype.$eventHub.$emit('partymeister-slides:load-definitions', {
+                name: 'slidemeister-competition-entry-{{$entry['id']}}',
+                elements: JSON.parse('{!! addslashes($firstEntryTemplate->definitions) !!}'),
+                type: 'competition-entry',
+                replacements: {!! json_encode($entry) !!},
+            });
             @else
-                sm['entry_{{$entry['id']}}'] = $('#slidemeister-entry-{{$entry['id']}}').slidemeister('#slidemeister-properties', slidemeisterProperties);
-            sm['entry_{{$entry['id']}}'].data.load({!! $entryTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);
+            Vue.prototype.$eventHub.$emit('partymeister-slides:load-definitions', {
+                name: 'slidemeister-competition-entry-{{$entry['id']}}',
+                elements: JSON.parse('{!! addslashes($entryTemplate->definitions) !!}'),
+                type: 'competition-entry',
+                replacements: {!! json_encode($entry) !!},
+            });
             @endif
-                    @endforeach
+            @endforeach
 
-                    @if (count($participants) > 0)
-                sm['participants'] = $('#slidemeister-competition-participants').slidemeister('#slidemeister-properties', slidemeisterProperties);
-            sm['participants'].data.load({!! $participantsTemplate->definitions !!}, {
-                'competition': 'PARTICIPANTS',
-                'headline': '{{strtoupper($competition->name)}}',
-                'body': '{{implode(', ', $participants)}}'
-            }, false, true);
-            @endif
-
-                sm['end'] = $('#slidemeister-competition-end').slidemeister('#slidemeister-properties', slidemeisterProperties);
-            sm['end'].data.load({!! $endTemplate->definitions !!}, {
-                'competition': '{{strtoupper($competition->name)}}',
-                'headline': '{{config('partymeister-slides-names.end')}}'
-            }, false, true);
 
             $('.competition-playlist-save').prop('disabled', false);
 
@@ -136,14 +168,60 @@
 
                 $('.loader').addClass('is-active');
 
-                Object.keys(sm).forEach(function (key) {
-                    console.log('Processing ' + key);
-                    $('input[name="slide[' + key + ']"]').val(JSON.stringify(sm[key].data.save(true)));
-                    $('input[name="cached_html_preview[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());
-                    sm[key].data.removePreviewElements();
-                    $('input[name="cached_html_final[' + key + ']"]').val($(sm[key].data.getTargetElement()).html());
-                    $('form#competition-playlist-save').submit();
+                let saveCounter = 0;
+
+                Vue.prototype.$eventHub.$on('partymeister-slides:timetable-finished', () => {
+                    if (saveCounter === $('.slidemeister-instance').length) {
+                        $('#competition-playlist-save').submit();
+                    }
                 });
+
+                Vue.prototype.$eventHub.$on('partymeister-slides:receive-definitions', (data) => {
+                    if (data.name === 'slidemeister-competition-comingup') {
+                        $('input[name="slide[comingup]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[comingup]"]').val($('#slidemeister-competition-comingup').html());
+                        $('input[name="cached_html_final[comingup]"]').val($('#slidemeister-competition-comingup').html());
+                        saveCounter++;
+                    }
+                    if (data.name === 'slidemeister-competition-now') {
+                        $('input[name="slide[now]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[now]"]').val($('#slidemeister-competition-now').html());
+                        $('input[name="cached_html_final[now]"]').val($('#slidemeister-competition-now').html());
+                        saveCounter++;
+                    }
+                    if (data.name === 'slidemeister-competition-end') {
+                        $('input[name="slide[end]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[end]"]').val($('#slidemeister-competition-end').html());
+                        $('input[name="cached_html_final[end]"]').val($('#slidemeister-competition-end').html());
+                        saveCounter++;
+                    }
+                    if (data.name === 'slidemeister-competition-participants') {
+                        $('input[name="slide[participants]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[participants]"]').val($('#slidemeister-competition-participants').html());
+                        $('input[name="cached_html_final[participants]"]').val($('#slidemeister-competition-participants').html());
+                        saveCounter++;
+                    }
+                    @foreach($entries as $index => $entry)
+                    if (data.name === 'slidemeister-competition-entry-{{$entry['id']}}') {
+                        $('input[name="slide[entry_{{$entry['id']}}]"]').val(data.definitions);
+                        $('input[name="cached_html_preview[entry_{{$entry['id']}}]"]').val($('#slidemeister-competition-entry-{{$entry['id']}}').html());
+                        $('input[name="cached_html_final[entry_{{$entry['id']}}]"]').val($('#slidemeister-competition-entry-{{$entry['id']}}').html());
+                        saveCounter++;
+                    }
+                    @endforeach
+
+                    Vue.prototype.$eventHub.$emit('partymeister-slides:timetable-finished');
+                });
+
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-competition-comingup');
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-competition-now');
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-competition-end');
+                @if (count($participants) > 0)
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-competition-participants');
+                @endif
+                @foreach($entries as $index => $entry)
+                Vue.prototype.$eventHub.$emit('partymeister-slides:request-definitions', 'slidemeister-competition-entry-{{$entry['id']}}');
+                @endforeach
             });
         });
     </script>
