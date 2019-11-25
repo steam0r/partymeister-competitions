@@ -28,7 +28,7 @@ class VoteService extends BaseService
     {
         foreach ($request->get('entry') as $competitionId => $entries) {
             foreach ($entries as $entryId => $points) {
-                if ((int) $points > 0) {
+                if ((int) $points !== 0) {
                     $mv = new ManualVote();
                     $mv->competition_id = $competitionId;
                     $mv->entry_id = $entryId;
@@ -76,16 +76,25 @@ class VoteService extends BaseService
                 return $item2[ 'points' ] <=> $item1[ 'points' ];
             });
 
+            $uniquePoints = [];
+
             foreach ($results[ $competition->id ][ 'entries' ] as $key => $entry) {
+
+                if (!array_key_exists((string)$entry['points'], $uniquePoints)) {
+                    $uniquePoints[$entry['points']] = 1;
+                    $rank = array_sum($uniquePoints);
+               } else {
+                    $uniquePoints[$entry['points']]++;
+                }
+
                 $results[ $competition->id ][ 'entries' ][ $key ][ 'max_points' ] = $maxPoints[ $competition->id ];
-                $results[ $competition->id ][ 'entries' ][ $key ][ 'rank' ] = ($key + 1);
+                $results[ $competition->id ][ 'entries' ][ $key ][ 'rank' ] = $rank;
 
                 // Identify ties
                 if (isset($results[ $competition->id ][ 'entries' ][ $key - 1 ])) {
                     if ($results[ $competition->id ][ 'entries' ][ $key ][ 'points' ] == $results[ $competition->id ][ 'entries' ][ $key - 1 ][ 'points' ]) {
                         $results[ $competition->id ][ 'entries' ][ $key ][ 'tie' ] = true;
                         $results[ $competition->id ][ 'entries' ][ $key - 1 ][ 'tie' ] = true;
-                        $results[ $competition->id ][ 'entries' ][ $key ][ 'rank' ] = ($key);
                     }
                 }
             }
