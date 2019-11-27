@@ -27,6 +27,11 @@
 
 @section('main-content')
     <div class="@boxWrapper">
+        <div class="@boxHeader">
+            <h3 class="box-title">@if($deadlineOver)<span style="color: red;">{{trans('partymeister-competitions::backend/votes.deadline_over')}}: @else {{trans('partymeister-competitions::backend/votes.deadline')}}: @endif {{config('partymeister-competitions-voting.deadline')}}@if($deadlineOver)</span>@endif </h3>
+        </div>
+    </div>
+    <div class="@boxWrapper">
         @if (isset($special) && count($special) > 0)
         <div class="@boxHeader">
             <h3 class="box-title">Crowd favourite</h3>

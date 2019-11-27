@@ -30,7 +30,10 @@ class VotesController extends Controller
         $results = VoteService::getAllVotesByRank();
         $special = VoteService::getAllSpecialVotesByRank();
 
-        return view('partymeister-competitions::backend.votes.index', compact('results', 'special'));
+        $deadlineTimestamp = strtotime(config('partymeister-competitions-voting.deadline'));
+        $deadlineOver = ($deadlineTimestamp < time() ? true : false);
+
+        return view('partymeister-competitions::backend.votes.index', compact('results', 'special', 'deadlineOver'));
     }
 
 
