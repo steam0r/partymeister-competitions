@@ -133,6 +133,7 @@ class PlaylistsController extends Controller
 
                 $firstEntryTemplate   = SlideTemplate::where('template_for', 'competition_entry_1')->first();
                 $entryTemplate        = SlideTemplate::where('template_for', 'competition')->first();
+                $nowTemplate          = SlideTemplate::where('template_for', 'now')->first();
                 $comingupTemplate     = SlideTemplate::where('template_for', 'coming_up')->first();
                 $endTemplate          = SlideTemplate::where('template_for', 'end')->first();
                 $participantsTemplate = SlideTemplate::where('template_for', 'participants')->first();
@@ -168,6 +169,7 @@ class PlaylistsController extends Controller
                             'firstEntryTemplate',
                             'entryTemplate',
                             'comingupTemplate',
+                            'nowTemplate',
                             'endTemplate',
                             'participantsTemplate',
                             'videos',

@@ -122,7 +122,7 @@
 
             Vue.prototype.$eventHub.$emit('partymeister-slides:load-definitions', {
                 name: 'slidemeister-competition-now',
-                elements: JSON.parse('{!! addslashes($comingupTemplate->definitions) !!}'),
+                elements: JSON.parse('{!! addslashes($nowTemplate->definitions) !!}'),
                 type: 'competition-support',
                 replacements: {headline: 'Now', entry: {!! json_encode($entry) !!} },
             });
