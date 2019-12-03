@@ -246,7 +246,6 @@
 
 @section('view-scripts')
     <script src="{{mix('js/partymeister-slides-frontend.js')}}"></script>
-    @include('partymeister-slides::layouts.partials.slide_scripts')
     <script>
         $(document).ready(function () {
 

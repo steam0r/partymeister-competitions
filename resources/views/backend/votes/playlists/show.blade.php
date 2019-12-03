@@ -152,7 +152,6 @@
 
 @if (!isset($message))
 @section('view_scripts')
-    @include('partymeister-slides::layouts.partials.slide_scripts')
     <script>
         $(document).ready(function () {
             Vue.prototype.$eventHub.$emit('partymeister-slides:load-definitions', {
