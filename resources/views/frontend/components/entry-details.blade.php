@@ -120,7 +120,13 @@
             </div>
         @endif
         <h3>Beamslide preview</h3>
-        <div id="slidemeister-competition-preview" class="slidemeister-instance"></div>
+        <div id="app">
+            <partymeister-slides-elements class="slidemeister-template"
+                                          :readonly="true" :id="'template-preview'"
+                                          :name="'template-preview'">
+
+            </partymeister-slides-elements>
+        </div>
     </div>
     @if ($record->competition->competition_type->number_of_work_stages > 0)
         <div class="medium-12">
@@ -165,7 +171,8 @@
                 <a href="{{ $record->getFirstMedia('config_file')->getUrl() }}">{{ $record->getFirstMedia('config_file')->file_name }}</a>
             </div>
             <div class="float-right">
-                {{trans('motor-backend::backend/global.uploaded')}} {{ $record->getFirstMedia('config_file')->created_at }}<br>
+                {{trans('motor-backend::backend/global.uploaded')}} {{ $record->getFirstMedia('config_file')->created_at }}
+                <br>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -245,19 +252,29 @@
 
 
 @section('view-scripts')
-    <script src="{{mix('js/partymeister-slides-frontend.js')}}"></script>
+    <script src="{{mix('js/slidemeister.js')}}"></script>
     <script>
         $(document).ready(function () {
 
+            Vue.prototype.$eventHub.$emit('partymeister-slides:load-definitions', {
+                name: 'template-preview',
+                elements: JSON.parse('{!! addslashes($competitionTemplate->definitions) !!}'),
+                type: 'competition-entry',
+                replacements: {!! json_encode($entry) !!},
+            });
+
             function resize() {
-                let width = $('#slidemeister-competition-preview').parent().width();
+                let width = $('#app').parent().width();
                 let zoom = width / 960;
-                $('#slidemeister-competition-preview').css('zoom', zoom);
+                $('#app').css('zoom', zoom);
+                $('#app').css('height', 560);
             }
 
-            let sm = $('#slidemeister-competition-preview').slidemeister('#slidemeister-properties', slidemeisterProperties);
-            sm.data.load({!! $competitionTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);
             resize();
+
+            {{--let sm = $('#slidemeister-competition-preview').slidemeister('#slidemeister-properties', slidemeisterProperties);--}}
+            {{--sm.data.load({!! $competitionTemplate->definitions !!}, {!! json_encode($entry) !!}, false, true);--}}
+            {{--resize();--}}
 
             $(window).resize(function () {
                 resize();
