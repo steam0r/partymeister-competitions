@@ -177,32 +177,32 @@
 
                 Vue.prototype.$eventHub.$on('partymeister-slides:receive-definitions', (data) => {
                     if (data.name === 'slidemeister-competition-comingup') {
-                        $('input[name="slide[comingup]"]').val(data.definitions);
+                        $('input[name="slide[comingup]"]').val(data.definitions_as_form_data);
                         $('input[name="cached_html_preview[comingup]"]').val($('#slidemeister-competition-comingup').html());
                         $('input[name="cached_html_final[comingup]"]').val($('#slidemeister-competition-comingup').html());
                         saveCounter++;
                     }
                     if (data.name === 'slidemeister-competition-now') {
-                        $('input[name="slide[now]"]').val(data.definitions);
+                        $('input[name="slide[now]"]').val(data.definitions_as_form_data);
                         $('input[name="cached_html_preview[now]"]').val($('#slidemeister-competition-now').html());
                         $('input[name="cached_html_final[now]"]').val($('#slidemeister-competition-now').html());
                         saveCounter++;
                     }
                     if (data.name === 'slidemeister-competition-end') {
-                        $('input[name="slide[end]"]').val(data.definitions);
+                        $('input[name="slide[end]"]').val(data.definitions_as_form_data);
                         $('input[name="cached_html_preview[end]"]').val($('#slidemeister-competition-end').html());
                         $('input[name="cached_html_final[end]"]').val($('#slidemeister-competition-end').html());
                         saveCounter++;
                     }
                     if (data.name === 'slidemeister-competition-participants') {
-                        $('input[name="slide[participants]"]').val(data.definitions);
+                        $('input[name="slide[participants]"]').val(data.definitions_as_form_data);
                         $('input[name="cached_html_preview[participants]"]').val($('#slidemeister-competition-participants').html());
                         $('input[name="cached_html_final[participants]"]').val($('#slidemeister-competition-participants').html());
                         saveCounter++;
                     }
                     @foreach($entries as $index => $entry)
                     if (data.name === 'slidemeister-competition-entry-{{$entry['id']}}') {
-                        $('input[name="slide[entry_{{$entry['id']}}]"]').val(data.definitions);
+                        $('input[name="slide[entry_{{$entry['id']}}]"]').val(data.definitions_as_form_data);
                         $('input[name="cached_html_preview[entry_{{$entry['id']}}]"]').val($('#slidemeister-competition-entry-{{$entry['id']}}').html());
                         $('input[name="cached_html_final[entry_{{$entry['id']}}]"]').val($('#slidemeister-competition-entry-{{$entry['id']}}').html());
                         saveCounter++;
