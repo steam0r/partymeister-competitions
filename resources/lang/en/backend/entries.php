@@ -63,18 +63,19 @@ return [
     'work_stages' => 'Work stages',
     'file'        => 'File',
 
-    'latest'                       => 'Latest entries',
-    'sort_position_updated'        => 'Entry position updated',
-    'entry_prepared'               => 'Entry marked as prepared',
-    'entry_not_prepared'           => 'Entry marked as not prepared yet',
-    'entry_recorded'               => 'Entry marked as recorded',
-    'entry_not_recorded'           => 'Entry marked as not recorded yet',
-    'gema_checked'                 => 'Entry marked as GEMA checked',
-    'gema_not_checked'             => 'Entry marked as NOT GEMA checked yet',
+    'latest'                 => 'Latest entries',
+    'sort_position_updated'  => 'Entry position updated',
+    'entry_prepared'         => 'Entry marked as prepared',
+    'entry_not_prepared'     => 'Entry marked as not prepared yet',
+    'entry_recorded'         => 'Entry marked as recorded',
+    'entry_not_recorded'     => 'Entry marked as not recorded yet',
+    'gema_checked'           => 'Entry marked as GEMA checked',
+    'gema_not_checked'       => 'Entry marked as NOT GEMA checked yet',
     'status_unchecked'       => 'Entry marked as unchecked',
     'status_checked'         => 'Entry marked as checked',
     'status_needs_feedback'  => 'Entry marked as needs feedback',
     'status_disqualified'    => 'Entry marked as disqualified',
     'status_not_preselected' => 'Entry marked as not preselected',
+    'comment_created'        => 'Entry comment created'
 
 ];

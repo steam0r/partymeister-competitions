@@ -80,7 +80,7 @@ class CommentsController extends Controller
         $c->message           = $request->get('message');
         $c->save();
 
-        flash()->success(trans('partymeister-competitions::backend/access_keys.created'));
+        flash()->success(trans('partymeister-competitions::backend/entries.comment_created'));
 
         return redirect('backend/entries/comments/' . $record->id);
     }
