@@ -4,7 +4,6 @@ namespace Partymeister\Competitions\Http\Controllers\Backend\Votes;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Motor\Backend\Http\Controllers\Controller;
 use Partymeister\Competitions\Services\VoteService;
@@ -19,7 +18,7 @@ class PlaylistsController extends Controller
 {
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return RedirectResponse|Redirector
      */
     public function store(Request $request)
@@ -33,7 +32,7 @@ class PlaylistsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -66,14 +65,13 @@ class PlaylistsController extends Controller
             } else {
                 $comments[$competition['id']] = [];
             }
-            $comments[$competition['id']] = implode(
-                '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-                $comments[$competition['id']]
-            );
+            $comments[$competition['id']] = implode('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+                $comments[$competition['id']]);
         }
 
         $prizegivingTemplate = SlideTemplate::where('template_for', 'prizegiving')->first();
         $comingupTemplate    = SlideTemplate::where('template_for', 'coming_up')->first();
+        $nowTemplate         = SlideTemplate::where('template_for', 'now')->first();
         $endTemplate         = SlideTemplate::where('template_for', 'end')->first();
         $commentsTemplate    = SlideTemplate::where('template_for', 'comments')->first();
 
@@ -118,23 +116,9 @@ class PlaylistsController extends Controller
         $renderBars         = true;
         $renderWinners      = true;
 
-        return view(
-            'partymeister-competitions::backend.votes.playlists.show',
-            compact(
-                'results',
-                'comments',
-                'commentsTemplate',
-                'specialVotes',
-                'prizegivingTemplate',
-                'comingupTemplate',
-                'endTemplate',
-                'renderSupport',
-                'renderCompetitions',
-                'renderBars',
-                'renderWinners',
-                'renderComments',
-                'renderNow'
-            )
-        );
+        return view('partymeister-competitions::backend.votes.playlists.show',
+            compact('results', 'comments', 'commentsTemplate', 'specialVotes', 'prizegivingTemplate',
+                'comingupTemplate', 'nowTemplate', 'endTemplate', 'renderSupport', 'renderCompetitions', 'renderBars', 'renderWinners',
+                'renderComments', 'renderNow'));
     }
 }

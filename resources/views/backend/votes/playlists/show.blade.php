@@ -164,7 +164,7 @@
 
             Vue.prototype.$eventHub.$emit('partymeister-slides:load-definitions', {
                 name: 'slidemeister-prizegiving-now',
-                elements: JSON.parse('{!! addslashes($comingupTemplate->definitions) !!}'),
+                elements: JSON.parse('{!! addslashes($nowTemplate->definitions) !!}'),
                 type: 'prizegiving-support',
                 replacements: {headline: 'Now', body: 'Prizegiving' },
             });
