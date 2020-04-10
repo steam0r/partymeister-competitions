@@ -14,7 +14,7 @@
                 <div class="card" data-equalizer-watch>
                     @if($entry->getFirstMedia('screenshot'))
                         <div class="image-wrapper">
-                            <a data-caption="{{$entry->title}} by {{$entry->author}}" data-fancybox="gallery"
+                            <a data-caption="{{$entry->title}} @if (!$entry->competition->competition_type->is_anonymous)by {{$entry->author}}@endif" data-fancybox="gallery"
                                href="{{$entry->getFirstMedia('screenshot')->getUrl('preview')}}">
                                 <img src="{{$entry->getFirstMedia('screenshot')->getUrl('preview')}}"
                                      class="img-fluid">
@@ -25,7 +25,7 @@
                         <audio controls src="{{$entry->getFirstMedia('audio')->getUrl()}}" style="width: 100%"></audio>
                     @endif
                         <div class="card-section">
-                        <h5>{{$entry->title}} by {{$entry->author}}</h5>
+                        <h5>{{$entry->title}} @if (!$entry->competition->competition_type->is_anonymous) by {{$entry->author}} @endif</h5>
                         <h6>{{$entry->competition->name}}</h6>
                         @if ($entry->download != null)
                             <div class="clearfix"></div>

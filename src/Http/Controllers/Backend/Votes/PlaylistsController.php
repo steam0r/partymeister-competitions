@@ -59,7 +59,7 @@ class PlaylistsController extends Controller
                 }
             }
             shuffle($comments[$competition['id']]);
-            $chunks = array_chunk($comments[$competition['id']], 10);
+            $chunks = array_chunk($comments[$competition['id']], 8);
             if (count($chunks) > 0) {
                 $comments[$competition['id']] = $chunks[0];
             } else {
