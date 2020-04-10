@@ -30,7 +30,7 @@
                     <div class="card @if(isset($votes[1][$entry->id]) && $votes[1][$entry->id]['special_vote'] == 1) special-vote-highlight @endif" data-entry-id="{{$entry->id}}" data-equalizer-watch>
                         @if($entry->getFirstMedia('screenshot'))
                             <div class="image-wrapper">
-                                <a data-caption="{{$entry->title}} by {{$entry->author}}" data-fancybox="gallery"
+                                <a data-caption="{{$entry->title}} @if (!$entry->competition->competition_type->is_anonymous)by {{$entry->author}}@endif" data-fancybox="gallery"
                                    href="{{$entry->getFirstMedia('screenshot')->getUrl('preview')}}">
                                     <img src="{{$entry->getFirstMedia('screenshot')->getUrl('preview')}}"
                                          class="img-fluid">
@@ -41,7 +41,7 @@
                             <audio controls src="{{$entry->getFirstMedia('audio')->getUrl()}}" style="width: 100%"></audio>
                         @endif
                         <div class="card-section">
-                            <h5>{{$entry->title}} by {{$entry->author}}</h5>
+                            <h5>{{$entry->title}} @if (!$entry->competition->competition_type->is_anonymous)by {{$entry->author}}@endif</h5>
                             <h6>{{$entry->competition->name}}</h6>
                             @if ($entry->options->count() > 0 || $entry->custom_option != '')
                                 <h6 class="mt-2">Options</h6>
