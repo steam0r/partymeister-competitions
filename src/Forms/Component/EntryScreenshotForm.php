@@ -2,6 +2,7 @@
 
 namespace Partymeister\Competitions\Forms\Component;
 
+use Illuminate\Support\Arr;
 use Kris\LaravelFormBuilder\Form;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
@@ -27,6 +28,7 @@ class EntryScreenshotForm extends Form
         } elseif (is_array($this->getModel()[$this->getName()])) {
             $data['competition'] = Competition::find($this->getModel()[$this->getName()]['competition_id']);
         }
+        $data['id'] = Arr::get($this->getModel(), 'entry-upload.id');
 
         $this->add('competition_id', 'static', [
             'label'       => trans('partymeister-competitions::backend/competitions.competition'),

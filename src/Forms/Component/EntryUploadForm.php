@@ -2,6 +2,7 @@
 
 namespace Partymeister\Competitions\Forms\Component;
 
+use Illuminate\Support\Arr;
 use Kris\LaravelFormBuilder\Form;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
@@ -24,7 +25,7 @@ class EntryUploadForm extends Form
                                    ->pluck('name', 'id')
                                    ->toArray();
 
-        $data = [];
+        $data['id'] = Arr::get($this->getModel(), 'entry-upload.id');
         // FIXME: something is not great here with setting the competition-id
         if (old($this->getName() . '.competition_id')) {
             $data['competition'] = Competition::find(old($this->getName() . '.competition_id'));

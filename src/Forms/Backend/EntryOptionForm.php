@@ -2,8 +2,10 @@
 
 namespace Partymeister\Competitions\Forms\Backend;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Kris\LaravelFormBuilder\Form;
+use Partymeister\Competitions\Models\Entry;
 
 /**
  * Class EntryOptionForm
@@ -22,6 +24,14 @@ class EntryOptionForm extends Form
         if (isset($this->model['options'])) {
             foreach ($this->model['options'] as $option) {
                 $selected[] = $option->id;
+            }
+        } else {
+            if (Arr::get($this->data, 'id')) {
+                $options = Entry::find(Arr::get($this->data, 'id'))->options;
+                foreach ($options as $option) {
+                    $selected[] = $option->id;
+                }
+
             }
         }
 
