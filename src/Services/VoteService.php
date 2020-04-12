@@ -133,7 +133,9 @@ class VoteService extends BaseService
 
                 // Sort by points
                 usort($results, function ($item1, $item2) {
-                    return $item2[ 'special_votes' ] <=> $item1[ 'special_votes' ];
+                    if (isset($item1['special_votes']) && isset($item2['special_votes'])) {
+                        return $item2[ 'special_votes' ] <=> $item1[ 'special_votes' ];
+                    }
                 });
 
                 foreach ($results as $key => $entry) {
