@@ -29,11 +29,11 @@ class VoteService extends BaseService
         foreach ($request->get('entry') as $competitionId => $entries) {
             foreach ($entries as $entryId => $points) {
                 if ((int) $points !== 0) {
-                    $mv = new ManualVote();
+                    $mv                 = new ManualVote();
                     $mv->competition_id = $competitionId;
-                    $mv->entry_id = $entryId;
-                    $mv->points = $points;
-                    $mv->ip_address = Request::ip();
+                    $mv->entry_id       = $entryId;
+                    $mv->points         = $points;
+                    $mv->ip_address     = Request::ip();
                     $mv->save();
                 }
             }
@@ -42,26 +42,26 @@ class VoteService extends BaseService
 
 
     /**
-     * @param string $direction
+     * @param  string  $direction
      * @return array
      */
     public static function getAllVotesByRank($direction = 'DESC')
     {
-        $results = [];
+        $results   = [];
         $maxPoints = [];
         foreach (Competition::where('has_prizegiving', true)
-                     ->orderBy('prizegiving_sort_position', $direction)
-                     ->get() as $competition) {
-            $results[ $competition->id ] = [
+                            ->orderBy('prizegiving_sort_position', $direction)
+                            ->get() as $competition) {
+            $results[$competition->id]   = [
                 'id'          => $competition->id,
                 'name'        => $competition->name,
-                'has_comment' => isset($competition->vote_categories[ 0 ]) ? (bool) $competition->vote_categories[ 0 ]->has_comment : false,
+                'has_comment' => isset($competition->vote_categories[0]) ? (bool) $competition->vote_categories[0]->has_comment : false,
                 'entries'     => []
             ];
-            $maxPoints[ $competition->id ] = 0;
+            $maxPoints[$competition->id] = 0;
             foreach ($competition->entries()->where('status', 1)->get() as $entry) {
-                $maxPoints[ $competition->id ] = max($entry->votes, $maxPoints[ $competition->id ]);
-                $results[ $competition->id ][ 'entries' ][ $entry->id ] = [
+                $maxPoints[$competition->id]                      = max($entry->votes, $maxPoints[$competition->id]);
+                $results[$competition->id]['entries'][$entry->id] = [
                     'id'       => $entry->id,
                     'title'    => $entry->title,
                     'author'   => $entry->author,
@@ -72,29 +72,29 @@ class VoteService extends BaseService
             }
 
             // Sort by points
-            usort($results[ $competition->id ][ 'entries' ], function ($item1, $item2) {
-                return $item2[ 'points' ] <=> $item1[ 'points' ];
+            usort($results[$competition->id]['entries'], function ($item1, $item2) {
+                return $item2['points'] <=> $item1['points'];
             });
 
             $uniquePoints = [];
 
-            foreach ($results[ $competition->id ][ 'entries' ] as $key => $entry) {
+            foreach ($results[$competition->id]['entries'] as $key => $entry) {
 
-                if (!array_key_exists((string)$entry['points'], $uniquePoints)) {
+                if ( ! array_key_exists((string) $entry['points'], $uniquePoints)) {
                     $uniquePoints[$entry['points']] = 1;
-                    $rank = array_sum($uniquePoints);
-               } else {
+                    $rank                           = array_sum($uniquePoints);
+                } else {
                     $uniquePoints[$entry['points']]++;
                 }
 
-                $results[ $competition->id ][ 'entries' ][ $key ][ 'max_points' ] = $maxPoints[ $competition->id ];
-                $results[ $competition->id ][ 'entries' ][ $key ][ 'rank' ] = $rank;
+                $results[$competition->id]['entries'][$key]['max_points'] = $maxPoints[$competition->id];
+                $results[$competition->id]['entries'][$key]['rank']       = $rank;
 
                 // Identify ties
-                if (isset($results[ $competition->id ][ 'entries' ][ $key - 1 ])) {
-                    if ($results[ $competition->id ][ 'entries' ][ $key ][ 'points' ] == $results[ $competition->id ][ 'entries' ][ $key - 1 ][ 'points' ]) {
-                        $results[ $competition->id ][ 'entries' ][ $key ][ 'tie' ] = true;
-                        $results[ $competition->id ][ 'entries' ][ $key - 1 ][ 'tie' ] = true;
+                if (isset($results[$competition->id]['entries'][$key - 1])) {
+                    if ($results[$competition->id]['entries'][$key]['points'] == $results[$competition->id]['entries'][$key - 1]['points']) {
+                        $results[$competition->id]['entries'][$key]['tie']     = true;
+                        $results[$competition->id]['entries'][$key - 1]['tie'] = true;
                     }
                 }
             }
@@ -109,45 +109,50 @@ class VoteService extends BaseService
      */
     public static function getAllSpecialVotesByRank()
     {
-        $results = [];
+        $results   = [];
         $maxPoints = 0;
         foreach (Competition::where('has_prizegiving', true)
-                     ->orderBy('prizegiving_sort_position', 'DESC')
-                     ->get() as $competition) {
-            if (isset($competition->vote_categories[ 0 ]) && $competition->vote_categories[ 0 ]->has_special_vote) {
+                            ->orderBy('prizegiving_sort_position', 'DESC')
+                            ->get() as $competition) {
+            if (isset($competition->vote_categories[0]) && $competition->vote_categories[0]->has_special_vote) {
                 foreach ($competition->entries()->where('status', 1)->get() as $entry) {
                     $specialVotes = (int) $entry->special_votes;
-                    $maxPoints = max($specialVotes, $maxPoints);
+                    $maxPoints    = max($specialVotes, $maxPoints);
                     if ($specialVotes > 0) {
-                        $results[ $entry->id ] = [
+                        $results[$entry->id] = [
                             'id'            => $entry->id,
                             'title'         => $entry->title,
                             'author'        => $entry->author,
                             'competition'   => $competition->name,
                             'special_votes' => (int) $specialVotes,
                             'points'        => (int) $specialVotes,
-                            'tie'      => false,
+                            'tie'           => false,
                         ];
                     }
                 }
 
                 // Sort by points
+                unset($results['entries']);
                 usort($results, function ($item1, $item2) {
-                    if (isset($item1['special_votes']) && isset($item2['special_votes'])) {
-                        return $item2[ 'special_votes' ] <=> $item1[ 'special_votes' ];
-                    }
+                    return $item2['special_votes'] <=> $item1['special_votes'];
                 });
 
                 foreach ($results as $key => $entry) {
-                    $results[ $key ][ 'max_points' ] = $maxPoints;
-                    $results[ $key ][ 'rank' ] = ($key + 1);
+                    $results[$key]['max_points'] = $maxPoints;
+                    $results[$key]['rank']       = ($key + 1);
 
                     // Identify ties
-                    if (isset($results[ $key - 1 ])) {
-                        if ($results[ $key ][ 'points' ] == $results[ $key - 1 ][ 'points' ]) {
-                            $results[ 'entries' ][ $key ][ 'tie' ] = true;
-                            $results[ 'entries' ][ $key - 1 ][ 'tie' ] = true;
-                            $results[ 'entries' ][ $key ][ 'rank' ] = ($key);
+                    if (isset($results[$key - 1])) {
+                        if ( ! isset($results[$key]['points'])) {
+                            continue;
+                        }
+                        if ( ! isset($results[$key - 1]['points'])) {
+                            continue;
+                        }
+                        if ($results[$key]['points'] == $results[$key - 1]['points']) {
+                            $results['entries'][$key]['tie']     = true;
+                            $results['entries'][$key - 1]['tie'] = true;
+                            $results['entries'][$key]['rank']    = ($key);
                         }
                     }
                 }

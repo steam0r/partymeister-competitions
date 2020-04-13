@@ -29,6 +29,7 @@ class VotesController extends Controller
     {
         $results = VoteService::getAllVotesByRank();
         $special = VoteService::getAllSpecialVotesByRank();
+        unset($special['entries']);
 
         $deadlineTimestamp = strtotime(config('partymeister-competitions-voting.deadline'));
         $deadlineOver = ($deadlineTimestamp < time() ? true : false);
