@@ -12,10 +12,10 @@
     }
   ],
   "require": {
-    "partymeister/core": "0.5.*",
-    "kwn/number-to-words": "^1.6",
-    "setasign/fpdi-tcpdf": "^2.2",
-    "tecnickcom/tcpdf": "^6.2"
+    "partymeister/core": "0.6.*",
+    "kwn/number-to-words": "^1.9",
+    "setasign/fpdi-tcpdf": "^2.3",
+    "tecnickcom/tcpdf": "^6.3"
   },
   "autoload": {
     "classmap": [
