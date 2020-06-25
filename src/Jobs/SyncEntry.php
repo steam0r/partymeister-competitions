@@ -47,6 +47,10 @@ class SyncEntry implements ShouldQueue
      */
     public function handle()
     {
+        if (!config('partymeister-competitions-sync.active')) {
+            return;
+        }
+
         $data = fractal()->item($this->entry)->transformWith(new SyncTransformer())->toJson();
 
         $client = new Client([

@@ -46,6 +46,10 @@ class SyncLiveVote implements ShouldQueue
      */
     public function handle()
     {
+        if (!config('partymeister-competitions-sync.active')) {
+            return;
+        }
+
         $data = [
             'data' => [
                 'entry_id'       => $this->liveVote->entry_id,
