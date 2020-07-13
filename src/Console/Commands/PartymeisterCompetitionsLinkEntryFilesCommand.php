@@ -13,6 +13,10 @@ use Partymeister\Competitions\Models\Competition;
 class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
 {
 
+    protected $archiveExtensions = [
+      "tar", "tgz", "gz", "zip", "cpio", "rpm", "deb", "gem", "7z", "cab", "rar", "lzh", "gzip"
+    ];
+
     /**
      * The console command name.
      *
@@ -35,6 +39,7 @@ class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
      */
     public function handle()
     {
+        $canUnzip = shell_exec('which dtrx');
         foreach (Competition::all() as $competition) {
             $directory = base_path('entries/' . Str::slug($competition->name));
             if (! is_dir($directory)) {
@@ -53,8 +58,20 @@ class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
                     $this->mkdir($directory . '/' . $entryDir . '/files');
                     foreach ($entry->getMedia('file') as $media) {
                         if (file_exists($media->getPath()) && ! file_exists($directory . '/' . $entryDir . '/files/' . $media->file_name)) {
-                            link($media->getPath(), $directory . '/' . $entryDir . '/files/' . $media->file_name);
+                          $filePath = $directory . '/' . $entryDir . '/files/';
+                            link($media->getPath(), $filePath . $media->file_name);
+                            if ($canUnzip) {
+                              print "can unzip";
+                              $pathinfo = pathinfo($media->file_name);
+                              print_r($pathinfo);
+                              if(in_array($pathinfo['extension'], $this->archiveExtensions)) {
+                                print "is archive: " . $filePath . " : " . $media->file_name;
+                                chdir($filePath);
+                                shell_exec('dtrx ' . $media->file_name);
+                              }
+                            }
                         }
+
                     }
                 }
 

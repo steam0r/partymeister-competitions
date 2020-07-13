@@ -32,6 +32,8 @@ return [
     'last_file_uploaded_at'                       => 'Last file upload',
     'final_file_media_id'                         => 'Final file',
     'choose'                                      => '=== Select final file for release ===',
+    'playable_file_name'                          => 'Playable file',
+    'choose_playable'                             => '=== Select file to play during compo ===',
     'config_file'                                 => 'Config (not to be released, for compo only)',
 
     'name'            => 'Name',

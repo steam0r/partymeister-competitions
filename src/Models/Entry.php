@@ -26,6 +26,7 @@ use Spatie\MediaLibrary\Models\Media;
  * @property int                                                                                       $id
  * @property int|null                                                                                  $competition_id
  * @property int|null                                                                                  $final_file_media_id
+ * @property string|null                                                                               $playable_file_name
  * @property int|null                                                                                  $visitor_id
  * @property string                                                                                    $title
  * @property string                                                                                    $author
@@ -176,6 +177,7 @@ class Entry extends Model implements HasMedia
         'composer_city',
         'composer_country_iso_3166_1',
         'final_file_media_id',
+        'playable_file_name',
         'status',
     ];
 

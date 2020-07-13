@@ -2,9 +2,12 @@
 
 namespace Partymeister\Competitions\Forms\Backend;
 
+use Illuminate\Support\Str;
 use Kris\LaravelFormBuilder\Form;
 use Partymeister\Competitions\Models\Competition;
 use Partymeister\Competitions\Models\Entry;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use Symfony\Component\Intl\Countries;
 
 /**
@@ -27,13 +30,28 @@ class EntryForm extends Form
         }
 
         $files = [];
+        $allFiles = [];
         if ($this->getModel() instanceof Entry) {
             foreach ($this->getModel()->ordered_files as $file) {
                 $files[$file->id] = $file->created_at . ' - ' . $file->file_name;
+                if($this->getModel()->final_file_media_id == $file->id) {
+                  $directory = base_path('entries/' . Str::slug($data['competition']->name));
+                  $entryDir = $this->getModel()->id;
+                  while (strlen($entryDir) < 4) {
+                    $entryDir = '0' . $entryDir;
+                  }
+                  $entryDir = $directory . '/' . $entryDir . '/files/';
+                  $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($entryDir),RecursiveIteratorIterator::SELF_FIRST);
+                  foreach($iterator as $entryFile) {
+                    if(!$entryFile->isDir()) {
+                      $allFiles[] = explode('files/', $entryFile->getRealpath(), 2)[1];
+                    }
+                  }
+                }
             }
         }
 
-        $this->add('competition_id', 'select2', [
+      $this->add('competition_id', 'select2', [
                 'attr'        => [ 'class' => 'form-control reload-on-change' ],
                 'label'       => trans('partymeister-competitions::backend/competitions.competition'),
                 'empty_value' => trans('motor-backend::backend/global.please_choose'),
@@ -93,6 +111,11 @@ class EntryForm extends Form
                  'empty_value' => trans('partymeister-competitions::backend/entries.choose'),
                  'choices'     => $files
              ])
+            ->add('playable_file_name', 'select', [
+                  'label'       => trans('partymeister-competitions::backend/entries.playable_file_name'),
+                  'empty_value' => trans('partymeister-competitions::backend/entries.choose_playable'),
+                  'choices'     => $allFiles
+            ])
              ->add('author_name', 'text', [ 'label' => trans('partymeister-competitions::backend/entries.name') ])
              ->add('author_email', 'text', [ 'label' => trans('partymeister-competitions::backend/entries.email') ])
              ->add('author_phone', 'text', [ 'label' => trans('partymeister-competitions::backend/entries.phone') ])
