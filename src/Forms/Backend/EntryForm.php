@@ -34,20 +34,18 @@ class EntryForm extends Form
         if ($this->getModel() instanceof Entry) {
             foreach ($this->getModel()->ordered_files as $file) {
                 $files[$file->id] = $file->created_at.' - '.$file->file_name;
-                if ($this->getModel()->final_file_media_id == $file->id) {
-                    $directory = base_path('entries/'.Str::slug($data['competition']->name));
-                    $entryDir = $this->getModel()->id;
-                    while (strlen($entryDir) < 4) {
-                        $entryDir = '0'.$entryDir;
-                    }
-                    $entryDir = $directory.'/'.$entryDir.'/files/';
-                    if (is_dir($entryDir)) {
-                        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($entryDir),
-                            RecursiveIteratorIterator::SELF_FIRST);
-                        foreach ($iterator as $entryFile) {
-                            if (!$entryFile->isDir()) {
-                                $allFiles[] = explode('files/', $entryFile->getRealpath(), 2)[1];
-                            }
+                $directory = base_path('entries/'.Str::slug($data['competition']->name));
+                $entryDir = $this->getModel()->id;
+                while (strlen($entryDir) < 4) {
+                    $entryDir = '0'.$entryDir;
+                }
+                $entryDir = $directory.'/'.$entryDir.'/files/';
+                if (is_dir($entryDir)) {
+                    $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($entryDir),
+                        RecursiveIteratorIterator::SELF_FIRST);
+                    foreach ($iterator as $entryFile) {
+                        if (!$entryFile->isDir()) {
+                            $allFiles[] = explode('files/', $entryFile->getRealpath(), 2)[1];
                         }
                     }
                 }
