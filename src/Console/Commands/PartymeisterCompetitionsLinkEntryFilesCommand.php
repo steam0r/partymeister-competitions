@@ -59,7 +59,7 @@ class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
                     foreach ($entry->getMedia('file') as $media) {
                         if (file_exists($media->getPath()) && ! file_exists($directory . '/' . $entryDir . '/files/' . $media->file_name)) {
                           $filePath = $directory . '/' . $entryDir . '/files/';
-                            link($media->getPath(), $filePath . $media->file_name);
+                            copy($media->getPath(), $filePath . $media->file_name);
                             if ($canUnzip) {
                               print "can unzip";
                               $pathinfo = pathinfo($media->file_name);
@@ -80,7 +80,7 @@ class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
                     $this->mkdir($directory . '/' . $entryDir . '/screenshot');
                     foreach ($entry->getMedia('screenshot') as $media) {
                         if (file_exists($media->getPath()) && ! file_exists($directory . '/' . $entryDir . '/screenshot/' . $media->file_name)) {
-                            link($media->getPath(), $directory . '/' . $entryDir . '/screenshot/' . $media->file_name);
+                            copy($media->getPath(), $directory . '/' . $entryDir . '/screenshot/' . $media->file_name);
                         }
                     }
                 }
@@ -92,7 +92,7 @@ class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
                         $media = $entry->getFirstMedia('work_stage_' . $i);
                         if (! is_null($media)) {
                             if (file_exists($media->getPath()) && ! file_exists($directory . '/' . $entryDir . '/work_stages/' . $i . '_' . $media->file_name)) {
-                                link(
+                                copy(
                                     $media->getPath(),
                                     $directory . '/' . $entryDir . '/work_stages/' . $i . '_' . $media->file_name
                                 );
@@ -106,7 +106,7 @@ class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
                     $this->mkdir($directory . '/' . $entryDir . '/audio');
                     foreach ($entry->getMedia('audio') as $media) {
                         if (file_exists($media->getPath()) && ! file_exists($directory . '/' . $entryDir . '/audio/' . $media->file_name)) {
-                            link($media->getPath(), $directory . '/' . $entryDir . '/audio/' . $media->file_name);
+                            copy($media->getPath(), $directory . '/' . $entryDir . '/audio/' . $media->file_name);
                         }
                     }
                 }
@@ -116,7 +116,7 @@ class PartymeisterCompetitionsLinkEntryFilesCommand extends Command
                     $this->mkdir($directory . '/' . $entryDir . '/video');
                     foreach ($entry->getMedia('video') as $media) {
                         if (file_exists($media->getPath()) && ! file_exists($directory . '/' . $entryDir . '/video/' . $media->file_name)) {
-                            link($media->getPath(), $directory . '/' . $entryDir . '/video/' . $media->file_name);
+                            copy($media->getPath(), $directory . '/' . $entryDir . '/video/' . $media->file_name);
                         }
                     }
                 }
