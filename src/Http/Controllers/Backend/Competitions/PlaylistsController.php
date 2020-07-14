@@ -14,7 +14,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Motor\Backend\Helpers\MediaHelper;
 use Motor\Backend\Http\Controllers\Controller;
 use Partymeister\Competitions\Models\Competition;
-use Partymeister\Competitions\Transformers\Competition\EntryTransformer;
+use Partymeister\Competitions\Transformers\EntryTransformer;
 use Partymeister\Competitions\Transformers\Entry\SlideTransformer;
 use Partymeister\Slides\Models\SlideTemplate;
 use Partymeister\Slides\Services\PlaylistService;

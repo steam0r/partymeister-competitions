@@ -45,7 +45,8 @@ class EntryForm extends Form
                         RecursiveIteratorIterator::SELF_FIRST);
                     foreach ($iterator as $entryFile) {
                         if (!$entryFile->isDir()) {
-                            $allFiles[] = explode('files/', $entryFile->getRealpath(), 2)[1];
+                            $playableFileName = explode('files/', $entryFile->getRealpath(), 2)[1];
+                            $allFiles[$playableFileName] = $playableFileName;
                         }
                     }
                 }
