@@ -4,10 +4,26 @@ namespace Partymeister\Competitions\Transformers\Entry;
 
 use Motor\Backend\Helpers\Filesize;
 use Partymeister\Competitions\Models\Entry;
+use Partymeister\Competitions\Transformers\EntryTransformer;
 use Spatie\MediaLibrary\Models\Media;
 
-class JsonTransformer extends \Partymeister\Competitions\Transformers\EntryTransformer
+class JsonTransformer extends EntryTransformer
 {
+
+    /**
+     * List of resources to automatically include
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'files',
+        'screenshot',
+        'video',
+        'audio',
+        'work_stages',
+        'config_file',
+        'options',
+    ];
 
     /**
      * Transform record to array
@@ -37,4 +53,5 @@ class JsonTransformer extends \Partymeister\Competitions\Transformers\EntryTrans
             'playable_file_name' => $record->playable_file_name,
         ];
     }
+
 }

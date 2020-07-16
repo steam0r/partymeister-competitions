@@ -14,6 +14,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Motor\Backend\Helpers\MediaHelper;
 use Motor\Backend\Http\Controllers\Controller;
 use Partymeister\Competitions\Models\Competition;
+use Partymeister\Competitions\Transformers\CompetitionTransformer;
 use Partymeister\Competitions\Transformers\Entry\JsonTransformer;
 use Partymeister\Competitions\Transformers\EntryTransformer;
 use Partymeister\Competitions\Transformers\Entry\SlideTransformer;
@@ -54,19 +55,16 @@ class PlaylistsController extends Controller
         $filename = Str::slug($competition->name . '_' . date('Y-m-d_H-i-s'));
         switch ($request->get('format', 'json')) {
             case 'json':
+                $competitionTransformer = new CompetitionTransformer();
                 $resource = $this->transformCollection($competition->sorted_entries, JsonTransformer::class);
 
                 $data = $this->fractal->createData($resource)->toArray();
                 $data = Arr::get($data, 'data');
-                $compo = $data[0]['competition'];
-                foreach($data as $key => $entry) {
-                    unset($data[$key]['competition']);
-                }
 
                 $data = [
                     'message' => 'Competition playlist for \'' . $competition->name . '\', generated ' . date('Y-m-d H:i:s'),
                     'data'    => [
-                        'competition' => $compo['data'],
+                        'competition' => $competitionTransformer->transform($competition),
                         'entries'     => [ 'data' => $data ]
                     ]
                 ];
