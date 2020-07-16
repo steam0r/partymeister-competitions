@@ -14,9 +14,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Motor\Backend\Helpers\MediaHelper;
 use Motor\Backend\Http\Controllers\Controller;
 use Partymeister\Competitions\Models\Competition;
-use Partymeister\Competitions\Transformers\CompetitionTransformer;
-use Partymeister\Competitions\Transformers\Entry\JsonTransformer;
-use Partymeister\Competitions\Transformers\EntryTransformer;
+use Partymeister\Competitions\Transformers\Competition\EntryTransformer;
 use Partymeister\Competitions\Transformers\Entry\SlideTransformer;
 use Partymeister\Slides\Models\SlideTemplate;
 use Partymeister\Slides\Services\PlaylistService;
@@ -55,8 +53,7 @@ class PlaylistsController extends Controller
         $filename = Str::slug($competition->name . '_' . date('Y-m-d_H-i-s'));
         switch ($request->get('format', 'json')) {
             case 'json':
-                $competitionTransformer = new CompetitionTransformer();
-                $resource = $this->transformCollection($competition->sorted_entries, JsonTransformer::class);
+                $resource = $this->transformCollection($competition->sorted_entries, EntryTransformer::class);
 
                 $data = $this->fractal->createData($resource)->toArray();
                 $data = Arr::get($data, 'data');
@@ -64,7 +61,10 @@ class PlaylistsController extends Controller
                 $data = [
                     'message' => 'Competition playlist for \'' . $competition->name . '\', generated ' . date('Y-m-d H:i:s'),
                     'data'    => [
-                        'competition' => $competitionTransformer->transform($competition),
+                        'competition' => [
+                            'name'         => $competition->name,
+                            'is_anonymous' => (bool) $competition->competition_type->is_anonymous
+                        ],
                         'entries'     => [ 'data' => $data ]
                     ]
                 ];
