@@ -102,7 +102,8 @@ class SlideTransformer extends Fractal\TransformerAbstract
             'composer_country_iso_3166_1'                 => $record->composer_country_iso_3166_1,
             'composer_country'                            => Countries::getName($record->composer_country_iso_3166_1 ? $record->composer_country_iso_3166_1 : $record->author_country_iso_3166_1),
             'composer_not_member_of_copyright_collective' => (bool) $record->composer_not_member_of_copyright_collective,
-            'playable_file_name'                          => $record->playable_file_name
+            'playable_file_name'                          => $record->playable_file_name,
+            'playable_file'                          => JsonTransformer::getPlayableFileInfo($record)
 //            'screenshot' => MediaHelper::getFileInformation($record, 'screenshot', true),
 //            'audio' => MediaHelper::getFileInformation($record, 'audio', true),
         ];

@@ -2,6 +2,7 @@
 
 namespace Partymeister\Competitions\Transformers\Entry;
 
+use Illuminate\Support\Str;
 use Motor\Backend\Helpers\Filesize;
 use Partymeister\Competitions\Models\Entry;
 use Partymeister\Competitions\Transformers\EntryTransformer;
@@ -50,8 +51,34 @@ class JsonTransformer extends EntryTransformer
             'sort_position_prefixed' => (strlen($record->sort_position) == 1 ? '0'.$record->sort_position : $record->sort_position),
             'competition_name' => $record->competition->name,
             'final_file' => Media::find($record->final_file_media_id),
-            'playable_file_name' => $record->playable_file_name,
+            'playable_file_name'                          => $record->playable_file_name,
+            'playable_file' => JsonTransformer::getPlayableFileInfo($record),
         ];
+    }
+
+    public static function getPlayableFileInfo(Entry $entry) {
+        $name = $entry->playable_file_name;
+        $path = base_path('entries/' . Str::slug($entry->competition->name));
+        $directory = '/entries/' . Str::slug($entry->competition->name);
+        $entryDir = $entry->id;
+        while (strlen($entryDir) < 4) {
+            $entryDir = '0' . $entryDir;
+        }
+
+        $entryDir .= '/files';
+
+        $location = $path . "/" . $entryDir . "/" . $name;
+        $data = [
+            "name" => basename($name),
+            "path" => $location,
+            "url" => $directory . "/" . $entryDir . "/" . $name
+        ];
+        if(file_exists($location)) {
+            $data['size'] = \filesize($location);
+            $data['created'] = date('Y-m-d H:i:s', filectime($location));
+            $data['mime_type'] = mime_content_type($location);
+        }
+        return $data;
     }
 
 }

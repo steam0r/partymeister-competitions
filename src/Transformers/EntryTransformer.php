@@ -8,6 +8,7 @@ use League\Fractal\Resource\Item;
 use Motor\Backend\Helpers\Filesize;
 use Motor\Backend\Transformers\MediaTransformer;
 use Partymeister\Competitions\Models\Entry;
+use Partymeister\Competitions\Transformers\Entry\JsonTransformer;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl\Intl;
@@ -110,7 +111,8 @@ class EntryTransformer extends Fractal\TransformerAbstract
             'composer_country'                            => $record->composer_country_iso_3166_1 == '' ? '' : Countries::getName($record->composer_country_iso_3166_1),
             'composer_not_member_of_copyright_collective' => (bool) $record->composer_not_member_of_copyright_collective,
             'final_file'                                  => Media::find($record->final_file_media_id),
-            'playable_file_name'                          => $record->playable_file_name
+            'playable_file_name'                          => $record->playable_file_name,
+            'playable_file'                          => JsonTransformer::getPlayableFileInfo($record)
 //            'screenshot' => MediaHelper::getFileInformation($record, 'screenshot', true),
 //            'audio' => MediaHelper::getFileInformation($record, 'audio', true),
         ];
