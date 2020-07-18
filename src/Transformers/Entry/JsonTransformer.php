@@ -58,26 +58,29 @@ class JsonTransformer extends EntryTransformer
 
     public static function getPlayableFileInfo(Entry $entry) {
         $name = $entry->playable_file_name;
-        $path = base_path('entries/' . Str::slug($entry->competition->name));
-        $directory = '/entries/' . Str::slug($entry->competition->name);
-        $entryDir = $entry->id;
-        while (strlen($entryDir) < 4) {
-            $entryDir = '0' . $entryDir;
+        $data = new \stdClass();
+        if($name) {
+            $path = base_path('entries/' . Str::slug($entry->competition->name));
+            $directory = '/entries/' . Str::slug($entry->competition->name);
+            $entryDir = $entry->id;
+            while (strlen($entryDir) < 4) {
+                $entryDir = '0' . $entryDir;
+            }
+
+            $entryDir .= '/files';
+
+            $location = $path . "/" . $entryDir . "/" . $name;
+            $data->name = basename($name);
+            $data->path = $location;
+            $data->url = $directory . "/" . $entryDir . "/" . $name;
+
+            if(file_exists($location)) {
+                $data->size = \filesize($location);
+                $data->created = date('Y-m-d H:i:s', filectime($location));
+                $data->mime_type = mime_content_type($location);
+            }
         }
 
-        $entryDir .= '/files';
-
-        $location = $path . "/" . $entryDir . "/" . $name;
-        $data = [
-            "name" => basename($name),
-            "path" => $location,
-            "url" => $directory . "/" . $entryDir . "/" . $name
-        ];
-        if(file_exists($location)) {
-            $data['size'] = \filesize($location);
-            $data['created'] = date('Y-m-d H:i:s', filectime($location));
-            $data['mime_type'] = mime_content_type($location);
-        }
         return $data;
     }
 
