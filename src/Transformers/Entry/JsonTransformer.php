@@ -72,7 +72,7 @@ class JsonTransformer extends EntryTransformer
             $location = $path . "/" . $entryDir . "/" . $name;
             $data->name = basename($name);
             $data->path = $location;
-            $data->url = $directory . "/" . $entryDir . "/" . $name;
+            $data->url = "/download/" . $directory . "/" . $entryDir . "/" . $name;
 
             if(file_exists($location)) {
                 $data->size = \filesize($location);
