@@ -30,9 +30,11 @@ class EntryForm extends Form
         }
 
         $files = [];
+        $playableFiles = [];
         if ($this->getModel() instanceof Entry) {
             foreach ($this->getModel()->ordered_files as $file) {
                 $files[$file->id] = $file->created_at.' - '.$file->file_name;
+                $playableFiles[$file->id] = $file->created_at.' - '.$file->file_name;
             }
         }
 
@@ -99,7 +101,7 @@ class EntryForm extends Form
             ->add('playable_file_name', 'select', [
                 'label' => trans('partymeister-competitions::backend/entries.playable_file_name'),
                 'empty_value' => trans('partymeister-competitions::backend/entries.choose_playable'),
-                'choices' => $files,
+                'choices' => $playableFiles,
             ])
             ->add('author_name', 'text', ['label' => trans('partymeister-competitions::backend/entries.name')])
             ->add('author_email', 'text', ['label' => trans('partymeister-competitions::backend/entries.email')])
