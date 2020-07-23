@@ -30,26 +30,9 @@ class EntryForm extends Form
         }
 
         $files = [];
-        $allFiles = [];
         if ($this->getModel() instanceof Entry) {
             foreach ($this->getModel()->ordered_files as $file) {
                 $files[$file->id] = $file->created_at.' - '.$file->file_name;
-                $directory = base_path('entries/'.Str::slug($data['competition']->name));
-                $entryDir = $this->getModel()->id;
-                while (strlen($entryDir) < 4) {
-                    $entryDir = '0'.$entryDir;
-                }
-                $entryDir = $directory.'/'.$entryDir.'/files/';
-                if (is_dir($entryDir)) {
-                    $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($entryDir),
-                        RecursiveIteratorIterator::SELF_FIRST);
-                    foreach ($iterator as $entryFile) {
-                        if (!$entryFile->isDir()) {
-                            $playableFileName = explode('files/', $entryFile->getRealpath(), 2)[1];
-                            $allFiles[$playableFileName] = $playableFileName;
-                        }
-                    }
-                }
             }
         }
 
@@ -116,7 +99,7 @@ class EntryForm extends Form
             ->add('playable_file_name', 'select', [
                 'label' => trans('partymeister-competitions::backend/entries.playable_file_name'),
                 'empty_value' => trans('partymeister-competitions::backend/entries.choose_playable'),
-                'choices' => $allFiles,
+                'choices' => $files,
             ])
             ->add('author_name', 'text', ['label' => trans('partymeister-competitions::backend/entries.name')])
             ->add('author_email', 'text', ['label' => trans('partymeister-competitions::backend/entries.email')])
