@@ -58,21 +58,56 @@ class JsonTransformer extends EntryTransformer
 
     public static function getPlayableFileInfo(Entry $entry)
     {
-        $media = Media::find($entry->playable_file_name);
+        $data = [];
+        $media = Media::find($entry->playable_file_id_1);
         if ($media) {
-            return [
-                [
-                    'collection' => $media->collection_name,
-                    'name' => $media->name,
-                    'file_name' => $media->file_name,
-                    'size' => (int)$media->size,
-                    'url' => $media->getUrl(),
-                    'path' => $media->getPath(),
-                    'created_at' => (string)$media->created_at,
-                ]
+            $data[] = [
+                'collection' => $media->collection_name,
+                'name' => $media->name,
+                'file_name' => $media->file_name,
+                'size' => (int)$media->size,
+                'url' => $media->getUrl(),
+                'path' => $media->getPath(),
+                'created_at' => (string)$media->created_at,
             ];
         }
-        return [];
+        $media = Media::find($entry->playable_file_id_2);
+        if ($media) {
+            $data[] = [
+                'collection' => $media->collection_name,
+                'name' => $media->name,
+                'file_name' => $media->file_name,
+                'size' => (int)$media->size,
+                'url' => $media->getUrl(),
+                'path' => $media->getPath(),
+                'created_at' => (string)$media->created_at,
+            ];
+        }
+        $media = Media::find($entry->playable_file_id_3);
+        if ($media) {
+            $data[] = [
+                'collection' => $media->collection_name,
+                'name' => $media->name,
+                'file_name' => $media->file_name,
+                'size' => (int)$media->size,
+                'url' => $media->getUrl(),
+                'path' => $media->getPath(),
+                'created_at' => (string)$media->created_at,
+            ];
+        }
+        $media = Media::find($entry->playable_file_id_4);
+        if ($media) {
+            $data[] = [
+                'collection' => $media->collection_name,
+                'name' => $media->name,
+                'file_name' => $media->file_name,
+                'size' => (int)$media->size,
+                'url' => $media->getUrl(),
+                'path' => $media->getPath(),
+                'created_at' => (string)$media->created_at,
+            ];
+        }
+        return $data;
     }
 
 }

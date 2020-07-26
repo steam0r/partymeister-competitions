@@ -98,8 +98,23 @@ class EntryForm extends Form
                 'empty_value' => trans('partymeister-competitions::backend/entries.choose'),
                 'choices' => $files,
             ])
-            ->add('playable_file_name', 'select', [
-                'label' => trans('partymeister-competitions::backend/entries.playable_file_name'),
+            ->add('playable_file_id_1', 'select', [
+                'label' => trans('partymeister-competitions::backend/entries.playable_file_name') . " 1",
+                'empty_value' => trans('partymeister-competitions::backend/entries.choose_playable'),
+                'choices' => $playableFiles,
+            ])
+            ->add('playable_file_id_2', 'select', [
+                'label' => trans('partymeister-competitions::backend/entries.playable_file_name') . " 2",
+                'empty_value' => trans('partymeister-competitions::backend/entries.choose_playable'),
+                'choices' => $playableFiles,
+            ])
+            ->add('playable_file_id_3', 'select', [
+                'label' => trans('partymeister-competitions::backend/entries.playable_file_name') . " 3",
+                'empty_value' => trans('partymeister-competitions::backend/entries.choose_playable'),
+                'choices' => $playableFiles,
+            ])
+            ->add('playable_file_id_4', 'select', [
+                'label' => trans('partymeister-competitions::backend/entries.playable_file_name') . " 4",
                 'empty_value' => trans('partymeister-competitions::backend/entries.choose_playable'),
                 'choices' => $playableFiles,
             ])
