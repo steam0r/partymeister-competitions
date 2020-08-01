@@ -119,14 +119,6 @@
                 </a>
             </div>
         @endif
-        <h3>Beamslide preview</h3>
-        <div id="app">
-            <partymeister-slides-elements class="slidemeister-template"
-                                          :readonly="true" :id="'template-preview'"
-                                          :name="'template-preview'">
-
-            </partymeister-slides-elements>
-        </div>
     </div>
     @if ($record->competition->competition_type->number_of_work_stages > 0)
         <div class="medium-12">
