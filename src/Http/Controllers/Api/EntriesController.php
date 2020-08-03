@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Motor\Backend\Http\Controllers\Controller;
 use Partymeister\Competitions\Http\Requests\Backend\EntryRequest;
 use Partymeister\Competitions\Models\Entry;
+use Partymeister\Competitions\Models\LiveVote;
 use Partymeister\Competitions\Services\EntryService;
 use Partymeister\Competitions\Transformers\EntryTransformer;
 
@@ -45,7 +46,6 @@ class EntriesController extends Controller
         return $this->respondWithJson('Entry created', $resource);
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -73,7 +73,22 @@ class EntriesController extends Controller
         $result   = EntryService::update($record, $request)->getResult();
         $resource = $this->transformItem($result, EntryTransformer::class);
 
-        return $this->respondWithJson('Entry updated', $resource);
+        foreach (LiveVote::all() as $liveVote) {
+            $liveVote->delete();
+        }
+
+        if(strpos($request->getContent(), 'enable_livevoting=true') !== false) {
+            if($record) {
+                $liveVote = new LiveVote();
+                $liveVote->competition_id = $record->competition_id;
+                $liveVote->entry_id       = $record->id;
+                $liveVote->sort_position  = $record->sort_position;
+                $liveVote->save();
+                $resource->enable_livevoting = true;
+            }
+       }
+
+        return response()->json([ 'message' => 'Entry updated', 'data' => $resource ]);
     }
 
 

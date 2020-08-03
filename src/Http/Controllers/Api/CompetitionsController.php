@@ -4,9 +4,12 @@ namespace Partymeister\Competitions\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use Motor\Backend\Http\Controllers\Controller;
+use Motor\Backend\Models\Permission;
 use Partymeister\Competitions\Http\Requests\Backend\CompetitionRequest;
 use Partymeister\Competitions\Models\Competition;
+use Partymeister\Competitions\Models\LiveVote;
 use Partymeister\Competitions\Services\CompetitionService;
 use Partymeister\Competitions\Transformers\CompetitionTransformer;
 
