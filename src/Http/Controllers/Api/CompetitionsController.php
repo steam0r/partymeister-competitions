@@ -77,9 +77,7 @@ class CompetitionsController extends Controller
         $resource = $this->transformItem($result, CompetitionTransformer::class);
 
         foreach (LiveVote::all() as $liveVote) {
-            if($liveVote->competition_id === $record->id) {
-                $liveVote->delete();
-            }
+            $liveVote->delete();
         }
 
         return $this->respondWithJson('Competition updated', $resource);
