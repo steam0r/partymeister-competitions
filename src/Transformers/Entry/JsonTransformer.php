@@ -59,6 +59,24 @@ class JsonTransformer extends EntryTransformer
     public static function getPlayableFileInfo(Entry $entry)
     {
         $data = [];
+        $workStages = $entry->media()
+            ->where('collection_name', 'LIKE', 'work_stage%')
+            ->orderBy('collection_name')
+            ->get();
+        if ($workStages->count() > 0) {
+            foreach ($workStages as $workStage) {
+                $data[] = [
+                    'collection' => $workStage->collection_name,
+                    'name' => $workStage->name,
+                    'file_name' => $workStage->file_name,
+                    'size' => (int)$workStage->size,
+                    'url' => $workStage->getUrl(),
+                    'path' => $workStage->getPath(),
+                    'created_at' => (string)$workStage->created_at,
+                ];
+            }
+        }
+
         $media = Media::find($entry->playable_file_id_1);
         if ($media) {
             $data[] = [
