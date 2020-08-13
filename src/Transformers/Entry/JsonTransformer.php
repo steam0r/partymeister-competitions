@@ -66,6 +66,7 @@ class JsonTransformer extends EntryTransformer
         if ($workStages->count() > 0) {
             foreach ($workStages as $workStage) {
                 $data[] = [
+                    'id' => $workStage->id,
                     'collection' => $workStage->collection_name,
                     'name' => $workStage->name,
                     'file_name' => $workStage->file_name,
@@ -80,6 +81,7 @@ class JsonTransformer extends EntryTransformer
         $media = Media::find($entry->playable_file_id_1);
         if ($media) {
             $data[] = [
+                'id' => $media->id,
                 'collection' => $media->collection_name,
                 'name' => $media->name,
                 'file_name' => $media->file_name,
@@ -92,6 +94,7 @@ class JsonTransformer extends EntryTransformer
         $media = Media::find($entry->playable_file_id_2);
         if ($media) {
             $data[] = [
+                'id' => $media->id,
                 'collection' => $media->collection_name,
                 'name' => $media->name,
                 'file_name' => $media->file_name,
@@ -104,6 +107,7 @@ class JsonTransformer extends EntryTransformer
         $media = Media::find($entry->playable_file_id_3);
         if ($media) {
             $data[] = [
+                'id' => $media->id,
                 'collection' => $media->collection_name,
                 'name' => $media->name,
                 'file_name' => $media->file_name,
@@ -116,6 +120,7 @@ class JsonTransformer extends EntryTransformer
         $media = Media::find($entry->playable_file_id_4);
         if ($media) {
             $data[] = [
+                'id' => $media->id,
                 'collection' => $media->collection_name,
                 'name' => $media->name,
                 'file_name' => $media->file_name,
